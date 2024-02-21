@@ -1,6 +1,7 @@
-const router = require('express').Router();
+import express from 'express';
+const router = express.Router();
 // Routes
-const testRoutes = require('./testRoutes');
+import testRoutes from './testRoutes.js';
 
 // Print all routes defined in app
 router.get('/api', (req, res) => {
@@ -13,4 +14,4 @@ router.get('/api', (req, res) => {
 router.use('/api/test', testRoutes);
 
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const { connectToDb } = require('../db');
-const keys = require('../config/keys');
-const { SkiAreaModel } = require('../models/SkiAreas');
+import { connectToDb } from '../db';
+import keys from '../config/keys.js';
+import SkiAreaModel from '../models/SkiAreas.js';
 
 let db = connectToDb(keys.mongoURI, {
 	dbName: process.env.NODE_ENV === 'production' ? 'prod' : 'test',
@@ -14,7 +14,6 @@ db.on('connected', () => {
 	console.log('Connected to DB');
 });
 
-// Create a ski area object based on trysil
 const skiArea = {
 	name: 'Trysil',
 	country: 'Norway',
@@ -24,7 +23,7 @@ const skiArea = {
 	pistes: [],
 	lifts: [],
 	facilities: [],
-}
+};
 
 
 const skiAreaInstance = SkiAreaModel(skiArea);

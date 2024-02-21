@@ -1,12 +1,11 @@
-const dotenv = require('dotenv');
+import { config } from 'dotenv';
 
 // Load environment variables based on NODE_ENV
 
-/* global process */
 if (process.env.NODE_ENV === 'production') {
-	dotenv.config({ path: './config/.env.prod' });
+	config({ path: './config/.env.prod' });
 } else {
-	dotenv.config({ path: './config/.env' });
+	config({ path: './config/.env' });
 }
 
 // Access the environment variables
@@ -21,4 +20,4 @@ const keys = {
 	GMAIL_APP_PASSWORD: process.env.GMAIL_APP_PASSWORD,
 };
 
-module.exports = keys;
+export default keys;

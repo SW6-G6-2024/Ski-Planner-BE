@@ -1,5 +1,6 @@
-const router = require('express').Router();
-const { SkiAreaModel } = require('../models/SkiAreas');
+import express from 'express';
+const router = express.Router();
+import SkiAreaModel from '../models/SkiAreas.js';
 
 // Routes
 router.get('/', (req, res) => {
@@ -16,7 +17,7 @@ router.post('/create-ski-area', (req, res) => {
 		pistes: [],
 		lifts: [],
 		facilities: [],
-	}
+	};
 	
 	const skiAreaInstance = SkiAreaModel(skiArea);
 	skiAreaInstance.save()
@@ -30,4 +31,4 @@ router.post('/create-ski-area', (req, res) => {
 		return res.send('SkiArea saved');
 	});
 
-module.exports = router;
+export default router;

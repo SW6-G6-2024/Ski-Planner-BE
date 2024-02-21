@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const ratingsSchema = new mongoose.Schema({
+const ratingsSchema = new Schema({
 	user: {
-		type: mongoose.Schema.Types.ObjectId,
+		type: Schema.Types.ObjectId,
 		ref: 'User',
 		required: true
 	},
 	skiResort: {
-		type: mongoose.Schema.Types.ObjectId,
+		type: Schema.Types.ObjectId,
 		ref: 'SkiResort',
 		required: true
 	},
@@ -21,6 +21,6 @@ const ratingsSchema = new mongoose.Schema({
 	}
 });
 
-const RatingsModel = mongoose.model('ratings', ratingsSchema);
+const RatingsModel = model('ratings', ratingsSchema);
 
-module.exports = RatingsModel;
+export default RatingsModel;

@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
 const liftSchema = new Schema({
 	name: {
@@ -12,6 +11,6 @@ const liftSchema = new Schema({
 	},
 });
 
-const LiftModel = mongoose.model('lifts', liftSchema);
+const LiftModel = model('lifts', liftSchema);
 
-module.exports = LiftModel;
+export default LiftModel;

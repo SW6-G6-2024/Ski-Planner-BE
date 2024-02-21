@@ -1,6 +1,5 @@
 // Create model for Pistes
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model, Types } from 'mongoose';
 
 const PistesSchema = new Schema({
 	name: {
@@ -16,11 +15,11 @@ const PistesSchema = new Schema({
 		required: [true, 'Grooming is required'],
 	},
 	ratings: {
-		type: mongoose.Mongoose.ObjectId,
+		type: Types.ObjectId,
 		ref: 'Ratings',
 	},
 	createdAt: { type: Date, default: Date.now }
 });
 
-const PistesModel = mongoose.model('pistes', PistesSchema);
-module.exports = { PistesModel };
+const PistesModel = model('pistes', PistesSchema);
+export default { PistesModel };

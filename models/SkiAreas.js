@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
 const SkiAreaSchema = new Schema({
 	name: {
@@ -46,5 +45,5 @@ const SkiAreaSchema = new Schema({
 	createdAt: { type: Date, default: Date.now }
 });
 
-const SkiAreaModel = mongoose.model('ski-area', SkiAreaSchema);
-module.exports = { SkiAreaModel };
+const SkiAreaModel = model('ski-area', SkiAreaSchema);
+export default { SkiAreaModel };
