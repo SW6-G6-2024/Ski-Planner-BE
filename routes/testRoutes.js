@@ -4,7 +4,7 @@ import SkiAreaModel from '../models/SkiAreas.js';
 
 // Routes
 router.get('/', (req, res) => {
-	res.send('Hello World');
+	res.status(200).send('Hello World');
 });
 
 router.post('/create-ski-area', (req, res) => {
