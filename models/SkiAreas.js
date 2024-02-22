@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
+import regexPatterns from '../utils/patterns.js';
 
 const SkiAreaSchema = new Schema({
 	name: {
@@ -19,7 +20,7 @@ const SkiAreaSchema = new Schema({
 		type: String,
 		validate: {
 			validator: function(v) {
-				return /https?:\/\/(www\.)?[\p{L}0-9]+\.[\p{L}0-9]+/ug.test(v);
+				return regexPatterns.website.test(v);
 			},
 			message: '{VALUE} is not a valid website URL'
 		},
@@ -51,7 +52,7 @@ const SkiAreaSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Facilities'
 	}],
-	createdAt: { type: Date, default: Date.now }
+	modifiedAt: { type: Date, default: Date.now }
 });
 
 SkiAreaSchema.plugin(uniqueValidator);

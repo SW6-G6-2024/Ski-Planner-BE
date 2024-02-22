@@ -4,17 +4,17 @@ const ratingsSchema = new Schema({
 	piste: {
 		type: Schema.Types.ObjectId,
 		ref: 'Pistes',
-		required: true
+		required: [true, 'Piste is required'],
 	},
 	rating: {
 		type: Number,
-		required: true
+		required: [true, 'Rating is required'],
 	},
 	weather: {
 		type: Object,
-		required: true
+		required: [true, 'Weather is required'],
 	},
-	createdAt: {
+	modifiedAt: {
 		type: Date,
 		default: Date.now
 	}

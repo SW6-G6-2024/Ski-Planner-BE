@@ -1,5 +1,5 @@
 // Create model for Pistes
-import { Schema, model, Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const PistesSchema = new Schema({
 	name: {
@@ -14,7 +14,7 @@ const PistesSchema = new Schema({
 		type: Boolean,
 		required: [true, 'Grooming is required'],
 	},
-	createdAt: { type: Date, default: Date.now }
+	modifiedAt: { type: Date, default: Date.now },
 });
 
 const PistesModel = model('pistes', PistesSchema);
