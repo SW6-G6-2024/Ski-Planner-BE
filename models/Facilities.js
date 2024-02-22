@@ -9,7 +9,6 @@ const facilitiesSchema = new Schema({
 		type: String,
 		required: true
 	},
-	// Add more fields as needed
 });
 
 const FacilitiesModel = model('facilities', facilitiesSchema);

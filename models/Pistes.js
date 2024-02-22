@@ -11,15 +11,11 @@ const PistesSchema = new Schema({
 		required: [true, 'Difficulty is required'],
 	},
 	grooming: {
-		type: String,
+		type: Boolean,
 		required: [true, 'Grooming is required'],
-	},
-	ratings: {
-		type: Types.ObjectId,
-		ref: 'Ratings',
 	},
 	createdAt: { type: Date, default: Date.now }
 });
 
 const PistesModel = model('pistes', PistesSchema);
-export default { PistesModel };
+export default PistesModel;

@@ -1,9 +1,11 @@
 import { Schema, model } from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 
 const SkiAreaSchema = new Schema({
 	name: {
 		type: String,
 		required: [true, 'Name is required'],
+		unique: true,
 	},
 	country: {
 		type: String,
@@ -17,19 +19,26 @@ const SkiAreaSchema = new Schema({
 		type: String,
 		validate: {
 			validator: function(v) {
-				return /https?:\/\/(www\.)?[a-zA-Z0-9]+\.[a-zA-Z0-9]+/.test(v);
+				return /https?:\/\/(www\.)?[\p{L}0-9]+\.[\p{L}0-9]+/ug.test(v);
 			},
 			message: '{VALUE} is not a valid website URL'
 		},
 		required: false
 	},
-	bounds: [
-		{
-			type: Number,
-			length: 4,
-			required: [true, 'Bounds are required']
+	bounds: {
+		type: [
+			{
+				type: Number,
+				required: [true, 'Bounds are required'],
+			}
+		],
+		validate: {
+			validator: function(v) {
+				return v.length === 4;
+			},
+			message: 'Invalid bounds array (length must be 4)'
 		}
-	],
+	},
 	pistes: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Pistes'
@@ -45,5 +54,7 @@ const SkiAreaSchema = new Schema({
 	createdAt: { type: Date, default: Date.now }
 });
 
+SkiAreaSchema.plugin(uniqueValidator);
+
 const SkiAreaModel = model('ski-area', SkiAreaSchema);
-export default { SkiAreaModel };
+export default SkiAreaModel;

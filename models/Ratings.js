@@ -1,18 +1,17 @@
 import { Schema, model } from 'mongoose';
 
 const ratingsSchema = new Schema({
-	user: {
+	piste: {
 		type: Schema.Types.ObjectId,
-		ref: 'User',
-		required: true
-	},
-	skiResort: {
-		type: Schema.Types.ObjectId,
-		ref: 'SkiResort',
+		ref: 'Pistes',
 		required: true
 	},
 	rating: {
 		type: Number,
+		required: true
+	},
+	weather: {
+		type: Object,
 		required: true
 	},
 	createdAt: {
