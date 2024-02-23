@@ -13,7 +13,7 @@ router.get('/api', (req, res) => {
 
 // Test route
 router.use('/api/test', testRoutes);
-router.use('/api/route', routingRoutes);
+router.use('/api/routes', routingRoutes);
 
 
 export default router;
