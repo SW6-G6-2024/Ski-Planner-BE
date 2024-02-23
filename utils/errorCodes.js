@@ -1,7 +1,12 @@
 export default {
 
 	// General Errors
-	E0001: "An unknown error occurred",
+	general: {
+		dbUnavailable: {
+			code: "E0001",
+			message: "Database is unavailable",
+		},
+	},
 
 	// Route generation errors
 	routeGeneration: {
@@ -21,7 +26,18 @@ export default {
 			code: "E0104",
 			message: "Invalid ski area id",
 		},
-	}
+	}, 
+
+	skiArea: {
+		missingId: {
+			code: "E0201",
+			message: "Ski area id is required",
+		},
+		invalidId: {
+			code: "E0202",
+			message: "Invalid ski area id",
+		},
+	},
 
   //
 };
