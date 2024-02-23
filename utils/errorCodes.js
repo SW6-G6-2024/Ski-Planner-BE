@@ -17,7 +17,11 @@ export default {
 			code: "E0103",
 			message: "Invalid start or end point (must contain lat and lng)",
 		},
+		invalidSkiArea: {
+			code: "E0104",
+			message: "Invalid ski area id",
+		},
 	}
 
   //
-}
+};

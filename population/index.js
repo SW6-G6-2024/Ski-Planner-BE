@@ -4,18 +4,20 @@ import SkiAreaModel from '../models/SkiAreas.js';
 import PistesModel from '../models/Pistes.js';
 import axios from 'axios';
 
+// eslint-disable-next-line no-unused-vars
 const getWeather =async (lat, long) => {
+	// eslint-disable-next-line no-unused-vars
 	const params = {
 		"latitude": lat,
 		"longitude": long,
 		"hourly": ["temperature_2m", "rain", "snowfall", "snow_depth", "weather_code"],
 		"timezone": "auto",
 		"forecast_days": 1
-	}
+	};
 
-	const weather = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,snowfall,weather_code,wind_speed_10m&timezone=auto&forecast_days=1`)
+	const weather = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,snowfall,weather_code,wind_speed_10m&timezone=auto&forecast_days=1`);
 
-	console.log(weather.data)
+	console.log(weather.data);
 };
 
 let db = connectToDb(keys.mongoURI, {
@@ -41,6 +43,7 @@ const skiArea = {
 	facilities: [],
 };
 
+// eslint-disable-next-line no-unused-vars
 const rating = {
 	piste: '65d70e9837424eef28ccb066',
 	rating: 5,

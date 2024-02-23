@@ -1,7 +1,6 @@
 import request from 'supertest';
 import express from 'express';
 import router from '../../routes/testRoutes.js';
-import connectDb from '../fixtures/db.js';
 import mongoose from 'mongoose';
 
 const app = express();
@@ -12,11 +11,6 @@ const PORT = 1234;
 const server = app.listen(PORT);
 
 const url = `http://localhost:${PORT}`;
-
-let db;
-beforeAll(async () => {
-	db = await connectDb();
-});
 
 describe('Test routes', () => {
 	it('should return status 200 for GET request to /api/test/', async () => {
