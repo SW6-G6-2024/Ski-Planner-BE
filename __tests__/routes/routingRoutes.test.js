@@ -4,6 +4,8 @@ import router from '../../routes/routingRoutes.js';
 import err from '../../utils/errorCodes.js';
 import connectDb from '../fixtures/db.js';
 import mongoose from 'mongoose';
+import { jest } from '@jest/globals';
+import axios from 'axios';
 
 const app = express();
 app.use(express.json());
@@ -26,6 +28,10 @@ let skiArea = {
 	lifts: [],
 	facilities: []
 };
+
+axios.post = jest.fn()
+	.mockResolvedValueOnce({ data: { data: { geoJson: { elements: [{ geometry: 'Dis way!' }] } } } })
+	.mockResolvedValueOnce({ data: { data: { start: { lat: 1, lng: 1 }, end: { lat: 2, lng: 2 }, geoJson: { elements: [{ geometry: 'Dis way!' }] } } }});
 	
 describe('Routing Routes', () => {
 	let id;
@@ -36,7 +42,7 @@ describe('Routing Routes', () => {
 		id = skiAreaInstance._id;
 	});
 
-	/*test('POST /api/routes/generate-route should return shortest route from a to b', async () => {
+	test('POST /api/routes/generate-route should return shortest route from a to b', async () => {
 		const data = {
 			start: { lat: 1, lng: 1 },
 			end: { lat: 2, lng: 2 },
@@ -45,22 +51,12 @@ describe('Routing Routes', () => {
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data);
-		//expect(response.status).toBe(200);
-		expect(response.body.res.data).toMatchObject({
-			start: data.start,
-			end: data.end,
-			skiArea: {
-				name: skiArea.name,
-				bounds: skiArea.bounds,
-				country: skiArea.country,
-				region: skiArea.region,
-				pistes: skiArea.pistes,
-				lifts: skiArea.lifts,
-				facilities: skiArea.facilities,
-				modifiedAt: expect.any(String)
-			}
+		expect(response.status).toBe(200);
+		expect(response.body).toMatchObject({
+			route: 'Dis way!',
+			res: 'Dis way!'
 		});
-	});*/
+	});
 
 	test('POST /api/routes/generate-route should return 400 if start or end is missing', async () => {
 		const data = {
@@ -110,6 +106,34 @@ describe('Routing Routes', () => {
 			.send(data);
 		expect(response.status).toBe(400);
 		expect(response.body).toEqual(err.routeGeneration.invalidSkiArea);
+	});
+
+	test('POST /api/routes/generate-route should return 500 if failed to fetch from overpass api', async () => {
+		axios.post.mockResolvedValueOnce({ data: null });
+		const data = {
+			start: { lat: 1, lng: 1 },
+			end: { lat: 2, lng: 2 },
+			skiArea: id
+		};
+		const response = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data);
+		expect(response.status).toBe(500);
+		expect(response.body).toEqual(err.routeGeneration.overpassApiError);
+	});
+
+	test('POST /api/routes/generate-route should return 500 if route generation service is not responding', async () => {
+		axios.post.mockResolvedValueOnce({data: { data: { geoJson: { elements: [{ geometry: 'Dis way!' }] } } }}).mockRejectedValueOnce();
+		const data = {
+			start: { lat: 1, lng: 1 },
+			end: { lat: 2, lng: 2 },
+			skiArea: id
+		};
+		const response = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data);
+		expect(response.status).toBe(500);
+		expect(response.body).toEqual(err.routeGeneration.routeGenerationError);
 	});
 });
 

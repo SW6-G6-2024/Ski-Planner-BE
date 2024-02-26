@@ -26,6 +26,14 @@ export default {
 			code: "E0104",
 			message: "Invalid ski area id",
 		},
+		overpassApiError: {
+			code: "E0105",
+			message: "Could not fetch data from overpass API",
+		},
+		routeGenerationError: {
+			code: "E0106",
+			message: "Route generation service is currently not responding",
+		},
 	}, 
 
 	skiArea: {
