@@ -67,7 +67,7 @@ describe('Routing Routes', () => {
 			.post('/api/routes/generate-route')
 			.send(data);
 		expect(response.status).toBe(400);
-		expect(response.body).toEqual(err.routeGeneration.missingPoint);
+		expect(response.body).toEqual(err.general.missingParam('end point'));
 	});
 
 	test('POST /api/routes/generate-route should return 400 if skiArea is missing', async () => {
@@ -79,10 +79,10 @@ describe('Routing Routes', () => {
 			.post('/api/routes/generate-route')
 			.send(data);
 		expect(response.status).toBe(400);
-		expect(response.body).toEqual(err.routeGeneration.missingSkiArea);
+		expect(response.body).toEqual(err.general.missingParam('skiArea'));
 	});
 
-	test('POST /api/routes/generate-route should return 400 if start or end is not an object', async () => {
+	test('POST /api/routes/generate-route should return 400 if start or end is not a valid point', async () => {
 		const data = {
 			start: 1,
 			end: { lat: 2, lng: 2 },
@@ -105,7 +105,7 @@ describe('Routing Routes', () => {
 			.post('/api/routes/generate-route')
 			.send(data);
 		expect(response.status).toBe(400);
-		expect(response.body).toEqual(err.routeGeneration.invalidSkiArea);
+		expect(response.body).toEqual(err.general.invalidId('skiArea'));
 	});
 
 	

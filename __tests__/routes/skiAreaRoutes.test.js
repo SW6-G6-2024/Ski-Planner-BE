@@ -29,6 +29,7 @@ describe('ski area routes', () => {
 	};
 	let id;
 	beforeAll(async () => {
+    await db.collection('ski-areas').deleteMany({});
 		await db.collection('ski-areas').insertOne(skiArea);
 		const skiAreaInstance = await db.collection('ski-areas').findOne({ name: 'Test Ski Area' });
 		id = skiAreaInstance._id;
@@ -48,12 +49,12 @@ describe('ski area routes', () => {
       facilities: skiArea.facilities
     });
   });
-
+  
   test('should return error when id is invalid', async () => {
     const response = await request(app)
       .get('/api/ski-areas/123');
     expect(response.statusCode).toBe(400);
-    expect(response.body).toMatchObject( err.skiArea.invalidId );
+    expect(response.body).toMatchObject( err.general.invalidId('ski area id'));
   });
 
   test('should return error when ski area is not found', async () => {

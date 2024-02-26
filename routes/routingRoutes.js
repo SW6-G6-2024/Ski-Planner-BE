@@ -2,21 +2,32 @@ import axios from 'axios';
 import express from 'express';
 import err from '../utils/errorCodes.js';
 import { isPoint } from '../utils/pointValidator.js';
-import mongoose from 'mongoose';
 import SkiArea from '../models/SkiAreas.js';
+import checkParams from '../utils/checkParams.js';
+
 const router = express.Router();
 
 // Routes
 router.post('/generate-route', async (req, res) => {
 	const { start, end, skiArea } = req.body;
-	if (!start || !end)
-		return res.status(400).send(err.routeGeneration.missingPoint);
-	if (!skiArea)
-		return res.status(400).send(err.routeGeneration.missingSkiArea);
-	if (!isPoint(start) || !isPoint(end))
-		return res.status(400).send(err.routeGeneration.invalidPoint);
-	if (!mongoose.Types.ObjectId.isValid(skiArea))
-		return res.status(400).send(err.routeGeneration.invalidSkiArea);
+	if (checkParams([{
+			name: 'start point',
+			value: start,
+			func: isPoint,
+			funcErr: err.routeGeneration.invalidPoint,
+		}, {
+			name: 'end point',
+			value: end,
+			func: isPoint,
+			funcErr: err.routeGeneration.invalidPoint,
+		}, {
+			name: 'skiArea',
+			value: skiArea,
+			id: true,
+		}
+	], res)) {
+		return;
+	}
 
 	//find ski area in db
 	const skiAreaInstance = await SkiArea.findById(skiArea);
