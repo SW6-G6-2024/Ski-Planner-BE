@@ -52,7 +52,7 @@ describe('ski area routes', () => {
         lifts: skiArea.lifts,
         facilities: skiArea.facilities
       },
-      geoJson: { geometry: 'geoJsonMock' }
+      geoJson: { type: 'FeatureCollection' }
     });
   });
 

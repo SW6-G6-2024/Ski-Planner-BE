@@ -5,6 +5,7 @@ import { isPoint } from '../utils/pointValidator.js';
 import SkiArea from '../models/SkiAreas.js';
 import checkParams from '../utils/checkParams.js';
 import getQuery from '../utils/getQuery.js';
+import { toGeoJson } from '../utils/dataFormatter.js';
 
 const router = express.Router();
 
@@ -33,7 +34,6 @@ router.post('/generate-route', async (req, res) => {
 	//find ski area in db
 	const skiAreaInstance = await SkiArea.findById(skiArea);
 
-	console.log(await SkiArea.find({}));
 	if (!skiAreaInstance)
 		return res.status(400).send(err.skiArea.notFound);
 
@@ -41,9 +41,11 @@ router.post('/generate-route', async (req, res) => {
 
 	const query = getQuery(bounds);
 
-	const geoJson = await axios.post('https://overpass-api.de/api/interpreter', query);
-	if (!geoJson?.data)
+	const apiRes = await axios.post('https://overpass-api.de/api/interpreter', query);
+	if (!apiRes?.data)
 		return res.status(500).send(err.routeGeneration.overpassApiError);
+
+	const geoJson = toGeoJson(apiRes.data);
 
 	// Call the route generation service
 	let result;
@@ -52,7 +54,7 @@ router.post('/generate-route', async (req, res) => {
 			data: {
 				start: start,
 				end: end,
-				geoJson: geoJson.data,
+				geoJson: geoJson,
 			}
 		});
 	} catch (error) {
