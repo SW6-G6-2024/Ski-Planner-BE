@@ -37,6 +37,10 @@ export default {
 			code: "E0202",
 			message: "Invalid ski area id",
 		},
+		notFound: {
+			code: "E0203",
+			message: "Ski area not found",
+		},
 	},
 
   //

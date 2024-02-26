@@ -14,9 +14,12 @@ router.get('/:id', async (req, res) => {
 
 	const skiArea = await SkiAreaModel.findById(id);
 
-	return res.status(200).send(skiArea);
+	if (!skiArea) {
+		return res.status(400).send(err.skiArea.notFound);
+	}
 
-		
+	return res.status(200).send(skiArea);
 });
+
 
 export default router;
