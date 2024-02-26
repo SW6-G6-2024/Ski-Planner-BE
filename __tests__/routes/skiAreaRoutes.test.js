@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use('/api/ski-areas', router);
 
-const PORT = 5123;
+const PORT = 5124;
 const server = app.listen(PORT);
 
 let db;
@@ -48,17 +48,25 @@ describe('ski area routes', () => {
       facilities: skiArea.facilities
     });
   });
-});
 
-test('should return error when id is invalid', async () => {
-  const response = await request(app)
-    .get('/api/ski-areas/123');
-  expect(response.statusCode).toBe(400);
-  expect(response.body).toMatchObject( err.skiArea.invalidId );
+  test('should return error when id is invalid', async () => {
+    const response = await request(app)
+      .get('/api/ski-areas/123');
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toMatchObject( err.skiArea.invalidId );
+  });
+
+  test('should return error when ski area is not found', async () => {
+    const response = await request(app)
+      .get('/api/ski-areas/5f9f6c3f9d5c1c2a3c3e3c3d');
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toMatchObject( err.skiArea.notFound );
+  });
 });
 
 afterAll(async () => {
   // You´re my wonderwall
+  await db.collection('ski-areas').deleteMany({});
   await mongoose.connection.close();
   server.close();
 });
