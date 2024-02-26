@@ -108,6 +108,7 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.routeGeneration.invalidSkiArea);
 	});
 
+	
 	test('POST /api/routes/generate-route should return 500 if failed to fetch from overpass api', async () => {
 		axios.post.mockResolvedValueOnce({ data: null });
 		const data = {
@@ -125,8 +126,8 @@ describe('Routing Routes', () => {
 	test('POST /api/routes/generate-route should return 500 if route generation service is not responding', async () => {
 		axios.post.mockResolvedValueOnce({data: { data: { geoJson: { elements: [{ geometry: 'Dis way!' }] } } }}).mockRejectedValueOnce();
 		const data = {
-			start: { lat: 1, lng: 1 },
-			end: { lat: 2, lng: 2 },
+			start: { lat: 2, lng: 2 },
+			end: { lat: 1, lng: 1 },
 			skiArea: id
 		};
 		const response = await request(app)
