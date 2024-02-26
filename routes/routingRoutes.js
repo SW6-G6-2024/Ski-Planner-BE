@@ -4,6 +4,7 @@ import err from '../utils/errorCodes.js';
 import { isPoint } from '../utils/pointValidator.js';
 import SkiArea from '../models/SkiAreas.js';
 import checkParams from '../utils/checkParams.js';
+import getQuery from '../utils/getQuery.js';
 
 const router = express.Router();
 
@@ -31,22 +32,14 @@ router.post('/generate-route', async (req, res) => {
 
 	//find ski area in db
 	const skiAreaInstance = await SkiArea.findById(skiArea);
+
+	console.log(await SkiArea.find({}));
 	if (!skiAreaInstance)
 		return res.status(400).send(err.skiArea.notFound);
 
 	const bounds = skiAreaInstance.bounds;
 
-	const query =
-		`
-[out:json];
-(
-  // Fetch downhill pistes within the bounding box
-  way["piste:type"="downhill"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});
-  // Fetch all ski lifts within the bounding box
-  way["aerialway"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});
-);
-out geom;
-	`;
+	const query = getQuery(bounds);
 
 	const geoJson = await axios.post('https://overpass-api.de/api/interpreter', query);
 	if (!geoJson?.data)

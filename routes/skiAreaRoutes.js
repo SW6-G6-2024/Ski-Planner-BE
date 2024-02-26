@@ -2,6 +2,8 @@ import express from 'express';
 import SkiAreaModel from '../models/SkiAreas.js';
 import err from '../utils/errorCodes.js';
 import checkParams from '../utils/checkParams.js';
+import getQuery from '../utils/getQuery.js';
+import axios from 'axios';
 
 const router = express.Router();
 
@@ -22,7 +24,17 @@ router.get('/:id', async (req, res) => {
 		return res.status(400).send(err.skiArea.notFound);
 	}
 
-	return res.status(200).send(skiArea);
+	const query = getQuery(skiArea.bounds);
+
+	const geoJson = await axios.post('https://overpass-api.de/api/interpreter', query);
+	if (!geoJson?.data) {
+		return res.status(500).send(err.routeGeneration.overpassApiError);
+	}
+
+	return res.status(200).send({
+		skiArea: skiArea,
+		geoJson: geoJson.data
+	});
 });
 
 
