@@ -6,6 +6,7 @@ import connectDb from '../fixtures/db.js';
 import mongoose from 'mongoose';
 import axios from 'axios';
 import { jest } from '@jest/globals';
+import overpassExampleData from '../fixtures/overpassExampleData.js';
 
 const app = express();
 app.use(express.json());
@@ -29,9 +30,11 @@ describe('ski area routes', () => {
     lifts: [],
     facilities: []
   };
+
   let id;
+
   beforeAll(async () => {
-    axios.post = jest.fn().mockResolvedValue({ data: { geometry: 'geoJsonMock' } });
+    axios.post = jest.fn().mockResolvedValue({data: overpassExampleData});
     await db.collection('ski-areas').insertOne(skiArea);
     const skiAreaInstance = await db.collection('ski-areas').findOne({ name: 'Test Ski Area' });
     id = skiAreaInstance._id;
@@ -68,6 +71,14 @@ describe('ski area routes', () => {
       .get('/api/ski-areas/5f9f6c3f9d5c1c2a3c3e3c3d');
     expect(response.statusCode).toBe(400);
     expect(response.body).toMatchObject(err.skiArea.notFound);
+  });
+
+  test('should return 500 when overpass api fails', async () => {
+    axios.post = jest.fn().mockResolvedValue({data: null});
+    const response = await request(app)
+      .get('/api/ski-areas/' + id);
+    expect(response.statusCode).toBe(500);
+    expect(response.body).toMatchObject(err.routeGeneration.overpassApiError);
   });
 });
 

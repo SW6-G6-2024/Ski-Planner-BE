@@ -5,7 +5,7 @@ import { isPoint } from '../utils/pointValidator.js';
 import SkiArea from '../models/SkiAreas.js';
 import checkParams from '../utils/checkParams.js';
 import getQuery from '../utils/getQuery.js';
-import { toGeoJson } from '../utils/dataFormatter.js';
+import { overpassToGeoJson } from '../utils/dataFormatter.js';
 
 const router = express.Router();
 
@@ -45,7 +45,7 @@ router.post('/generate-route', async (req, res) => {
 	if (!apiRes?.data)
 		return res.status(500).send(err.routeGeneration.overpassApiError);
 
-	const geoJson = toGeoJson(apiRes.data);
+	const geoJson = overpassToGeoJson(apiRes.data);
 
 	// Call the route generation service
 	let result;

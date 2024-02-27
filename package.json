@@ -42,6 +42,11 @@
     },
     "jest": {
         "verbose": true,
+        "coveragePathIgnorePatterns": [
+            "/node_modules/",
+            "/__tests__/",
+            "/models/"
+        ],
         "transform": {},
         "modulePathIgnorePatterns": [
             "<rootDir>/__tests__/fixtures",

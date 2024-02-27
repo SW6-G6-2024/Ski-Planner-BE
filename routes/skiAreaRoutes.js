@@ -4,7 +4,7 @@ import err from '../utils/errorCodes.js';
 import checkParams from '../utils/checkParams.js';
 import getQuery from '../utils/getQuery.js';
 import axios from 'axios';
-import { toGeoJson } from '../utils/dataFormatter.js';
+import { overpassToGeoJson } from '../utils/dataFormatter.js';
 
 const router = express.Router();
 
@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
 
 	return res.status(200).send({
 		skiArea: skiArea,
-		geoJson: toGeoJson(geoJson.data)
+		geoJson: overpassToGeoJson(geoJson.data)
 	});
 });
 
