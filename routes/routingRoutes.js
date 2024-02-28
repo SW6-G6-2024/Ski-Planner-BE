@@ -5,7 +5,6 @@ import { isPoint } from '../utils/pointValidator.js';
 import SkiArea from '../models/SkiAreas.js';
 import checkParams from '../utils/checkParams.js';
 import getQuery from '../utils/getQuery.js';
-import { overpassToGeoJson } from '../utils/dataFormatter.js';
 
 const router = express.Router();
 
@@ -15,13 +14,13 @@ router.post('/generate-route', async (req, res) => {
 	if (checkParams([{
 			name: 'start point',
 			value: start,
-			func: isPoint,
-			funcErr: err.routeGeneration.invalidPoint,
+			// func: isPoint,
+			// funcErr: err.routeGeneration.invalidPoint,
 		}, {
 			name: 'end point',
 			value: end,
-			func: isPoint,
-			funcErr: err.routeGeneration.invalidPoint,
+			// func: isPoint,
+			// funcErr: err.routeGeneration.invalidPoint,
 		}, {
 			name: 'skiArea',
 			value: skiArea,
@@ -31,7 +30,6 @@ router.post('/generate-route', async (req, res) => {
 		return;
 	}
 
-	//find ski area in db
 	const skiAreaInstance = await SkiArea.findById(skiArea);
 
 	if (!skiAreaInstance)
@@ -45,24 +43,21 @@ router.post('/generate-route', async (req, res) => {
 	if (!apiRes?.data)
 		return res.status(500).send(err.routeGeneration.overpassApiError);
 
-	const geoJson = overpassToGeoJson(apiRes.data);
-
 	// Call the route generation service
 	let result;
 	try {
-		result = await axios.post('http://localhost:3500/generate-route', {
+		result = await axios.post('http://127.0.0.1:5000/generate-route', {
 			data: {
 				start: start,
 				end: end,
-				geoJson: geoJson,
+				geoJson: apiRes.data,
 			}
 		});
 	} catch (error) {
 		return res.status(500).send(err.routeGeneration.routeGenerationError);
 	}
 
-
-	return res.status(200).send({ route: 'Dis way!', res: result.data.data.geoJson.elements[0].geometry });
+	return res.status(200).send({ route: 'Dis way!', res: result.data.features[0] });
 });
 
 export default router;
