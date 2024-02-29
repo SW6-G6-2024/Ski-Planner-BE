@@ -39,5 +39,12 @@ export default {
 		},
 	},
 
+  pistes: {
+    saveError: {
+      code: "E0301",
+      message: "Could not save piste",
+    },
+  }
+
   //
 };

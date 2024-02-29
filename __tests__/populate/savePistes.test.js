@@ -2,42 +2,39 @@ import express from 'express';
 import mongoose from 'mongoose';
 import connectDb from '../fixtures/db.js';
 import makeFakeSkiArea from '../fixtures/fakeSkiArea.js';
-import makeFakePiste from '../fixtures/fakePiste.js';
-import SkiAreaModel from '../../models/SkiAreas.js';
+import savePistesFromArea from '../../population/savePistesFromArea.js';
 
 const app = express();
 // Connect to the database
 app.use(express.json());
+let db;
+
+beforeAll(async () => {
+  db = await connectDb();
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
+});
 
 describe('savePistes', () => {
-  let db;
-  beforeAll(async () => {
-    db = await connectDb();
-  });
+  const fakeArea = makeFakeSkiArea();
 
   beforeEach(async () => {
-    let fakeArea = makeFakeSkiArea();
-    let fakePiste1 = makeFakePiste("1337", fakeArea._id); 
-    let fakePiste2 = makeFakePiste("69", fakeArea._id);
-    let fakePiste3 = makeFakePiste("420", fakeArea._id);
-    await db.collection('skiareas').insertOne(fakeArea);
-    await db.collection('pistes').insertOne(fakePiste1);
-    await db.collection('pistes').insertOne(fakePiste2);
-    await db.collection('pistes').insertOne(fakePiste3)
+    await db.collection('ski-areas').insertOne(fakeArea);
   });
 
   afterEach(async () => {
-    await db.collection('skiareas').deleteMany({});
+    await db.collection('ski-areas').deleteMany({});
   });
-
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
-
-
 
   it('should save pistes', async () => {
-    const id = "65d4a9dbecaa09d942314101";
-    const skiArea = await SkiAreaModel.findById(id);
+    await savePistesFromArea(fakeArea._id);
+    expect(await db.collection('pistes').countDocuments()).toBe(127);
+    let totalPistes = await db.collection('pistes').find({}).toArray();
+    for (let i = 0; i < totalPistes.length; i++) {
+      expect(totalPistes[i].name).toBeDefined();
+      expect(totalPistes[i].skiAreaId).toEqual(fakeArea._id);
+    }
   });
 });
