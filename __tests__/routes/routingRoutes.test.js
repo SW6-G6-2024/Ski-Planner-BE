@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import { jest } from '@jest/globals';
 import axios from 'axios';
 import overpassExampleData from '../fixtures/overpassExampleData.js';
+import generatedRouteExample from '../fixtures/generatedRouteExample.js';
 
 const app = express();
 app.use(express.json());
@@ -32,8 +33,8 @@ let skiArea = {
 
 axios.post = jest.fn()
 	.mockResolvedValueOnce({ data: overpassExampleData })
-	.mockResolvedValueOnce({ data: { data: { start: { lat: 1, lng: 1 }, end: { lat: 2, lng: 2 }, geoJson: { elements: [{ geometry: 'Dis way!' }] } } }});
-	
+	.mockResolvedValueOnce({ data: generatedRouteExample});
+
 describe('Routing Routes', () => {
 	let id;
 	beforeAll(async () => {
@@ -54,7 +55,7 @@ describe('Routing Routes', () => {
 		expect(response.status).toBe(200);
 		expect(response.body).toMatchObject({
 			route: 'Dis way!',
-			res: { data: { start: { lat: 1, lng: 1 }, end: { lat: 2, lng: 2 }, geoJson: { elements: [{ geometry: 'Dis way!' }] } } }
+			res: generatedRouteExample.features[0]
 		});
 	});
 
@@ -122,7 +123,7 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.general.invalidId('skiArea'));
 	});
 
-	
+
 	test('POST /api/routes/generate-route should return 500 if failed to fetch from overpass api', async () => {
 		axios.post.mockResolvedValueOnce({ data: null });
 		const data = {
@@ -138,7 +139,7 @@ describe('Routing Routes', () => {
 	});
 
 	test('POST /api/routes/generate-route should return 500 if route generation service is not responding', async () => {
-		axios.post.mockResolvedValueOnce({data: overpassExampleData}).mockRejectedValueOnce();
+		axios.post.mockResolvedValueOnce({ data: overpassExampleData }).mockRejectedValueOnce();
 		const data = {
 			start: { lat: 2, lng: 2 },
 			end: { lat: 1, lng: 1 },
