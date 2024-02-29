@@ -1,6 +1,7 @@
 import axios from 'axios';
 import express from 'express';
 import err from '../utils/errorCodes.js';
+// eslint-disable-next-line no-unused-vars
 import { isPoint } from '../utils/pointValidator.js';
 import SkiArea from '../models/SkiAreas.js';
 import checkParams from '../utils/checkParams.js';
@@ -46,7 +47,7 @@ router.post('/generate-route', async (req, res) => {
 	// Call the route generation service
 	let result;
 	try {
-		result = await axios.post('http://127.0.0.1:5000/generate-route', {
+		result = await axios.post('http://127.0.0.1:3500/generate-route', {
 			data: {
 				start: start,
 				end: end,
