@@ -40,10 +40,6 @@ const SkiAreaSchema = new Schema({
 			message: 'Invalid bounds array (length must be 4)'
 		}
 	},
-	pistes: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Pistes'
-	}],
 	lifts: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Lifts'

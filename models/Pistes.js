@@ -15,6 +15,11 @@ const PistesSchema = new Schema({
 		required: [true, 'Grooming is required'],
 	},
 	modifiedAt: { type: Date, default: Date.now },
+  skiAreaId: {
+    type: Schema.Types.ObjectId,
+    ref: 'skiareas',
+    required: [true, 'Ski Area Id is required'],
+  },
 });
 
 const PistesModel = model('pistes', PistesSchema);
