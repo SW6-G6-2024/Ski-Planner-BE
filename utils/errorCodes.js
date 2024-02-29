@@ -44,6 +44,13 @@ export default {
       code: "E0301",
       message: "Could not save piste",
     },
+  },
+
+  geoJson: {
+    invalidObject: {
+      code: "E0401",
+      message: "Invalid geoJson object",
+    },
   }
 
   //

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import connectDb from '../fixtures/db.js';
 import makeFakeSkiArea from '../fixtures/fakeSkiArea.js';
 import savePistesFromArea from '../../population/savePistesFromArea.js';
-import pisteResponse from '../fixtures/overpassSkiAreaExample.js';
+import pisteResponse from '../fixtures/pisteGeoJsonExample.js';
 
 const app = express();
 // Connect to the database
@@ -29,7 +29,7 @@ describe('savePistes', () => {
     await db.collection('ski-areas').deleteMany({});
   });
 
-  it('should save pistes', async () => {
+  it('Saves all pistes by geoJson and sky area id', async () => {
     await savePistesFromArea(pisteResponse, fakeArea._id);
 
     // Check if all the pistes, and only the pistes are saved from the example response
@@ -41,5 +41,15 @@ describe('savePistes', () => {
       expect(totalPistes[i].name).toBeDefined();
       expect(totalPistes[i].skiAreaId).toEqual(fakeArea._id);
     }
+  });
+
+  it('Returns an error if skiAreaId is invalid', async () => {
+    const result = await savePistesFromArea(pisteResponse, "invalidId");
+    expect(result).toEqual("Invalid id: skiAreaId is an invalid id");
+  });
+
+  it('Returns an error if the geoJson object is invalid', async () => {
+    const result = await savePistesFromArea({}, fakeArea._id);
+    expect(result).toEqual("Invalid geoJson object");
   });
 });
