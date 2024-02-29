@@ -1,3 +1,8 @@
+/**
+ * Converts overpass api data to geojson format
+ * @param {{elements: Array}} data overpass api data to be converted to geojson
+ * @returns {JSON} geojson data
+ */
 const overpassToGeoJson = (data) => {
 
 	const dataArr = data.elements ?? data;
@@ -25,6 +30,11 @@ const overpassToGeoJson = (data) => {
   };
 };
 
+/**
+ * Filters data to only include pistes and lifts
+ * @param {Array} data array of elements to be filtered
+ * @returns {Array} filtered array
+ */
 const filterData = (data) => {
 	return data.filter(element => {
 		const isPiste = element.tags["piste:type"] === "downhill";

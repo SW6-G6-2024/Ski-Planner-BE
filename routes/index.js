@@ -1,5 +1,6 @@
 import express from 'express';
 const router = express.Router();
+
 // Routes
 import testRoutes from './testRoutes.js';
 import routingRoutes from './routingRoutes.js';
@@ -10,7 +11,7 @@ router.get('/api', (req, res) => {
 	res.send(router.stack);
 });
 
-// Test route
+// Route definitions
 router.use('/api/test', testRoutes);
 router.use('/api/routes', routingRoutes);
 router.use('/api/ski-areas', skiAreaRoutes);
