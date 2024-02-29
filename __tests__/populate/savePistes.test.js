@@ -4,6 +4,7 @@ import connectDb from '../fixtures/db.js';
 import makeFakeSkiArea from '../fixtures/fakeSkiArea.js';
 import savePistesFromArea from '../../population/savePistesFromArea.js';
 import pisteResponse from '../fixtures/pisteGeoJsonExample.js';
+import err from '../../utils/errorCodes.js';
 
 const app = express();
 // Connect to the database
@@ -45,11 +46,11 @@ describe('savePistes', () => {
 
   it('Returns an error if skiAreaId is invalid', async () => {
     const result = await savePistesFromArea(pisteResponse, "invalidId");
-    expect(result).toEqual("Invalid id: skiAreaId is an invalid id");
+    expect(result).toEqual(new Error(err.general.invalidId("skiAreaId")));
   });
 
   it('Returns an error if the geoJson object is invalid', async () => {
     const result = await savePistesFromArea({}, fakeArea._id);
-    expect(result).toEqual("Invalid geoJson object");
+    expect(result).toEqual(new Error(err.geoJson.invalidObject));
   });
 });

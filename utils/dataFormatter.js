@@ -1,9 +1,11 @@
+import err from "./errorCodes";
+
 const overpassToGeoJson = (data) => {
 
 	const dataArr = data.elements ?? data;
 
 	if (!dataArr.length > 0 || !dataArr[0].geometry) {
-		throw new Error('Invalid data: Must contain elements with geometry.');
+		throw new Error(err.geoJson.missingGeometry);
 	}
 
 	const filtered = filterData(dataArr);
