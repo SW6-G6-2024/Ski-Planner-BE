@@ -58,7 +58,7 @@ router.post('/generate-route', async (req, res) => {
 		return res.status(500).send(err.routeGeneration.routeGenerationError);
 	}
 
-	return res.status(200).send({ route: 'Dis way!', res: result.data.features[0] });
+	return res.status(200).send({ route: 'Dis way!', res: result.data });
 });
 
 export default router;
