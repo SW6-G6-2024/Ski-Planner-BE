@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import connectDb from '../fixtures/db.js';
 import makeFakeSkiArea from '../fixtures/fakeSkiArea.js';
 import savePistesFromArea from '../../population/savePistesFromArea.js';
+import pisteResponse from '../fixtures/overpassSkiAreaExample.js';
 
 const app = express();
 // Connect to the database
@@ -29,8 +30,12 @@ describe('savePistes', () => {
   });
 
   it('should save pistes', async () => {
-    await savePistesFromArea(fakeArea._id);
-    expect(await db.collection('pistes').countDocuments()).toBe(127);
+    await savePistesFromArea(pisteResponse, fakeArea._id);
+
+    // Check if all the pistes, and only the pistes are saved from the example response
+    expect(await db.collection('pistes').countDocuments()).toBe(3);
+
+    // Check if the pistes are saved with the correct skiAreaId, and if the name is defined
     let totalPistes = await db.collection('pistes').find({}).toArray();
     for (let i = 0; i < totalPistes.length; i++) {
       expect(totalPistes[i].name).toBeDefined();
