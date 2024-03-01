@@ -29,7 +29,6 @@ async function savePistesFromArea(obj, skiAreaId) {
           skiAreaId: skiAreaId,
         }).save();
       } catch (error) {
-        console.log(error);
         throw err.pistes.saveError;
       }
     }

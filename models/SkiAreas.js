@@ -40,10 +40,6 @@ const SkiAreaSchema = new Schema({
       message: 'Invalid bounds array (length must be 4)'
     }
   },
-  facilities: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Facilities'
-  }],
   modifiedAt: { type: Date, default: Date.now }
 });
 
