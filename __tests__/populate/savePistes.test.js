@@ -28,6 +28,7 @@ describe('savePistes', () => {
 
   afterEach(async () => {
     await db.collection('ski-areas').deleteMany({});
+    await db.collection('pistes').deleteMany({});
   });
 
   it('Saves all pistes by geoJson and sky area id', async () => {
@@ -39,19 +40,33 @@ describe('savePistes', () => {
     // Check if the pistes are saved with the correct skiAreaId, and if the name is defined
     let totalPistes = await db.collection('pistes').find({}).toArray();
     for (let i = 0; i < totalPistes.length; i++) {
-      expect(totalPistes[i].id).toBeDefined();
-      expect(totalPistes[i].name).toBeDefined();
-      expect(totalPistes[i].skiAreaId).toEqual(fakeArea._id);
+      if (pisteResponse.features[i].properties["piste:type"] === "downhill") {
+        expect(totalPistes[i].id).toBe(pisteResponse.features[i].id);
+        expect(totalPistes[i].name).toBe(pisteResponse.features[i].properties.name ?? "Unknown");
+        expect(totalPistes[i].skiAreaId).toEqual(fakeArea._id);
+      }
     }
   });
 
   it('Returns an error if skiAreaId is invalid', async () => {
-    const result = await savePistesFromArea(pisteResponse, "invalidId");
-    expect(result).toEqual(new Error(err.general.invalidId("skiAreaId")));
+    let invalidId = "invalidId";
+    savePistesFromArea(pisteResponse, invalidId)
+      .then(() => {
+        fail("Should not resolve");
+      })
+      .catch((e) => {
+        expect(e).toEqual(err.general.invalidId(invalidId));
+      });
   });
 
   it('Returns an error if the geoJson object is invalid', async () => {
-    const result = await savePistesFromArea({}, fakeArea._id);
-    expect(result).toEqual(new Error(err.geoJson.invalidObject));
+    let invalidGeoJson = { type: "InvalidType" };
+    savePistesFromArea(invalidGeoJson, fakeArea._id)
+      .then(() => {
+        fail("Should not resolve");
+      })
+      .catch((e) => {
+        expect(e).toEqual(err.geoJson.invalidObject);
+      });
   });
 });

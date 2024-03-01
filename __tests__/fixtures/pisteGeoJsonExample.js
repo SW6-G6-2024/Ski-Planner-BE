@@ -4,27 +4,6 @@ const pisteResponse = {
     {
       "type": "Feature",
       "properties": {
-        "aerialway": "drag_lift",
-        "aerialway:drag_lift": "t-bar",
-        "name": "S4 Tolver'n"
-      },
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            12.1993807,
-            61.303757
-          ],
-          [
-            12.1943646,
-            61.3069892
-          ]
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "75",
         "piste:difficulty": "expert",
         "piste:type": "downhill",

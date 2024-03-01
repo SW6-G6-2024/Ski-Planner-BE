@@ -5,7 +5,7 @@ const overpassToGeoJson = (data) => {
 	const dataArr = data.elements ?? data;
 
 	if (!dataArr.length > 0 || !dataArr[0].geometry) {
-		throw new Error(err.geoJson.missingGeometry);
+		throw err.geoJson.missingGeometry;
 	}
 
 	const filtered = filterData(dataArr);
