@@ -8,7 +8,14 @@ import { overpassToGeoJson } from '../utils/dataFormatter.js';
 
 const router = express.Router();
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', 
+/**
+ * GET request for ski area by ID
+ * @param {*} req request object
+ * @param {*} res response object
+ * @returns 
+ */
+async (req, res) => {
 	const id = req.params.id.toString();
 
 	if (checkParams([{
