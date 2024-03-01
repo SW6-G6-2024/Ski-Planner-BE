@@ -20,5 +20,5 @@ export default function makeFakeSkiArea() {
       12.266869460358693],
     lifts: [],
     facilities: [],
-  }
-};
+  };
+}

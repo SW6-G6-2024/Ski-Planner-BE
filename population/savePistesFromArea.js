@@ -32,6 +32,6 @@ async function savePistesFromArea(obj, skiAreaId) {
       }
     }
   }
-};
+}
 
 export default savePistesFromArea;

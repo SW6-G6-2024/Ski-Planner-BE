@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 
 /**
  * function to create a fake piste for testing
@@ -10,6 +9,6 @@ export default function makeFakePiste(fakeName, fakeSkiAreaId) {
   return {
     name: fakeName,
     skiAreaId: fakeSkiAreaId,
-  }
+  };
 }
 

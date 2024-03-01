@@ -205,7 +205,7 @@ const pisteResponse = {
       }
     }
   ]
-}
+};
 
 
 export default pisteResponse;
