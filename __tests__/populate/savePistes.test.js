@@ -40,7 +40,7 @@ describe('savePistes', () => {
     // Check if the pistes are saved with the correct skiAreaId, and if the name is defined
     let totalPistes = await db.collection('pistes').find({}).toArray();
     for (let i = 0; i < totalPistes.length; i++) {
-      expect(totalPistes[i].id).toBe(pisteResponse.features[i].id);
+      expect(totalPistes[i]._id).toBe(pisteResponse.features[i].id);
       expect(totalPistes[i].name).toBe(pisteResponse.features[i].properties.name ?? "Unknown");
       expect(totalPistes[i].skiAreaId).toEqual(fakeArea._id);
     }
