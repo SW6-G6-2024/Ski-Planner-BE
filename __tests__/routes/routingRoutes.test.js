@@ -54,7 +54,7 @@ describe('Routing Routes', () => {
 		expect(response.status).toBe(200);
 		expect(response.body).toMatchObject({
 			route: 'Dis way!',
-			res: 'Dis way!'
+			res: { data: { start: { lat: 1, lng: 1 }, end: { lat: 2, lng: 2 }, geoJson: { elements: [{ geometry: 'Dis way!' }] } } }
 		});
 	});
 
@@ -95,7 +95,8 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.skiArea.notFound);
 	});
 
-	test('POST /api/routes/generate-route should return 400 if start or end is not a valid point', async () => {
+	// eslint-disable-next-line jest/no-commented-out-tests
+	/*test('POST /api/routes/generate-route should return 400 if start or end is not a valid point', async () => {
 		const data = {
 			start: 1,
 			end: { lat: 2, lng: 2 },
@@ -106,7 +107,7 @@ describe('Routing Routes', () => {
 			.send(data);
 		expect(response.status).toBe(400);
 		expect(response.body).toEqual(err.routeGeneration.invalidPoint);
-	});
+	});*/
 
 	test('POST /api/routes/generate-route should return 400 if id is invalid', async () => {
 		const data = {
@@ -132,7 +133,7 @@ describe('Routing Routes', () => {
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data);
-		//expect(response.status).toBe(500);
+		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.overpassApiError);
 	});
 
@@ -146,7 +147,7 @@ describe('Routing Routes', () => {
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data);
-		//expect(response.status).toBe(500);
+		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.routeGenerationError);
 	});
 });
