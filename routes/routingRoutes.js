@@ -9,8 +9,14 @@ import getQuery from '../utils/getQuery.js';
 
 const router = express.Router();
 
-// Routes
-router.post('/generate-route', async (req, res) => {
+router.post('/generate-route', 
+/**
+ * POST request for generating shortest route between two points
+ * @param {*} req request object
+ * @param {*} res response object
+ * @returns 
+ */
+async (req, res) => {
 	const { start, end, skiArea } = req.body;
 	if (checkParams([{
 			name: 'start point',
@@ -58,7 +64,10 @@ router.post('/generate-route', async (req, res) => {
 		return res.status(500).send(err.routeGeneration.routeGenerationError);
 	}
 
-	return res.status(200).send({ route: 'Dis way!', res: result.data });
+	if(!result.data)
+		return res.status(500).send(err.routeGeneration.routeGenerationError);
+
+	return res.status(200).send({ route: 'Dis way!', res: result.data.features[0] });
 });
 
 export default router;
