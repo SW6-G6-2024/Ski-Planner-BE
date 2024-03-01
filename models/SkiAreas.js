@@ -3,52 +3,48 @@ import uniqueValidator from 'mongoose-unique-validator';
 import regexPatterns from '../utils/patterns.js';
 
 const SkiAreaSchema = new Schema({
-	name: {
-		type: String,
-		required: [true, 'Name is required'],
-		unique: true,
-	},
-	country: {
-		type: String,
-		required: [true, 'Country is required'],
-	},
-	region: {
-		type: String,
-		required: [true, 'Region is required'],
-	},
-	website: {
-		type: String,
-		validate: {
-			validator: function(v) {
-				return regexPatterns.website.test(v);
-			},
-			message: '{VALUE} is not a valid website URL'
-		},
-		required: false
-	},
-	bounds: {
-		type: [
-			{
-				type: Number,
-				required: [true, 'Bounds are required'],
-			}
-		],
-		validate: {
-			validator: function(v) {
-				return v.length === 4;
-			},
-			message: 'Invalid bounds array (length must be 4)'
-		}
-	},
-	lifts: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Lifts'
-	}],
-	facilities: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Facilities'
-	}],
-	modifiedAt: { type: Date, default: Date.now }
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+    unique: true,
+  },
+  country: {
+    type: String,
+    required: [true, 'Country is required'],
+  },
+  region: {
+    type: String,
+    required: [true, 'Region is required'],
+  },
+  website: {
+    type: String,
+    validate: {
+      validator: function (v) {
+        return regexPatterns.website.test(v);
+      },
+      message: '{VALUE} is not a valid website URL'
+    },
+    required: false
+  },
+  bounds: {
+    type: [
+      {
+        type: Number,
+        required: [true, 'Bounds are required'],
+      }
+    ],
+    validate: {
+      validator: function (v) {
+        return v.length === 4;
+      },
+      message: 'Invalid bounds array (length must be 4)'
+    }
+  },
+  facilities: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Facilities'
+  }],
+  modifiedAt: { type: Date, default: Date.now }
 });
 
 SkiAreaSchema.plugin(uniqueValidator);
