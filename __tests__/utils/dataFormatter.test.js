@@ -14,6 +14,7 @@ describe('toGeoJson', () => {
 						'piste:difficulty': 'easy',
 						name: 'Example Piste'
 					},
+					id: 123,
 					geometry: {
 						type: 'LineString',
 						coordinates: [
@@ -28,6 +29,7 @@ describe('toGeoJson', () => {
 						aerialway: 'gondola',
 						name: 'Example Lift'
 					},
+					id: 456,
 					geometry: {
 						type: 'LineString',
 						coordinates: [
