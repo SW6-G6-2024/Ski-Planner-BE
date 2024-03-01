@@ -1,5 +1,6 @@
 import { overpassToGeoJson } from '../../utils/dataFormatter.js';
 import exampleData from '../fixtures/overpassExampleData.js';
+import err from '../../utils/errorCodes.js';
 
 describe('toGeoJson', () => {
 	test('should convert data to GeoJSON format', () => {
@@ -47,7 +48,7 @@ describe('toGeoJson', () => {
 
 	test('should throw error if data is invalid', () => {
 		const invalidData = { data: "invalidData" };
-		expect(() => overpassToGeoJson(invalidData)).toThrow('Invalid data: Must contain elements with geometry.');
+		expect(() => overpassToGeoJson(invalidData)).toThrow(err.geoJson.missingGeometry);
 
 		const invalidData2 = { elements: [{
 			type: 'node',
