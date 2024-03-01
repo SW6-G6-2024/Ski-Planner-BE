@@ -31,6 +31,7 @@ const pisteResponse = {
         "ref": "75",
         "route": "piste"
       },
+      "id": 12345678,
       "geometry": {
         "type": "LineString",
         "coordinates": [
@@ -77,6 +78,7 @@ const pisteResponse = {
         "piste:type": "downhill",
         "ref": "10"
       },
+      "id": 13371337,
       "geometry": {
         "type": "LineString",
         "coordinates": [
@@ -135,6 +137,7 @@ const pisteResponse = {
         "piste:type": "downhill",
         "ref": "28"
       },
+      "id": 11235813,
       "geometry": {
         "type": "LineString",
         "coordinates": [

@@ -23,6 +23,7 @@ async function savePistesFromArea(obj, skiAreaId) {
     if (pisteData.properties["piste:type"] === "downhill") {
       try {
         await new PistesModel({
+          id: pisteData.id,
           name: pisteData.properties.name ?? "Unknown",
           skiAreaId: skiAreaId,
         }).save();
