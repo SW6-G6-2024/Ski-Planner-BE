@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 /**
  * Function that saves pistes from a ski area to the database
  * @param {Object} geoJson - The geoJson object with the pistes/ or other features
+ * @param {String} skiAreaId - The id of the ski area
  * @returns void
  */
 async function savePistesFromArea(obj, skiAreaId) {
