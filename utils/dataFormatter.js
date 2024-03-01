@@ -17,6 +17,7 @@ const overpassToGeoJson = (data) => {
     return {
       type: "Feature",
       properties: way.tags,
+      id: way.id,
       geometry: {
         type: "LineString",
         coordinates: way.geometry?.map(({lat, lon}) => [lon, lat])
