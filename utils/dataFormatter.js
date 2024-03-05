@@ -1,4 +1,4 @@
-import err from "./errorCodes";
+import err from "./errorCodes.js";
 
 /**
  * Converts overpass api data to geojson format
