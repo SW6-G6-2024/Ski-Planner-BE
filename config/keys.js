@@ -18,6 +18,7 @@ const keys = {
 	GMAIL_USER: process.env.GMAIL_USER,
 	GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
 	GMAIL_APP_PASSWORD: process.env.GMAIL_APP_PASSWORD,
+	pathFindingUrl: process.env.PATHFINDING_URL,
 };
 
 export default keys;
