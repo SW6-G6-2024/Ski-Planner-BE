@@ -22,13 +22,13 @@ async (req, res) => {
 	if (checkParams([{
 			name: 'start point',
 			value: start,
-			// func: isPoint,
-			// funcErr: err.routeGeneration.invalidPoint,
+			func: isPoint,
+			funcErr: err.routeGeneration.invalidPoint,
 		}, {
 			name: 'end point',
 			value: end,
-			// func: isPoint,
-			// funcErr: err.routeGeneration.invalidPoint,
+			func: isPoint,
+			funcErr: err.routeGeneration.invalidPoint,
 		}, {
 			name: 'skiArea',
 			value: skiArea,
