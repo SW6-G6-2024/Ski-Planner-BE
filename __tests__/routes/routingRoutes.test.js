@@ -45,8 +45,8 @@ describe('Routing Routes', () => {
 
 	test('POST /api/routes/generate-route should return shortest route from a to b', async () => {
 		const data = {
-			start: { lat: 1, lng: 1 },
-			end: { lat: 2, lng: 2 },
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 },
 			skiArea: id
 		};
 		const response = await request(app)
@@ -61,7 +61,7 @@ describe('Routing Routes', () => {
 
 	test('POST /api/routes/generate-route should return 400 if start or end is missing', async () => {
 		const data = {
-			start: { lat: 1, lng: 1 },
+			start: { lat: 1, lon: 1 },
 			skiArea: id
 		};
 		const response = await request(app)
@@ -73,8 +73,8 @@ describe('Routing Routes', () => {
 
 	test('POST /api/routes/generate-route should return 400 if skiArea is missing', async () => {
 		const data = {
-			start: { lat: 1, lng: 1 },
-			end: { lat: 2, lng: 2 }
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 }
 		};
 		const response = await request(app)
 			.post('/api/routes/generate-route')
@@ -85,8 +85,8 @@ describe('Routing Routes', () => {
 
 	test('POST /api/routes/generate-route should return 400 if ski area does not exist', async () => {
 		const data = {
-			start: { lat: 1, lng: 1 },
-			end: { lat: 2, lng: 2 },
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 },
 			skiArea: '5f9f6c3f9d5c1c2a3c3e3c3d'
 		};
 		const response = await request(app)
@@ -96,11 +96,10 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.skiArea.notFound);
 	});
 
-	// eslint-disable-next-line jest/no-commented-out-tests
-	/*test('POST /api/routes/generate-route should return 400 if start or end is not a valid point', async () => {
+	test('POST /api/routes/generate-route should return 400 if start or end is not a valid point', async () => {
 		const data = {
 			start: 1,
-			end: { lat: 2, lng: 2 },
+			end: { lat: 2, lon: 2 },
 			skiArea: id
 		};
 		const response = await request(app)
@@ -108,12 +107,12 @@ describe('Routing Routes', () => {
 			.send(data);
 		expect(response.status).toBe(400);
 		expect(response.body).toEqual(err.routeGeneration.invalidPoint);
-	});*/
+	});
 
 	test('POST /api/routes/generate-route should return 400 if id is invalid', async () => {
 		const data = {
-			start: { lat: 1, lng: 1 },
-			end: { lat: 2, lng: 2 },
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 },
 			skiArea: 'invalid'
 		};
 		const response = await request(app)
@@ -127,8 +126,8 @@ describe('Routing Routes', () => {
 	test('POST /api/routes/generate-route should return 500 if failed to fetch from overpass api', async () => {
 		axios.post.mockResolvedValueOnce({ data: null });
 		const data = {
-			start: { lat: 1, lng: 1 },
-			end: { lat: 2, lng: 2 },
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 },
 			skiArea: id
 		};
 		const response = await request(app)
@@ -141,8 +140,8 @@ describe('Routing Routes', () => {
 	test('POST /api/routes/generate-route should return 500 if route generation service is not responding', async () => {
 		axios.post.mockResolvedValueOnce({ data: overpassExampleData }).mockRejectedValueOnce();
 		const data = {
-			start: { lat: 2, lng: 2 },
-			end: { lat: 1, lng: 1 },
+			start: { lat: 2, lon: 2 },
+			end: { lat: 1, lon: 1 },
 			skiArea: id
 		};
 		const response = await request(app)
