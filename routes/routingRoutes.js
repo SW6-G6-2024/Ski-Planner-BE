@@ -6,6 +6,7 @@ import { isPoint } from '../utils/pointValidator.js';
 import SkiArea from '../models/SkiAreas.js';
 import checkParams from '../utils/checkParams.js';
 import getQuery from '../utils/getQuery.js';
+import env from '../config/keys.js';
 
 const router = express.Router();
 
@@ -21,13 +22,13 @@ async (req, res) => {
 	if (checkParams([{
 			name: 'start point',
 			value: start,
-			// func: isPoint,
-			// funcErr: err.routeGeneration.invalidPoint,
+			func: isPoint,
+			funcErr: err.routeGeneration.invalidPoint,
 		}, {
 			name: 'end point',
 			value: end,
-			// func: isPoint,
-			// funcErr: err.routeGeneration.invalidPoint,
+			func: isPoint,
+			funcErr: err.routeGeneration.invalidPoint,
 		}, {
 			name: 'skiArea',
 			value: skiArea,
@@ -53,7 +54,7 @@ async (req, res) => {
 	// Call the route generation service
 	let result;
 	try {
-		result = await axios.post('http://127.0.0.1:3500/generate-route', {
+		result = await axios.post(env.pathFindingUrl + '/generate-route', {
 			data: {
 				start: start,
 				end: end,
