@@ -12,7 +12,7 @@ export function generateRatings(numEntries) {
     const minutes = Math.floor(Math.random() * 60); // Random minute between 0 and 59
 
     const time = new Date(year, month - 1, day, hours, minutes);
-    const weather = generateWeather();
+    const weather = generateWeather(time);
     const piste = pisteIDs[Math.floor(Math.random() * pisteIDs.length)];
 
     const points = calculatePoints(weather, time);

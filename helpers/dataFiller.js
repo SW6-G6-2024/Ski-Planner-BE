@@ -1,86 +1,81 @@
-// Function assigns weights to weather codes based on their impact on skiing conditions
-function assignWeightForWeatherCodes(weatherCode) {
-  switch (weatherCode) {
-    case 0:
-      return 10; // Clear sky
-    case 1:
-    case 2:
-    case 3:
-      return 9; // Mainly clear, partly cloudy, and overcast
-    case 45:
-    case 48:
-      return 8; // Fog and depositing rime fog
-    case 51:
-    case 53:
-    case 55:
-      return 7; // Drizzle: Light, moderate, and dense intensity - Adjusted weight
-    case 56:
-    case 57:
-      return 6; // Freezing Drizzle: Light and dense intensity
-    case 61:
-    case 63:
-    case 65:
-      return 5; // Rain: Slight, moderate and heavy intensity
-    case 66:
-    case 67:
-      return 4; // Freezing Rain: Light and heavy intensity
-    case 71:
-    case 73:
-    case 75:
-      return 3; // Snow fall: Slight, moderate, and heavy intensity
-    case 77:
-      return 2; // Snow grains
-    case 80:
-    case 81:
-    case 82:
-      return 2; // Rain showers: Slight, moderate, and violent
-    case 85:
-    case 86:
-      return 1; // Snow showers: slight and heavy
-    case 95:
-    case 96:
-    case 99:
-      return 1; // Thunderstorm: Slight or moderate 
-    default:
-      return 0; // Unknown weather code
-  }
-}
+import { assignWeightForWeatherCodes } from "./weatherCodes.js";
+import { getTempAndVisWeight } from "./getTempAndVis.js";
+
+const wsFactor = 2;
+const tFactor = 1.25;
+const sfFactor = 2;
+const dpFactor = 2.5;
+const sdFactor = 1.25;
+const vFactor = 1.5;
 
 // Function to generate random weather data for ratings
-function generateWeather() {
+function generateWeather(time) {
   const weatherCodes = [
     0, 1, 2, 3, 45, 48, 51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86, 95, 96, 99
   ];
+
   const randomIndex = Math.floor(Math.random() * weatherCodes.length);
   const selectedWeatherCode = weatherCodes[randomIndex];
 
+  const weatherWeights = assignWeightForWeatherCodes(selectedWeatherCode);
+  const temperatureWeights = getTempAndVisWeight(time, selectedWeatherCode);
+
   return {
-    temperature: Math.random() * (5 - (-15)) - 15, // Random temperature between -15 and 5
+    temperature: (Math.random() * (15 - (-15)) - 15) * temperatureWeights.temp, // Random temperature between -15 and 15 degrees
     weatherCode: selectedWeatherCode, // Random weather code from defined list
-    windSpeed: Math.random() * (50 - 5) + 5, // Random wind speed between 5 and 50 km/h
+    windSpeed: (Math.random() * (50 - 5) + 5) * weatherWeights.wspeed, // Random wind speed between 5 and 50 km/h
     windDirection: Math.floor(Math.random() * 360), // Random wind direction between 0 and 359 degrees
-    snowfall: Math.random() * 10, // Random snowfall between 0 and 10 cm
-    snowDepth: (Math.random() * 200) / 100, // Random snow depth between 0 and 2 meters
-    visibility: Math.random() * 1000 // Random visibility between 0 and 1000 meters
-  };
+    snowfall: (Math.floor(Math.random() * 10) + 1) * weatherWeights.snowfall, // Random snowfall between 1 and 10 cm
+    snowDepth: randn_bm(40, 300, 3), // Random snow depth between 40 and 100 cm
+    downpour: (Math.floor(Math.random() * 10) + 1) * weatherWeights.downpour, // Random downpour between 1 and 10 mm
+    visibility: (500 + Math.random() * 1500) * temperatureWeights.visibility // Random visibility between 500 and 2000 meters
+  }
+  
 }
 
 // Function that calculates points based on weather and time
-function calculatePoints(weather, time) {
-  const weatherWeight = assignWeightForWeatherCodes(weather.weatherCode); // Weather is weighted based on weather code
-  const temperatureWeight = 2 * (10 - Math.abs(weather.temperature + 10)); // Temperature is weighted with a factor of 2
-  const visibilityWeight = 2 * (weather.visibility / 100); // Visibility is weighted with a factor of 2
-  const timeWeight = (10 - (Math.abs(time.getHours() - 12) / 3)) * 1.5; // Time is weighted with a factor of 1.5
-  const snowDepthWeight = 1.5 * weather.snowDepth; // Snow depth is weighted with a factor of 1.5
-  const snowfallWeight = 1.5 * weather.snowfall; // Snowfall is weighted with a factor of 1.5
-  const windSpeedWeight = 0.5 * (10 - (weather.windSpeed / 10)); // Wind speed is weighted with a factor of 0.5
+function calculatePoints(weather) {
+  const points = randn_bm(1, 5, 1)
+  console.log("p: ", points)
 
-  // Calculate total points with adjusted weights
-  const totalPoints = (weatherWeight + temperatureWeight + timeWeight + snowDepthWeight + visibilityWeight + snowfallWeight + windSpeedWeight) / 11.5;
-  // Normalize points to a scale of 1-5
-  const normalizedPoints = Math.min(5, Math.max(1, totalPoints));
+  console.log(weather.snowDepth / (300 * sdFactor))
 
-  return Math.round(normalizedPoints);
+  const wSpeedWeight = 1 - (weather.windSpeed / (50 * wsFactor))
+  console.log("ws: ", wSpeedWeight)
+  const tempWeight = 1 - (Math.abs(weather.temperature / (15 * tFactor))) 
+  console.log("t: ", tempWeight)
+  const snowfallWeight = 1 - (weather.snowfall / (10 * sfFactor))
+  console.log("sf: ",snowfallWeight)
+  const downpourWeight = 1 - (weather.downpour / (10 * dpFactor))
+  console.log("dp: ",downpourWeight)
+  const snowDepthWeight = 1 + (weather.snowDepth / (300 * sdFactor))
+  console.log("sd: ",snowDepthWeight)
+  const visibilityWeight = 1 + (weather.visibility / (2000 * vFactor))
+  console.log("vis: ",visibilityWeight)
+  console.log("---------------------")
+
+  const finalPoints = points * wSpeedWeight * tempWeight * snowfallWeight * downpourWeight * snowDepthWeight * visibilityWeight
+
+  return finalPoints;
 }
 
-export { generateWeather, calculatePoints};
+export { generateWeather, calculatePoints };
+
+// Function to generate random numbers with a skew. Inspired by https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+function randn_bm(min, max, skew) {
+  let u = 0, v = 0;
+  while(u === 0) u = Math.random() //Converting [0,1) to (0,1)
+  while(v === 0) v = Math.random()
+  let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v )
+  
+  num = num / 10.0 + 0.5 // Translate to 0 -> 1
+  if (num > 1 || num < 0) 
+    num = randn_bm(min, max, skew) // resample between 0 and 1 if out of range
+  
+  else{
+    num = Math.pow(num, skew) // Skew
+    num *= max - min // Stretch to fill range
+    num += min // offset to min
+  }
+  return num
+}
