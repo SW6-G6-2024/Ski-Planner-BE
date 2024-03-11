@@ -12,4 +12,4 @@ function generatePisteRatings(entries) {
     console.log('Mock-up data saved to mockup_data.json');
 }
 
-generatePisteRatings(1000);
+generatePisteRatings(50000);

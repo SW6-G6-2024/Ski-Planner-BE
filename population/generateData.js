@@ -1,4 +1,4 @@
-import { generateWeather, calculatePoints} from '../helpers/dataFiller.js';
+import { generateWeather, calculatePoints} from './helpers/dataFiller.js';
 
 export function generateRatings(numEntries) {
   const ratings = [];
