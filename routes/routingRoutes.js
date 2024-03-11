@@ -88,7 +88,7 @@ function checkResult(result, res) {
 
 	if(!result.data.features || !result.data.features.length) {
 		res.status(400).send(err.routeGeneration.noRouteFound);
-		return true
+		return true;
 	}
 }
 
