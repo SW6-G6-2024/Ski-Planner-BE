@@ -139,5 +139,5 @@ export default {
       "snowfall": 0,
       "downpour": 0.9
   }
-}
+};
 
