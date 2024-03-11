@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import connectDb from '../fixtures/db.js';
 import makeFakeSkiArea from '../fixtures/fakeSkiArea.js';
-import savePistesFromArea from '../../population/savePistesFromArea.js';
+import savePistesFromArea from '../../data_generation/savePistesFromArea.js';
 import pisteResponse from '../fixtures/pisteGeoJsonExample.js';
 import err from '../../utils/errorCodes.js';
 
