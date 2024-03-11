@@ -11,8 +11,8 @@ if (process.env.NODE_ENV === 'production') {
 // Access the environment variables
 const keys = {
   mongoURI: process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production' ? process.env.MONGO_URI : process.env.MONGO_URI_TEST,
-  pathFindingUrl: process.env.RUNNING_IN_DOCKER ? process.env.PATHFINDING_URL_DOCKER : process.env.PATHFINDING_URL,
-  ratingPredictionUrl: process.env.RUNNING_IN_DOCKER ? process.env.RATING_PRED_URL_DOCKER : process.env.RATING_PRED_URL,
+  pathFindingUrl: process.env.PATHFINDING_URL,
+  ratingPredictionUrl: process.env.RATING_PRED_URL,
 };
 
 export default keys;
