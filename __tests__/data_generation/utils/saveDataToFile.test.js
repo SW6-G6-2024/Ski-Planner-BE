@@ -50,13 +50,13 @@ describe('saveDataToFile', () => {
 		// Test case 1: Call saveDataToFile without file path and check if it throws an error
 		const data = { name: 'John Doe', age: 30 };
 		expect(() => saveDataToFile(data, undefined))
-			.toThrow(TypeError('The \"path\" argument must be of type string or an instance of Buffer or URL. Received undefined'));
+			.toThrow(TypeError('The "path" argument must be of type string or an instance of Buffer or URL. Received undefined'));
 	});
 
 	it('should throw an error if data is not provided', () => {
 		// Test case 1: Call saveDataToFile without data and check if it throws an error
 		expect(() => saveDataToFile(undefined, filePath))
-			.toThrow(TypeError('The \"data\" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined'));
+			.toThrow(TypeError('The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined'));
 	});
 
 	afterEach(() => {
@@ -64,7 +64,7 @@ describe('saveDataToFile', () => {
 		if (fs.existsSync(filePath)) {
 			fs.unlinkSync(filePath);
 		}
-	})
+	});
 });
 
 

@@ -20,7 +20,7 @@ describe('generateRatings', () => {
 					visibility: expect.any(Number),
 					snowDepth: expect.any(Number),
 				}
-			})
+			});
 		});
 	});
 });
