@@ -9,7 +9,7 @@
         "lint": "eslint .",
         "dev": "nodemon index.js",
         "start": "node index.js",
-        "data-gen": "node ./data_generation/saveDataToFile.js"
+        "data-gen": "node ./data_generation/index.js"
     },
     "repository": {
         "type": "git",
