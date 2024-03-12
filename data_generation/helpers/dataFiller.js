@@ -1,4 +1,4 @@
-import weatherCodeWeights from "./weatherCodes.js";
+import weatherCodeWeights from "./weatherCodes.json";
 import { getTempAndVisWeight } from "./getTempAndVis.js";
 
 const wsFactor = 2.25;

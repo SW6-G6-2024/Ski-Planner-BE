@@ -47,7 +47,8 @@
         "coveragePathIgnorePatterns": [
             "/node_modules/",
             "/__tests__/",
-            "/models/"
+            "/models/",
+            "/config/"
         ],
         "transform": {},
         "modulePathIgnorePatterns": [
