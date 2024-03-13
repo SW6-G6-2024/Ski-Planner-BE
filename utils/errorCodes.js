@@ -30,6 +30,10 @@ export default {
 			code: "E0103",
 			message: "Route generation service is currently not responding",
 		},
+		noRouteFound: {
+			code: "E0104",
+			message: "No route found",
+		},
 	}, 
 
 	skiArea: {
