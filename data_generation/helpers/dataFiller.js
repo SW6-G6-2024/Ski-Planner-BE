@@ -1,6 +1,9 @@
-import weatherCodeWeights from "./weatherCodes.json";
 import { getTempAndVisWeight } from "./getTempAndVis.js";
+import fs from "fs";
 
+const weatherCodeWeights = JSON.parse(fs.readFileSync("data_generation/helpers/weatherCodes.json", "utf8"));
+
+// Factors to be used when calculating points
 const wsFactor = 2.25;
 const tFactor = 1.75;
 const sfFactor = 2;
@@ -8,7 +11,11 @@ const dpFactor = 2.5;
 const sdFactor = 1.5;
 const vFactor = 1.75;
 
-// Function to generate random weather data for ratings
+/**
+ * Generates a random weather object based on the given time
+ * @param {Date} time The time to generate the weather for
+ * @returns a weather object with random values
+ */ 
 function generateWeather(time) {
   const weatherCodes = [
     { code: 0, weight: 14 }, // Clear
@@ -72,7 +79,11 @@ function generateWeather(time) {
   
 }
 
-// Function that calculates points based on weather and time
+/**
+ * Calculates the points for a given set of weather conditions
+ * @param {object} weather The weather conditions to calculate the points for
+ * @returns the points for the given weather conditions
+ */
 function calculatePoints(weather) {
   const points = Math.round(randn_bm(1, 5, 1));
   //console.log("p: ", points)
@@ -102,9 +113,13 @@ function calculatePoints(weather) {
   }
 }
 
-export { generateWeather, calculatePoints };
-
-// Function to generate random numbers with a skew. Heavily inspired by https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+/**
+ * // Generates random numbers between bounds with a skew. Heavily inspired by https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+ * @param {number} min Minimum bound
+ * @param {number} max Maximum bound
+ * @param {number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution
+ * @returns 
+ */
 function randn_bm(min, max, skew) {
   let u = 0, v = 0;
   while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
@@ -122,3 +137,5 @@ function randn_bm(min, max, skew) {
   }
   return num;
 }
+
+export { generateWeather, calculatePoints };

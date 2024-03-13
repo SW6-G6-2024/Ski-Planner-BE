@@ -12,7 +12,12 @@ const weightData = [
   { hours: Infinity, cloudy: true, temp: 0.7, visibility: 0.7 }
 ];
 
-// Function that returns a weight based 
+/**
+ * Finds the appropriate weight for temperature and visibility based on the given time and weather code
+ * @param {Date} time 
+ * @param {number} weatherCode 
+ * @returns object with temperature and visibility weights
+ */
 export function getTempAndVisWeight(time, weatherCode) {
   const hours = time.getHours();
   const cloudy = weatherCode < 2;

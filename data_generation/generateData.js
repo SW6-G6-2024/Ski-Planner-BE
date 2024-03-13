@@ -1,5 +1,5 @@
 import { generateWeather, calculatePoints} from './helpers/dataFiller.js';
-import { daysInMonth } from './utils/dates.js';
+import { daysInMonth, getWinterMonth } from './utils/dates.js';
 
 /**
  * Generates an array of ratings based on generated weather and time
@@ -12,7 +12,7 @@ export function generateRatings(numEntries) {
 
   for (let i = 0; i < numEntries; i++) {
     const year = 2023; // Year is locked to 2023
-    const month = Math.floor(Math.random() * 12) + 1; // Random month between 1 and 12
+    const month = getWinterMonth(); // Random month between nov and mar
     const day = Math.floor(Math.random() * daysInMonth(month, year)) + 1; // Random day between 1 and length of month
     const hours = Math.floor(Math.random() * (17 - 9 + 1)) + 9; // Random hour between 9 and 17
     const minutes = Math.floor(Math.random() * 60); // Random minute between 0 and 59
