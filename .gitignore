@@ -131,3 +131,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 __tests__/setup/globalConfigMongo.json
+mockup_data.json

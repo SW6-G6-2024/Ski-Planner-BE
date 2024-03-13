@@ -122,33 +122,35 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.general.invalidId('skiArea'));
 	});
 
+	const data = (id) => ({
+		start: { lat: 1, lon: 1 },
+		end: { lat: 2, lon: 2 },
+		skiArea: id
+	});
 
 	test('POST /api/routes/generate-route should return 500 if failed to fetch from overpass api', async () => {
 		axios.post.mockResolvedValueOnce({ data: null });
-		const data = {
-			start: { lat: 1, lon: 1 },
-			end: { lat: 2, lon: 2 },
-			skiArea: id
-		};
 		const response = await request(app)
 			.post('/api/routes/generate-route')
-			.send(data);
+			.send(data(id));
 		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.overpassApiError);
 	});
 
-	test('POST /api/routes/generate-route should return 500 if route generation service is not responding', async () => {
+	test('POST /api/routes/generate-route should return 500 if route generation service is not responding or result is empty', async () => {
 		axios.post.mockResolvedValueOnce({ data: overpassExampleData }).mockRejectedValueOnce();
-		const data = {
-			start: { lat: 2, lon: 2 },
-			end: { lat: 1, lon: 1 },
-			skiArea: id
-		};
 		const response = await request(app)
 			.post('/api/routes/generate-route')
-			.send(data);
+			.send(data(id));
 		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.routeGenerationError);
+
+		axios.post.mockResolvedValueOnce({ data: overpassExampleData }).mockResolvedValueOnce({ data: null });
+		const response2 = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data(id));
+		expect(response2.status).toBe(500);
+		expect(response2.body).toEqual(err.routeGeneration.routeGenerationError);
 	});
 });
 
