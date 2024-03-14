@@ -6,14 +6,15 @@ import { isPoint } from '../utils/pointValidator.js';
 import SkiArea from '../models/SkiAreas.js';
 import checkParams from '../utils/checkParams.js';
 import getQuery from '../utils/getQuery.js';
+import env from '../config/keys.js';
 
 const router = express.Router();
 
 router.post('/generate-route', 
 /**
  * POST request for generating shortest route between two points
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Express.Request} req request object
+ * @param {Express.Response} res response object
  * @returns 
  */
 async (req, res) => {
@@ -21,13 +22,13 @@ async (req, res) => {
 	if (checkParams([{
 			name: 'start point',
 			value: start,
-			// func: isPoint,
-			// funcErr: err.routeGeneration.invalidPoint,
+			func: isPoint,
+			funcErr: err.routeGeneration.invalidPoint,
 		}, {
 			name: 'end point',
 			value: end,
-			// func: isPoint,
-			// funcErr: err.routeGeneration.invalidPoint,
+			func: isPoint,
+			funcErr: err.routeGeneration.invalidPoint,
 		}, {
 			name: 'skiArea',
 			value: skiArea,
@@ -53,7 +54,7 @@ async (req, res) => {
 	// Call the route generation service
 	let result;
 	try {
-		result = await axios.post('http://127.0.0.1:3500/generate-route', {
+		result = await axios.post(env.pathFindingUrl + '/generate-route', {
 			data: {
 				start: start,
 				end: end,
@@ -64,10 +65,31 @@ async (req, res) => {
 		return res.status(500).send(err.routeGeneration.routeGenerationError);
 	}
 
-	if(!result.data)
-		return res.status(500).send(err.routeGeneration.routeGenerationError);
+	if (checkResult(result, res)) {
+		return;
+	}
 
 	return res.status(200).send({ route: 'Dis way!', res: result.data.features[0] });
 });
+
+/**
+ * This function checks if the result is valid or not (i.e. if data and 
+ * data.features are present in the result object) and sends the appropriate 
+ * response if not.
+ * @param {import('axios').AxiosResponse} result The result object to check
+ * @param {Express.Response} res The express response object to send the response to
+ * @returns Sends the appropriate response if the result is invalid
+ */
+function checkResult(result, res) {
+	if(!result.data) {
+		res.status(500).send(err.routeGeneration.routeGenerationError);
+		return true;
+	}
+
+	if(!result.data.features || !result.data.features.length) {
+		res.status(400).send(err.routeGeneration.noRouteFound);
+		return true;
+	}
+}
 
 export default router;

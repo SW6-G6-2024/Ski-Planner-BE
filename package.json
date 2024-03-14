@@ -6,9 +6,10 @@
     "type": "module",
     "scripts": {
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
-        "lint": "eslint .",
+        "lint": "eslint . --fix",
         "dev": "nodemon index.js",
-        "start": "node index.js"
+        "start": "node index.js",
+        "data-gen": "node ./data_generation/index.js"
     },
     "repository": {
         "type": "git",
@@ -46,7 +47,8 @@
         "coveragePathIgnorePatterns": [
             "/node_modules/",
             "/__tests__/",
-            "/models/"
+            "/models/",
+            "/config/"
         ],
         "transform": {},
         "modulePathIgnorePatterns": [

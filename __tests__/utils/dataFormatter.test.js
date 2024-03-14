@@ -57,6 +57,6 @@ describe('toGeoJson', () => {
 			lon: 12.1993807
 		}] };
 
-		expect(() => overpassToGeoJson(invalidData2)).toThrow(err.geoJson.missingGeometry);
+		expect(() => overpassToGeoJson(invalidData2)).toThrow('Invalid data: Must contain elements with geometry.');
 	});
 });
