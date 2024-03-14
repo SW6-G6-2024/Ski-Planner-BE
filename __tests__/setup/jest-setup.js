@@ -11,23 +11,22 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-/* global __dirname */
 const globalConfigPath = join(__dirname, 'globalConfigMongo.json');
 
 const mongod =
-	global.__MONGOD__ ||
-	new MongoMemoryServer({
-	  autoStart: false,
-	  useUnifiedTopology: true
-	});
+global.__MONGOD__ ||
+  new MongoMemoryServer({
+    autoStart: false,
+    useUnifiedTopology: true
+  });
 
 export default async () => {
   await mongod.ensureInstance();
 
   const mongoConfig = {
-    mongoDBName: 'jest',
-    mongoUri: mongod.getUri()
-  };
+  mongoDBName: 'jest',
+  mongoUri: mongod.getUri()
+};
 
   // Write global config to disk because all tests run in different contexts.
   writeFileSync(globalConfigPath, JSON.stringify(mongoConfig));
