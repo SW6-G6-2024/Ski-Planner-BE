@@ -4,7 +4,7 @@
  * @returns 
  */
 const isPoint = (point) => {
-	if (typeof point.lat === 'number' && typeof point.lng === 'number') {
+	if (typeof point.lat === 'number' && typeof point.lon === 'number') {
 		return true;
 	}
 	return false;
