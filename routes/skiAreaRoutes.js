@@ -6,6 +6,7 @@ import getQuery from '../utils/getQuery.js';
 import axios from 'axios';
 import { overpassToGeoJson } from '../utils/dataFormatter.js';
 // import savePistesFromArea from '../data_generation/savePistesFromArea.js';
+import getCurrentWeather from '../utils/getWeather.js';
 
 const router = express.Router();
 
@@ -39,6 +40,9 @@ async (req, res) => {
 	if (!geoJson?.data) {
 		return res.status(500).send(err.routeGeneration.overpassApiError);
 	}
+
+	const weather = await getCurrentWeather();
+	console.log(weather.current, weather.hourly.snow_depth, weather.hourly.visibility);
 
 	// TODO: Only run this function if the user has admin roles
 	// await savePistesFromArea(overpassToGeoJson(geoJson.data), skiArea);

@@ -7,7 +7,6 @@ import SkiArea from '../models/SkiAreas.js';
 import checkParams from '../utils/checkParams.js';
 import getQuery from '../utils/getQuery.js';
 import env from '../config/keys.js';
-// import savePistesFromArea from '../data_generation/savePistesFromArea.js';
 
 const router = express.Router();
 
@@ -69,8 +68,6 @@ async (req, res) => {
 	if (checkResult(result, res)) {
 		return;
 	}
-	// TODO: Only run this function if the user has admin roles
-	// await savePistesFromArea(result.data, skiArea);
 
 	return res.status(200).send({ route: 'Dis way!', res: result.data.features[0] });
 });
