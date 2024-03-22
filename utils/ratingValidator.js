@@ -1,6 +1,6 @@
 /**
- * Check if the object is a valid point (latitude and longitude)
- * @param {*} point object to be checked
+ * Check if the object is a valid rating (number between 1 and 5 inclusive)
+ * @param {*} rating object to be checked
  * @returns 
  */
 const isRating = (rating) => {

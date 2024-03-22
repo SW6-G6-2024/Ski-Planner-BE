@@ -1,13 +1,12 @@
-import axios from 'axios';
 import express from 'express';
 import err from '../utils/errorCodes.js';
 // eslint-disable-next-line no-unused-vars
 import { isRating } from '../utils/ratingValidator.js';
-import SkiArea from '../models/SkiAreas.js';
+import { isPisteId } from '../utils/pisteIdValidator.js';
 import checkParams from '../utils/checkParams.js';
-import getQuery from '../utils/getQuery.js';
-import env from '../config/keys.js';
-// import savePistesFromArea from '../data_generation/savePistesFromArea.js';
+import getCurrentWeather from '../utils/getWeather.js';
+import SkiAreaModel from '../models/SkiAreas.js';
+import PisteModel from '../models/Pistes.js';
 
 const router = express.Router();
 
@@ -30,21 +29,48 @@ async (req, res) => {
 		}, {
 			name: 'piste',
 			value: id,
-			id: true,
+			func: isPisteId,
+			funcErr: err.pistes.invalidPisteId,
 		}
 	], res)) {
 		return;
 	}
 
-  console.log(rating, id)
+	
+	const piste = await PisteModel.findOne({ _id: id });
 
-  return res.status(202).send("Rating added successfully");
+	if (!piste) {
+		return res.status(400).send(err.pistes.notFound);
+	}
 
-  // TODO: Change this to find a piste instead of skiArea
-	// const skiAreaInstance = await SkiArea.findById(skiArea);
+	const skiArea = await SkiAreaModel.findById(piste.skiAreaId);
 
-	// if (!skiAreaInstance)
-	// 	return res.status(400).send(err.skiArea.notFound);
+	if (!skiArea) {
+		return res.status(400).send(err.skiArea.notFound);
+	}
+
+	
+	const lat = (skiArea.bounds[0] + skiArea.bounds[2]) / 2;
+	const lon = (skiArea.bounds[1] + skiArea.bounds[3]) / 2;
+	
+	const date = new Date();
+	const currentHour = date.getHours();
+	const weather = await getCurrentWeather(lat.toFixed(4), lon.toFixed(4));
+	
+	const weatherForRating = {
+		temperature: weather.current.temperature_2m,
+		rain: weather.current.rain,
+		snowfall: weather.current.snowfall,
+		weatherCode: weather.current.weather_code,
+		windSpeed: weather.current.wind_speed_10m,
+		windDirection: weather.current.wind_direction_10m,
+		snowDepth: weather.hourly.snow_depth[currentHour],
+		visibility: weather.hourly.visibility[currentHour],
+	};
+	
+	console.log(weatherForRating);
+
+	res.status(202).send("Rating added successfully");
 });
 
 export default router;
