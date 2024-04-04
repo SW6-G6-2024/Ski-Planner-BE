@@ -7,6 +7,7 @@ import checkParams from '../utils/checkParams.js';
 import getCurrentWeather from '../utils/getWeather.js';
 import SkiAreaModel from '../models/SkiAreas.js';
 import PisteModel from '../models/Pistes.js';
+import RatingsModel from '../models/Ratings.js';
 
 const router = express.Router();
 
@@ -35,7 +36,6 @@ async (req, res) => {
 	], res)) {
 		return;
 	}
-
 	
 	const piste = await PisteModel.findOne({ _id: id });
 
@@ -55,22 +55,32 @@ async (req, res) => {
 	
 	const date = new Date();
 	const currentHour = date.getHours();
-	const weather = await getCurrentWeather(lat.toFixed(4), lon.toFixed(4));
 	
-	const weatherForRating = {
-		temperature: weather.current.temperature_2m,
-		rain: weather.current.rain,
-		snowfall: weather.current.snowfall,
-		weatherCode: weather.current.weather_code,
-		windSpeed: weather.current.wind_speed_10m,
-		windDirection: weather.current.wind_direction_10m,
-		snowDepth: weather.hourly.snow_depth[currentHour],
-		visibility: weather.hourly.visibility[currentHour],
-	};
-	
-	console.log(weatherForRating);
+	try {
+		const weather = await getCurrentWeather(lat.toFixed(4), lon.toFixed(4));
+		const weatherForRating = {
+			temperature: weather.current.temperature_2m,
+			rain: weather.current.rain,
+			snowfall: weather.current.snowfall,
+			weatherCode: weather.current.weather_code,
+			windSpeed: weather.current.wind_speed_10m,
+			windDirection: weather.current.wind_direction_10m,
+			snowDepth: weather.hourly.snow_depth[currentHour],
+			visibility: weather.hourly.visibility[currentHour],
+		};
+		
+		const newRating = new RatingsModel({
+			piste: parseInt(id, 10),
+			skiAreaId: skiArea._id,
+			rating: parseInt(rating, 10),
+			weather: weatherForRating
+		});
 
-	res.status(202).send("Rating added successfully");
+		await newRating.save();
+		res.status(202).send("Rating added successfully");
+	} catch (error) {
+		res.status(500).send("Failed to save rating");
+	}
 });
 
 export default router;
