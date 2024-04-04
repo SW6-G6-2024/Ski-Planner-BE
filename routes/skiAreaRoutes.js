@@ -6,7 +6,7 @@ import getQuery from '../utils/getQuery.js';
 import axios from 'axios';
 import { overpassToGeoJson } from '../utils/dataFormatter.js';
 // import savePistesFromArea from '../data_generation/savePistesFromArea.js';
-import getCurrentWeather from '../utils/getWeather.js';
+//import getCurrentWeather from '../utils/getWeather.js';
 
 const router = express.Router();
 
