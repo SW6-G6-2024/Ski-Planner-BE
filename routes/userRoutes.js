@@ -6,10 +6,6 @@ import { checkJwt } from '../utils/authorization.js';
 
 const router = express.Router();
 const checkScopes = requiredScopes('update:user');
-const printScope = (req, res, next) => {
-	console.log(req.headers.authorization);
-	next();
-}
 
 // Routes
 router.patch('/:id', checkJwt, checkScopes, (req, res) => {
