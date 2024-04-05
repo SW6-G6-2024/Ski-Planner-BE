@@ -45,7 +45,7 @@ describe('Rating routes', () => {
       .post('/api/rate-piste/' + piste._id)
       .send({ rating: 4 });
 
-    expect(response.statusCode).toBe(202);
+    expect(response.statusCode).toBe(200);
     expect(response.text).toEqual("Successfully rated piste");
   });
 
