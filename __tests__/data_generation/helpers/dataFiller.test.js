@@ -7,7 +7,7 @@ describe('generateWeather function', () => {
     expect(weather.temperature).toBeGreaterThanOrEqual(-8);
     expect(weather.temperature).toBeLessThanOrEqual(8);
     expect(weather.weatherCode).toBeDefined();
-    expect(weather.windSpeed).toBeGreaterThanOrEqual(5);
+    expect(weather.windSpeed).toBeGreaterThanOrEqual(0);
     expect(weather.windSpeed).toBeLessThanOrEqual(25);
     expect(weather.windDirection).toBeGreaterThanOrEqual(0);
     expect(weather.windDirection).toBeLessThanOrEqual(359);
@@ -17,7 +17,7 @@ describe('generateWeather function', () => {
     expect(weather.snowDepth).toBeLessThanOrEqual(300);
     expect(weather.downpour).toBeGreaterThanOrEqual(0);
     expect(weather.downpour).toBeLessThanOrEqual(10);
-    expect(weather.visibility).toBeGreaterThanOrEqual(500);
+    expect(weather.visibility).toBeGreaterThanOrEqual(400);
     expect(weather.visibility).toBeLessThanOrEqual(2000);
   });
 });

@@ -44,10 +44,22 @@ export default {
 	},
 
   pistes: {
-    saveError: {
-      code: "E0301",
-      message: "Could not save piste",
-    },
+		notFound: {
+			code: "E0301",
+			message: "Piste not found",
+		},
+		saveError: {
+			code: "E0302",
+			message: "Could not save piste",
+		},
+		invalidRatingInterval: {
+			code: "E0303",
+			message: "Rating must be between 1 and 5",
+		},
+		invalidPisteId: {
+			code: "E0304",
+			message: "Invalid piste id",
+		},
   },
 
   geoJson: {

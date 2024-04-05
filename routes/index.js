@@ -5,6 +5,7 @@ const router = express.Router();
 import testRoutes from './testRoutes.js';
 import routingRoutes from './routingRoutes.js';
 import skiAreaRoutes from './skiAreaRoutes.js';
+import ratePisteRoutes from './ratingRoutes.js';
 
 // Print all routes defined in app
 router.get('/api', (req, res) => {
@@ -15,5 +16,6 @@ router.get('/api', (req, res) => {
 router.use('/api/test', testRoutes);
 router.use('/api/routes', routingRoutes);
 router.use('/api/ski-areas', skiAreaRoutes);
+router.use('/api/rate-piste', ratePisteRoutes);
 
 export default router;
