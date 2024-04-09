@@ -11,7 +11,11 @@ describe('generateRatings', () => {
 				piste: expect.any(String),
 				user: null,
 				points: expect.any(Number),
-				time: expect.any(Date),
+				year: expect.any(Number),
+				month: expect.any(Number),
+				day: expect.any(Number),
+				hours: expect.any(Number),
+				minutes: expect.any(Number),
 				weather: {
 					temperature: expect.any(Number),
 					downpour: expect.any(Number),
@@ -19,7 +23,7 @@ describe('generateRatings', () => {
 					windDirection: expect.any(Number),
 					visibility: expect.any(Number),
 					snowDepth: expect.any(Number),
-				}
+				},
 			});
 		});
 	});

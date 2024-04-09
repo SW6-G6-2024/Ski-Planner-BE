@@ -1,14 +1,13 @@
 import express from 'express';
 import env from '../config/keys.js';
 import { ManagementClient } from 'auth0';
-import { requiredScopes } from 'express-oauth2-jwt-bearer';
-import { checkJwt } from '../utils/authorization.js';
+import { checkJwt, checkScopes } from '../utils/authorization.js';
 
 const router = express.Router();
-const checkScopes = requiredScopes('update:user');
+const scopeCheck = checkScopes('update:users')
 
 // Routes
-router.patch('/:id', checkJwt, checkScopes, (req, res) => {
+router.patch('/:id', checkJwt, scopeCheck, (req, res) => {
 	const { id } = req.params;
 	const body = { 
 		given_name: req.body.given_name, 
@@ -23,7 +22,6 @@ router.patch('/:id', checkJwt, checkScopes, (req, res) => {
 	});
 
 	try {
-		throw new Error('Error updating user');
 		management.users.update({ id }, body,);
 	} catch (error) {
 		return res.status(500).send('Error updating user');
