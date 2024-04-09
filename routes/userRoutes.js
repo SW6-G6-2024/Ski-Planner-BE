@@ -4,7 +4,7 @@ import { ManagementClient } from 'auth0';
 import { checkJwt, checkScopes } from '../utils/authorization.js';
 
 const router = express.Router();
-const scopeCheck = checkScopes('update:users')
+const scopeCheck = checkScopes('update:users');
 
 // Routes
 router.patch('/:id', checkJwt, scopeCheck, (req, res) => {
