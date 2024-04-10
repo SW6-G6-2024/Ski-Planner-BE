@@ -23,7 +23,7 @@ describe('generateRatings', () => {
 					windDirection: expect.any(Number),
 					visibility: expect.any(Number),
 					snowDepth: expect.any(Number),
-				}
+				},
 			});
 		});
 	});
