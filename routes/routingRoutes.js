@@ -65,11 +65,12 @@ async (req, res) => {
 		return res.status(500).send(err.routeGeneration.routeGenerationError);
 	}
 
-	if (checkResult(result, res)) {
+	// Only pass the shortest route and not the step-by-step guide
+	if (checkResult(result.data[0], res)) {
 		return;
 	}
 
-	return res.status(200).send({ route: 'Dis way!', res: result.data.features[0] });
+	return res.status(200).send({ route: 'Dis way!', res: result.data });
 });
 
 /**
@@ -81,12 +82,12 @@ async (req, res) => {
  * @returns Sends the appropriate response if the result is invalid
  */
 function checkResult(result, res) {
-	if(!result.data) {
+	if(!result) {
 		res.status(500).send(err.routeGeneration.routeGenerationError);
 		return true;
 	}
 
-	if(!result.data.features || !result.data.features.length) {
+	if(!result.features || !result.features.length) {
 		res.status(400).send(err.routeGeneration.noRouteFound);
 		return true;
 	}
