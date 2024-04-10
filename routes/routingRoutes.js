@@ -66,7 +66,7 @@ async (req, res) => {
 	}
 
 	// Only pass the shortest route and not the step-by-step guide
-	if (checkResult(result.data[0], res)) {
+	if (checkResult(result?.data?.[0], res)) {
 		return;
 	}
 
