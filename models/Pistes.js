@@ -16,6 +16,10 @@ const PistesSchema = new Schema({
     ref: 'ski-areas',
     required: [true, 'Ski Area Id is required'],
   },
+  direction: {
+    type: String,
+    required: [true, 'Direction is required'],
+  },
   modifiedAt: { type: Date, default: Date.now },
 }, { _id: false });
 
