@@ -28,30 +28,20 @@ async function savePistesFromArea(obj, skiAreaId) {
     const pisteData = obj.features[i];
     if (pisteData.properties["piste:type"] === "downhill") {
       try {
-        const updated = await PistesModel.findOneAndUpdate({ _id: pisteData.id }, {
-          $set: {
-            name: pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown",
-            skiAreaId: skiAreaId,
-            direction: "n",
-          }
-        }, { upsert: true })
-
-        if (!updated) {
-          await new PistesModel({
-            _id: pisteData.id,
-            name: pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown",
-            skiAreaId: skiAreaId,
-            direction: "n",
-          }).save();
-        }
-
-      } catch (error) {
-        throw error
+        await PistesModel.findOneAndUpdate({ id: pisteData.id }, {
+          id: pisteData.id,
+          name: pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown",
+          skiAreaId: skiAreaId,
+          direction: "n",
+        }, { upsert: true });
+      } catch {
         throw err.pistes.saveError;
       }
     }
   }
 }
+
+export default savePistesFromArea;
 
 const query = getQuery([
   61.29560770030594,
@@ -62,8 +52,6 @@ const query = getQuery([
 
 const overpass = await axios.post('https://overpass-api.de/api/interpreter', query);
 const geoJson = overpassToGeoJson(overpass.data);
-
-console.log(geoJson);
 
 console.log('Checking for duplicates...');
 for (let i = 0; i < geoJson.features.length; i++) {
@@ -80,11 +68,4 @@ const db = connectToDb(env.mongoURI, {
 });
 
 const res = await savePistesFromArea(geoJson, "65d4a9dbecaa09d942314101");
-
-console.log(env.mongoURI);
-
 db.close();
-
-console.log(res);
-
-export default savePistesFromArea;

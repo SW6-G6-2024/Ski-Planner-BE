@@ -2,7 +2,7 @@
 import { Schema, model } from 'mongoose';
 
 const PistesSchema = new Schema({
-  _id: {
+  id: {
     type: Number,
     required: [true, 'Id is required'],
     unique: true,
