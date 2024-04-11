@@ -55,7 +55,7 @@ describe('Routing Routes', () => {
 		expect(response.status).toBe(200);
 		expect(response.body).toMatchObject({
 			route: 'Dis way!',
-			res: generatedRouteExample.features[0]
+			res: generatedRouteExample
 		});
 	});
 
