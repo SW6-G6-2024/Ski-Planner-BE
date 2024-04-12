@@ -22,6 +22,7 @@
     },
     "homepage": "https://github.com/SW6-G6-2024/Ski-Planner-BE#readme",
     "dependencies": {
+        "auth0": "^4.3.1",
         "axios": "^1.6.7",
         "cookie-session": "^2.1.0",
         "cors": "^2.8.5",
@@ -32,14 +33,15 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.5",
         "express": "^4.18.2",
+        "express-oauth2-jwt-bearer": "^1.6.0",
         "mongoose": "^8.1.3",
         "mongoose-unique-validator": "^5.0.0",
         "passport": "^0.7.0"
     },
     "devDependencies": {
         "jest": "^29.7.0",
-        "nodemon": "^3.1.0",
         "mongodb-memory-server": "^9.1.6",
+        "nodemon": "^3.1.0",
         "supertest": "^6.3.4"
     },
     "jest": {

@@ -1,11 +1,11 @@
-import PistesModel from "../models/Pistes";
-import err from "../utils/errorCodes";
+import PistesModel from "../models/Pistes.js";
+import err from "../utils/errorCodes.js";
 import mongoose from "mongoose";
 
 /**
- * Function that saves pistes from a ski area to the database
- * @param {Object} geoJson - The geoJson object with the pistes/ or other features
- * @param {String} skiAreaId - The id of the ski area
+ * Function that saves or updates pistes from a ski area in the database.
+ * @param {Object} geoJson - The geoJson object with the pistes/ or other features.
+ * @param {String} skiAreaId - The id of the ski area.
  * @returns void
  */
 async function savePistesFromArea(obj, skiAreaId) {
@@ -22,12 +22,18 @@ async function savePistesFromArea(obj, skiAreaId) {
   for (let i = 0; i < obj.features.length; i++) {
     const pisteData = obj.features[i];
     if (pisteData.properties["piste:type"] === "downhill") {
+      const name = pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown";
+      const now = new Date();
+
       try {
-        await new PistesModel({
-          _id: pisteData.id,
-          name: pisteData.properties.name ?? "Unknown",
-          skiAreaId: skiAreaId,
-        }).save();
+        await PistesModel.findOneAndUpdate(
+          { _id: pisteData.id },
+          {
+            $setOnInsert: { _id: pisteData.id, skiAreaId: skiAreaId, createdAt: now },
+            $set: { name: name, modifiedAt: now }
+          },
+          { upsert: true, new: true }
+        );
       } catch (error) {
         throw err.pistes.saveError;
       }

@@ -27,7 +27,11 @@ export function generateRatings(numEntries) {
       piste: piste,
       user: null,
       points: points,
-      time: time,
+      year: time.getFullYear(),
+      month: time.getMonth() + 1,
+      day: time.getDate(),
+      hours: time.getHours(),
+      minutes: time.getMinutes(),
       weather: weather
     };
 
