@@ -15,16 +15,7 @@ import getPisteDirection from "../utils/getPisteDirection.js";
  * @returns void
  */
 async function savePistesFromArea(obj, skiAreaId) {
-  // if skiAreaId is not a mongoose ObjectId, return an error
-  if (!mongoose.Types.ObjectId.isValid(skiAreaId)) {
-    throw err.general.invalidId(skiAreaId);
-  }
-
-  // if the object is not a valid geoJson object, return an error
-  if (obj.type !== "FeatureCollection" && obj.type !== "Feature") {
-    throw err.geoJson.invalidObject;
-  }
-
+  checkParams(obj, skiAreaId)
   for (let i = 0; i < obj.features.length; i++) {
     const pisteData = obj.features[i];
     if (pisteData.properties["piste:type"] === "downhill") {
@@ -72,3 +63,15 @@ await savePistesFromArea(geoJson, "65d4a9dbecaa09d942314101");
 
 console.log('Pistes saved!');
 db.close();
+
+
+function checkParams(obj, skiAreaId) {
+  // Check if the skiAreaId is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(skiAreaId)) {
+    throw err.general.invalidId(skiAreaId);
+  }
+  // Check if the object is a valid GeoJson object
+  if (obj.type !== "FeatureCollection" && obj.type !== "Feature") {
+    throw err.geoJson.invalidObject;
+  }
+}
