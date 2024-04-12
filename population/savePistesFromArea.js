@@ -1,11 +1,12 @@
 import PistesModel from "../models/Pistes.js";
 import err from "../utils/errorCodes.js";
-import mongoose from "mongoose";
+import mongoose, { get } from "mongoose";
 import getQuery from "../utils/getQuery.js";
 import axios from "axios";
 import { overpassToGeoJson } from "../utils/dataFormatter.js";
 import { connectToDb } from "../db/index.js";
 import env from "../config/keys.js";
+import getPisteDirection from "../utils/getPisteDirection.js";
 
 /**
  * Function that saves pistes from a ski area to the database
@@ -29,12 +30,14 @@ async function savePistesFromArea(obj, skiAreaId) {
     if (pisteData.properties["piste:type"] === "downhill") {
       try {
         await PistesModel.findOneAndUpdate({ id: pisteData.id }, {
-          id: pisteData.id,
-          name: pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown",
-          skiAreaId: skiAreaId,
-          direction: "n",
-        }, { upsert: true });
-      } catch {
+          $set: {
+            id: pisteData.id,
+            name: pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown",
+            skiAreaId: skiAreaId,
+            direction: getPisteDirection(pisteData.geometry.coordinates),
+          }
+        }, { upsert: true })
+      } catch (error) {
         throw err.pistes.saveError;
       }
     }
@@ -61,11 +64,11 @@ for (let i = 0; i < geoJson.features.length; i++) {
     }
   }
 }
+console.log('Duplicates checked!');
+const db = connectToDb(env.mongoURI, {});
 
-const db = connectToDb(env.mongoURI, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-});
+console.log('Saving pistes...');
+await savePistesFromArea(geoJson, "65d4a9dbecaa09d942314101");
 
-const res = await savePistesFromArea(geoJson, "65d4a9dbecaa09d942314101");
+console.log('Pistes saved!');
 db.close();
