@@ -5,40 +5,20 @@ function getPisteDirection(coordinates) {
   const firstPoint = coordinates[0];
   const lastPoint = coordinates[coordinates.length - 1];
 
-  // Calculate differences in latitude and longitude
-  const deltaLon = getDistanceFromLatLonInKm((firstPoint[1]+lastPoint[1])/2, firstPoint[0], (firstPoint[1]+lastPoint[1])/2, lastPoint[0]);
-	const deltaLat = getDistanceFromLatLonInKm(firstPoint[1], (firstPoint[0]+lastPoint[0])/2, lastPoint[1], (firstPoint[0]+lastPoint[0])/2);
-	
-	let direction = '';
+  const pisteAngle = angle(firstPoint[0], firstPoint[1], lastPoint[0], lastPoint[1]);
 
-  if (Math.abs(deltaLat) > factor * deltaLon) {
-    direction += ((lastPoint[1] - firstPoint[1]) > 0 ? 'n' : 's');
-  } 
-	
-	if (Math.abs(deltaLon) > factor * deltaLat) {
-    direction += ((lastPoint[0] - firstPoint[0]) > 0 ? 'e' : 'w');
-  } 
-
-  return direction;
+  return pisteAngle;
 }
 
-function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = deg2rad(lat2-lat1);  // deg2rad below
-  var dLon = deg2rad(lon2-lon1); 
-  var a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2)
-    ; 
-  var c = 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  var d = R * c; // Distance in km
-
-  return d;
+function angle(cx, cy, ex, ey) {
+  var dy = ey - cy;
+  var dx = ex - cx;
+  var theta = Math.atan2(dy, dx); // range (-PI, PI]
+  theta = (theta + 360) % 360; // range [0, 360)
+  //if (theta < 0) theta = 360 + theta; // range [0, 360)
+  return theta;
 }
 
-function deg2rad(deg) {
-  return deg * (Math.PI/180)
-}
+getPisteDirection([ [ 12.1272371, 61.2956077 ], [ 12.2668695, 61.3324028 ] ]);
 
 export default getPisteDirection;
