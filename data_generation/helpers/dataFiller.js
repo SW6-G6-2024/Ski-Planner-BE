@@ -1,3 +1,5 @@
+import getPisteDirection from "../../utils/getPisteDirection.js";
+import calculateWindEffect from "./calcWindEffect.js";
 import { getTempAndVisWeight } from "./getTempAndVis.js";
 import fs from "fs";
 
@@ -10,6 +12,17 @@ const sfFactor = 2;
 const dpFactor = 2.5;
 const sdFactor = 1.5;
 const vFactor = 1.75;
+const timeFactor = 0.6;
+
+function getTimeFactor(time) {
+  const hours = time.getHours();
+  const minutes = time.getMinutes();
+  const totalMinutes = hours * 60 + minutes;
+
+  const minSince9 = totalMinutes - 9 * 60;
+  const factor = 1 - (minSince9 / (8 * 60)) * timeFactor;
+  return factor;
+}
 
 /**
  * Generates a random weather object based on the given time
@@ -82,35 +95,29 @@ function generateWeather(time) {
 /**
  * Calculates the points for a given set of weather conditions
  * @param {object} weather The weather conditions to calculate the points for
+ * @param {object} piste The piste to calculate the points for
  * @returns the points for the given weather conditions
  */
-function calculatePoints(weather) {
+function calculatePoints(weather, time, piste) {
+  // Generate a random number of points between 1 and 5 based on a normal distribution
   const points = Math.round(randn_bm(1, 5, 1));
-  //console.log("p: ", points)
 
   const wSpeedWeight = 1 - (weather.windSpeed / (25 * wsFactor));
-  //console.log("ws: ", wSpeedWeight)
+  // Calculate the wind effect on the skiing conditions and multyiply it with the wind speed weight
+  const windWeight = wSpeedWeight * calculateWindEffect(weather.windDirection, piste.direction);
   const tempWeight = 1 - (Math.abs(weather.temperature / (16 * tFactor))); 
-  //console.log("t: ", tempWeight)
   const snowfallWeight = 1 - (weather.snowfall / (10 * sfFactor));
-  //console.log("sf: ",snowfallWeight)
   const downpourWeight = 1 - (weather.downpour / (10 * dpFactor));
-  //console.log("dp: ",downpourWeight)
   const snowDepthWeight = 1 + (weather.snowDepth / (300 * sdFactor));
-  //console.log("sd: ",snowDepthWeight)
   const visibilityWeight = 1 + (weather.visibility / (2000 * vFactor));
-  //console.log("vis: ",visibilityWeight)
-  //console.log("---------------------")
+  
+  const timeWeight = getTimeFactor(time);
+  
 
-  const finalPoints = Math.round(points * wSpeedWeight * tempWeight * snowfallWeight * downpourWeight * snowDepthWeight * visibilityWeight);
+  const finalPoints = Math.round(points * windWeight * tempWeight * snowfallWeight * downpourWeight * snowDepthWeight * visibilityWeight * timeWeight);
 
-  // Points can't exceed 5
-  if (finalPoints > 5) {
-    return 5;
-  }
-  else {
-    return finalPoints;
-  }
+  // Points can't exceed 5 or go below 1
+  return Math.min(Math.max(1, finalPoints), 5)
 }
 
 /**
