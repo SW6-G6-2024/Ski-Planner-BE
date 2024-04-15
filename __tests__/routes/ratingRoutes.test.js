@@ -29,22 +29,21 @@ describe('Rating routes', () => {
       bounds: [1.0, 2.0, 3.0, 4.0],
     });
     
-    const insertedPiste = await db.collection('pistes').insertOne({
+    await db.collection('pistes').insertOne({
       name: 'Test Piste',
-      _id: 1234,
+      id: 1234,
       skiAreaId: skiArea.insertedId,
     });
 
-    piste = await db.collection('pistes').findOne({ _id: insertedPiste.insertedId });
+    piste = await db.collection('pistes').findOne({ id: 1234 });
   });
 
   test('should successfully rate a piste', async () => {
     axios.post = jest.fn().mockResolvedValue({data: weatherData});
-
     const response = await request(app)
-      .post('/api/rate-piste/' + piste._id)
+      .post('/api/rate-piste/' + piste.id)
       .send({ rating: 4 });
-
+    
     expect(response.statusCode).toBe(200);
     expect(response.text).toEqual("Successfully rated piste");
   });
@@ -71,14 +70,14 @@ describe('Rating routes', () => {
     // First a brand new piste is created with a fake skiAreaId
     const insertedPiste = await db.collection('pistes').insertOne({
       name: 'Test Piste 2',
-      _id: 12345,
+      id: 12345,
       skiAreaId: "not a valid skiAreaId",
     });
 
     piste = await db.collection('pistes').findOne({ _id: insertedPiste.insertedId });
 
     const response = await request(app)
-      .post('/api/rate-piste/' + piste._id)
+      .post('/api/rate-piste/' + piste.id)
       .send({ rating: 4 });
       
     expect(response.statusCode).toBe(400);
@@ -87,7 +86,7 @@ describe('Rating routes', () => {
 
   test('should return error when rating is not between 1 and 5', async () => {
     const response = await request(app)
-      .post('/api/rate-piste/' + piste._id)
+      .post('/api/rate-piste/' + piste.id)
       .send({ rating: 6 });
     
     expect(response.statusCode).toBe(400);
@@ -96,7 +95,7 @@ describe('Rating routes', () => {
 
   test('should return error when rating is not a number', async () => {
     const response = await request(app)
-      .post('/api/rate-piste/' + piste._id)
+      .post('/api/rate-piste/' + piste.id)
       .send({ rating: 'not a number' });
     
     expect(response.statusCode).toBe(400);
