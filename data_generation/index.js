@@ -1,6 +1,5 @@
 import generateRatings from "./generateData.js";
 import saveToFile from "./utils/saveDataToFile.js";
-import fs from "fs"
 
 const data = await generateRatings(process.argv[2] || 100);
 saveToFile(data, 'mockup_data.json');

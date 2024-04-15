@@ -1,4 +1,3 @@
-import getPisteDirection from "../../utils/getPisteDirection.js";
 import calculateWindEffect from "./calcWindEffect.js";
 import { getTempAndVisWeight } from "./getTempAndVis.js";
 import fs from "fs";
@@ -14,6 +13,11 @@ const sdFactor = 1.65;
 const vFactor = 1.5;
 const timeFactor = 0.20;
 
+/**
+ * Calculates the time factor for a given date object
+ * @param {Date} time The time to calculate the factor for
+ * @returns {Number} the time factor for the given time
+ */
 function getTimeFactor(time) {
   const hours = time.getHours();
   const minutes = time.getMinutes();
@@ -23,8 +27,6 @@ function getTimeFactor(time) {
   const factor = 1 - (minSince9 / (8 * 60)) * timeFactor;
   return factor;
 }
-
-//console.log(getTimeFactor(new Date(2023, 12, 12, 12, 0))); 
 
 /**
  * Generates a random weather object based on the given time
@@ -123,7 +125,7 @@ function calculatePoints(weather, time, piste) {
 }
 
 /**
- * // Generates random numbers between bounds with a skew. Heavily inspired by https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+ * // Generates random numbers between bounds with a skew. Taken from: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
  * @param {Number} min Minimum bound
  * @param {Number} max Maximum bound
  * @param {Number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution

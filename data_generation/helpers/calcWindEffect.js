@@ -1,4 +1,3 @@
-
 /**
  * Calculate the effect of the wind on the skiing conditions
  * @param {Number} windDir direction of the wind in degrees (0-359)
