@@ -10,9 +10,9 @@ const wsFactor = 2.25;
 const tFactor = 1.75;
 const sfFactor = 2;
 const dpFactor = 2.5;
-const sdFactor = 1.5;
-const vFactor = 1.75;
-const timeFactor = 0.6;
+const sdFactor = 1.65;
+const vFactor = 1.5;
+const timeFactor = 0.20;
 
 function getTimeFactor(time) {
   const hours = time.getHours();
@@ -23,6 +23,8 @@ function getTimeFactor(time) {
   const factor = 1 - (minSince9 / (8 * 60)) * timeFactor;
   return factor;
 }
+
+//console.log(getTimeFactor(new Date(2023, 12, 12, 12, 0))); 
 
 /**
  * Generates a random weather object based on the given time
@@ -102,9 +104,9 @@ function calculatePoints(weather, time, piste) {
   // Generate a random number of points between 1 and 5 based on a normal distribution
   const points = Math.round(randn_bm(1, 5, 1));
 
-  const wSpeedWeight = 1 - (weather.windSpeed / (25 * wsFactor));
+  const wSpeedWeight = 1 - (weather.windSpeed * calculateWindEffect(weather.windDirection, piste.direction) / (25 * wsFactor));
   // Calculate the wind effect on the skiing conditions and multyiply it with the wind speed weight
-  const windWeight = wSpeedWeight * calculateWindEffect(weather.windDirection, piste.direction);
+  const windWeight = wSpeedWeight;
   const tempWeight = 1 - (Math.abs(weather.temperature / (16 * tFactor))); 
   const snowfallWeight = 1 - (weather.snowfall / (10 * sfFactor));
   const downpourWeight = 1 - (weather.downpour / (10 * dpFactor));
