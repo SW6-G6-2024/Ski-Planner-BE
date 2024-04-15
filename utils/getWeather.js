@@ -75,5 +75,3 @@ export default getCurrentWeather;
  * @property {Number} snow_depth The snow depth
  * @property {Number} visibility The visibility
  */
-
-console.log(await getCurrentWeather(59.9139, 10.7522));
