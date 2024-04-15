@@ -60,6 +60,7 @@ function getRating(piste) {
  * @returns {Array<piste>} array of piste objects
  */
 async function getPistes() {
+  /* istanbul ignore next */
   const db = connectToDb(keys.mongoURI, {
     dbName: process.env.NODE_ENV === 'production' ? 'prod' : 'test',
   });

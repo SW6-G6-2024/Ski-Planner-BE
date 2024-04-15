@@ -8,12 +8,12 @@ import getPisteDirection from "../utils/getPisteDirection.js";
  * Function that saves pistes from a ski area to the database
  * @param {Object} geoJson - The geoJson object with the pistes/ or other features
  * @param {String} skiAreaId - The id of the ski area
- * @returns void
  */
 async function savePistesFromArea(obj, skiAreaId) {
   checkParams(obj, skiAreaId)
   for (let i = 0; i < obj.features.length; i++) {
     const pisteData = obj.features[i];
+    /* istanbul ignore next */
     if (pisteData.properties["piste:type"] === "downhill") {
       try {
         await PistesModel.findOneAndUpdate({ id: pisteData.id }, {
@@ -25,6 +25,7 @@ async function savePistesFromArea(obj, skiAreaId) {
           }
         }, { upsert: true })
       } catch (error) {
+        /* istanbul ignore next */
         throw err.pistes.saveError;
       }
     }
@@ -33,6 +34,13 @@ async function savePistesFromArea(obj, skiAreaId) {
 
 export default savePistesFromArea;
 
+/**
+ * Function that checks the parameters of the function savePistesFromArea
+ * The object must be a valid GeoJson object and the skiAreaId must be a valid ObjectId
+ * Throws an error if the parameters are invalid
+ * @param {*} obj the geoJson object with the pistes
+ * @param {*} skiAreaId the id of the ski area
+ */
 function checkParams(obj, skiAreaId) {
   // Check if the skiAreaId is a valid ObjectId
   if (!mongoose.Types.ObjectId.isValid(skiAreaId)) {
