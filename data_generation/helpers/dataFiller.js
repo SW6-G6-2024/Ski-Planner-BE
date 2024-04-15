@@ -121,7 +121,7 @@ function calculatePoints(weather, time, piste) {
   const finalPoints = Math.round(points * windWeight * tempWeight * snowfallWeight * rainWeight * snowDepthWeight * visibilityWeight * timeWeight);
 
   // Points can't exceed 5 or go below 1
-  return Math.min(Math.max(1, finalPoints), 5)
+  return Math.min(Math.max(1, finalPoints), 5);
 }
 
 /**

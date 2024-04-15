@@ -2,7 +2,6 @@ import express from 'express';
 const router = express.Router();
 
 // Routes
-import testRoutes from './testRoutes.js';
 import routingRoutes from './routingRoutes.js';
 import skiAreaRoutes from './skiAreaRoutes.js';
 import ratePisteRoutes from './ratingRoutes.js';

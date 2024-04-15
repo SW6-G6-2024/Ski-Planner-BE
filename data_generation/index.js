@@ -10,10 +10,10 @@ let counts = {
 	3: 0,
 	4: 0,
 	5: 0,
-}
+};
 
 for (let pts in Object.keys(counts))  {
-	counts[Number(pts) + 1] = data.filter((rating) => rating.points === Number(pts) + 1).length
+	counts[Number(pts) + 1] = data.filter((rating) => rating.points === Number(pts) + 1).length;
 }
 
-console.log(counts)
+console.log(counts);

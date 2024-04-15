@@ -1,7 +1,6 @@
 import PistesModel from "../models/Pistes.js";
 import err from "../utils/errorCodes.js";
-import mongoose, { get } from "mongoose";
-import getQuery from "../utils/getQuery.js";
+import mongoose from "mongoose";
 import getPisteDirection from "../utils/getPisteDirection.js";
 
 /**
@@ -10,7 +9,7 @@ import getPisteDirection from "../utils/getPisteDirection.js";
  * @param {String} skiAreaId - The id of the ski area
  */
 async function savePistesFromArea(obj, skiAreaId) {
-  checkParams(obj, skiAreaId)
+  checkParams(obj, skiAreaId);
   for (let i = 0; i < obj.features.length; i++) {
     const pisteData = obj.features[i];
     /* istanbul ignore next */
@@ -23,7 +22,7 @@ async function savePistesFromArea(obj, skiAreaId) {
             skiAreaId: skiAreaId,
             direction: getPisteDirection(pisteData.geometry.coordinates),
           }
-        }, { upsert: true })
+        }, { upsert: true });
       } catch (error) {
         /* istanbul ignore next */
         throw err.pistes.saveError;

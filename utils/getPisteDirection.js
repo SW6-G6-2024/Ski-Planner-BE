@@ -1,5 +1,3 @@
-import { get } from "mongoose";
-
 /**
  * Returns the angle of the piste in degrees based on the start and end points
  * @param {Array<Array<Number>>} coordinates Array of coordinates of the piste path
