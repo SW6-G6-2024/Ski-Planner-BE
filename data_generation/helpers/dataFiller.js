@@ -1,4 +1,3 @@
-import getPisteDirection from "../../utils/getPisteDirection.js";
 import calculateWindEffect from "./calcWindEffect.js";
 import { getTempAndVisWeight } from "./getTempAndVis.js";
 import fs from "fs";
@@ -10,10 +9,15 @@ const wsFactor = 2.25;
 const tFactor = 1.75;
 const sfFactor = 2;
 const dpFactor = 2.5;
-const sdFactor = 1.5;
-const vFactor = 1.75;
-const timeFactor = 0.6;
+const sdFactor = 1.65;
+const vFactor = 1.5;
+const timeFactor = 0.20;
 
+/**
+ * Calculates the time factor for a given date object
+ * @param {Date} time The time to calculate the factor for
+ * @returns {Number} the time factor for the given time
+ */
 function getTimeFactor(time) {
   const hours = time.getHours();
   const minutes = time.getMinutes();
@@ -102,9 +106,9 @@ function calculatePoints(weather, time, piste) {
   // Generate a random number of points between 1 and 5 based on a normal distribution
   const points = Math.round(randn_bm(1, 5, 1));
 
-  const wSpeedWeight = 1 - (weather.windSpeed / (25 * wsFactor));
+  const wSpeedWeight = 1 - (weather.windSpeed * calculateWindEffect(weather.windDirection, piste.direction) / (25 * wsFactor));
   // Calculate the wind effect on the skiing conditions and multyiply it with the wind speed weight
-  const windWeight = wSpeedWeight * calculateWindEffect(weather.windDirection, piste.direction);
+  const windWeight = wSpeedWeight;
   const tempWeight = 1 - (Math.abs(weather.temperature / (16 * tFactor))); 
   const snowfallWeight = 1 - (weather.snowfall / (10 * sfFactor));
   const downpourWeight = 1 - (weather.downpour / (10 * dpFactor));
@@ -121,7 +125,7 @@ function calculatePoints(weather, time, piste) {
 }
 
 /**
- * // Generates random numbers between bounds with a skew. Heavily inspired by https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+ * // Generates random numbers between bounds with a skew. Taken from: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
  * @param {Number} min Minimum bound
  * @param {Number} max Maximum bound
  * @param {Number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution

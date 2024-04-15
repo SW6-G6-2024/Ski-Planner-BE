@@ -16,13 +16,10 @@ function getWinterMonth() {
   // Define an array containing winter months (November to March)
   const winterMonths = [11, 12, 1, 2, 3];
 
-  // Define weights for each month (higher weight for January and February)
   const weights = [1, 1, 2, 2, 1];
 
-  // Calculate total weight
   const totalWeight = weights.reduce((acc, val) => acc + val, 0);
 
-  // Generate a random number between 0 and totalWeight
   const randomNum = Math.random() * totalWeight;
 
   // Choose a month based on the random number and weights
