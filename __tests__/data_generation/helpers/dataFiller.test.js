@@ -15,8 +15,8 @@ describe('generateWeather function', () => {
     expect(weather.snowfall).toBeLessThanOrEqual(20);
     expect(weather.snowDepth).toBeGreaterThanOrEqual(40);
     expect(weather.snowDepth).toBeLessThanOrEqual(300);
-    expect(weather.downpour).toBeGreaterThanOrEqual(0);
-    expect(weather.downpour).toBeLessThanOrEqual(10);
+    expect(weather.rain).toBeGreaterThanOrEqual(0);
+    expect(weather.rain).toBeLessThanOrEqual(10);
     expect(weather.visibility).toBeGreaterThanOrEqual(400);
     expect(weather.visibility).toBeLessThanOrEqual(2000);
   });
@@ -28,7 +28,7 @@ describe('calculatePoints function', () => {
       temperature: 0,
       windSpeed: 10,
       snowfall: 5,
-      downpour: 5,
+      rain: 5,
       snowDepth: 150,
       visibility: 1000,
       windDirection: 180

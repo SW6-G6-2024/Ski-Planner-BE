@@ -90,7 +90,7 @@ function generateWeather(time) {
     windDirection: Math.floor(Math.random() * 360), // Random wind direction between 0 and 359 degrees
     snowfall: (Math.ceil(Math.random() * 10) + 1) * weatherWeights.snowfall, // Random snowfall between 1 and 10 cm
     snowDepth: randn_bm(40, 300, 3), // Random snow depth between 40 and 100 cm
-    downpour: (Math.ceil(Math.random() * 10) + 1) * weatherWeights.downpour, // Random downpour between 1 and 10 mm
+    rain: (Math.ceil(Math.random() * 10) + 1) * weatherWeights.rain, // Random rain between 1 and 10 mm
     visibility: (500 + Math.random() * 1500) * temperatureWeights.visibility // Random visibility between 500 and 2000 meters
   };
   
@@ -111,14 +111,14 @@ function calculatePoints(weather, time, piste) {
   const windWeight = wSpeedWeight;
   const tempWeight = 1 - (Math.abs(weather.temperature / (16 * tFactor))); 
   const snowfallWeight = 1 - (weather.snowfall / (10 * sfFactor));
-  const downpourWeight = 1 - (weather.downpour / (10 * dpFactor));
+  const rainWeight = 1 - (weather.rain / (10 * dpFactor));
   const snowDepthWeight = 1 + (weather.snowDepth / (300 * sdFactor));
   const visibilityWeight = 1 + (weather.visibility / (2000 * vFactor));
   
   const timeWeight = getTimeFactor(time);
   
 
-  const finalPoints = Math.round(points * windWeight * tempWeight * snowfallWeight * downpourWeight * snowDepthWeight * visibilityWeight * timeWeight);
+  const finalPoints = Math.round(points * windWeight * tempWeight * snowfallWeight * rainWeight * snowDepthWeight * visibilityWeight * timeWeight);
 
   // Points can't exceed 5 or go below 1
   return Math.min(Math.max(1, finalPoints), 5)

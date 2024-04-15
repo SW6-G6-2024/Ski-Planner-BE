@@ -21,7 +21,7 @@ describe('generateRatings', () => {
 				minutes: expect.any(Number),
 				weather: {
 					temperature: expect.any(Number),
-					downpour: expect.any(Number),
+					rain: expect.any(Number),
 					windSpeed: expect.any(Number),
 					windDirection: expect.any(Number),
 					visibility: expect.any(Number),
