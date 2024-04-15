@@ -1,3 +1,4 @@
+import PistesModel from '../models/Pistes.js';
 import { generateWeather, calculatePoints } from './helpers/dataFiller.js';
 import { daysInMonth, getWinterMonth } from './utils/dates.js';
 import getPistes from './utils/getPistes.js';
@@ -7,9 +8,14 @@ import getPistes from './utils/getPistes.js';
  * @param {Number} numEntries number of ratings to generate for each piste
  * @returns {Array<rating>} array of ratings
  */
-async function generateRatings(numEntries) {
+async function generateRatings(numEntries, test = false) {
   const ratings = [];
-  let pistes = await getPistes();
+  let pistes;
+  if (!test) {
+    pistes = await getPistes();
+  } else {
+    pistes = await PistesModel.find({});
+  }
 
   for (let i = 0; i < pistes.length; i++) {
     for (let j = 0; j < numEntries; j++) {

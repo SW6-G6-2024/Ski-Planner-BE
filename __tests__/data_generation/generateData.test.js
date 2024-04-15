@@ -1,10 +1,22 @@
+import mongoose from 'mongoose';
 import generateRatings from '../../data_generation/generateData.js';
+import connectDb from '../fixtures/db.js';
+import fs from 'fs';
+
+let db;
+
+beforeAll(async () => {
+	db = await connectDb();
+	const pistes = JSON.parse(fs.readFileSync("__tests__/fixtures/test-pistes.json", "utf8")); JSON.parse(fs.readFileSync("__tests__/fixtures/test-pistes.json", "utf8"));
+	await db.collection('pistes').insertMany(pistes);
+});
 
 describe('generateRatings', () => {
+
 	it('should generate an array of ratings with the specified number of entries', async () => {
 		const numEntries = 10;
-		const ratings = await generateRatings(numEntries);
-		
+		const ratings = await generateRatings(numEntries, true);
+
 		expect(ratings).toHaveLength(numEntries * 133 /* number of pistes */);
 		ratings.forEach((rating) => {
 			expect(rating).toMatchObject({
@@ -30,4 +42,9 @@ describe('generateRatings', () => {
 			});
 		});
 	});
+});
+
+afterAll(async () => {
+	// You're my wonderwall
+	await mongoose.connection.close();
 });

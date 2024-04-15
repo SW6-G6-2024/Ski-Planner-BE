@@ -1,0 +1,1463 @@
+[{
+  "id": 23325550,
+  "direction": 8.382708638148756,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.053Z"
+  },
+  "name": "75",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31110043,
+  "direction": 310.2441509487419,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.495Z"
+  },
+  "name": "L2",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31143308,
+  "direction": 4.2600158773442445,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.518Z"
+  },
+  "name": "10",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31143536,
+  "direction": 337.4322514712286,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.538Z"
+  },
+  "name": "28",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31143566,
+  "direction": 18.652222826995455,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.560Z"
+  },
+  "name": "30",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31143611,
+  "direction": 135.85912131514624,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.581Z"
+  },
+  "name": "33",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31143652,
+  "direction": 338.3352226433449,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.603Z"
+  },
+  "name": "1",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31143793,
+  "direction": 329.90262210965244,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.625Z"
+  },
+  "name": "12",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31143825,
+  "direction": 164.22185866568782,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.649Z"
+  },
+  "name": "38",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31143866,
+  "direction": 1.5765969170888638,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.670Z"
+  },
+  "name": "23",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185219,
+  "direction": 58.60336435945965,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.692Z"
+  },
+  "name": "46",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185220,
+  "direction": 123.87044229832645,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.714Z"
+  },
+  "name": "44",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185222,
+  "direction": 107.22899907740236,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.736Z"
+  },
+  "name": "53",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185223,
+  "direction": 147.76884766980538,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.759Z"
+  },
+  "name": "48",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185225,
+  "direction": 124.53422998898384,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.780Z"
+  },
+  "name": "52",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185230,
+  "direction": 17.17423019022965,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.802Z"
+  },
+  "name": "76",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185243,
+  "direction": 19.634263057855378,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.826Z"
+  },
+  "name": "70",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185249,
+  "direction": 3.8744826584041903,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.849Z"
+  },
+  "name": "49",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185251,
+  "direction": 16.762047689851215,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.869Z"
+  },
+  "name": "76",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185259,
+  "direction": 336.6086777378888,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.890Z"
+  },
+  "name": "17",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185260,
+  "direction": 332.5163375571278,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.914Z"
+  },
+  "name": "19",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185262,
+  "direction": 354.7910763391755,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.935Z"
+  },
+  "name": "79",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185263,
+  "direction": 9.259828387310847,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.956Z"
+  },
+  "name": "65",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185265,
+  "direction": 267.3201388028589,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.977Z"
+  },
+  "name": "14",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185268,
+  "direction": 9.156460213102662,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:16.998Z"
+  },
+  "name": "15",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185272,
+  "direction": 2.331207848837039,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.019Z"
+  },
+  "name": "3",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185276,
+  "direction": 233.84147303286767,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.042Z"
+  },
+  "name": "9",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31185277,
+  "direction": 178.7131929325211,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.064Z"
+  },
+  "name": "29",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31186464,
+  "direction": 359.96834891189263,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.085Z"
+  },
+  "name": "39",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31186468,
+  "direction": 356.4861441804572,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.107Z"
+  },
+  "name": "62",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31193758,
+  "direction": 282.6355537287724,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.128Z"
+  },
+  "name": "14",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31230551,
+  "direction": 83.1437457926267,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.149Z"
+  },
+  "name": "63",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31230555,
+  "direction": 7.329342193715661,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.171Z"
+  },
+  "name": "26",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31230561,
+  "direction": 126.05737064674167,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.194Z"
+  },
+  "name": "24",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31230569,
+  "direction": 325.95933013611506,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.214Z"
+  },
+  "name": "32",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31231042,
+  "direction": 9.449797808867459,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.234Z"
+  },
+  "name": "80",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31246201,
+  "direction": 27.001067603926515,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.256Z"
+  },
+  "name": "70",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31246235,
+  "direction": 21.692479176294626,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.280Z"
+  },
+  "name": "69",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31247767,
+  "direction": 333.68355110484737,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.305Z"
+  },
+  "name": "8",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31247878,
+  "direction": 90.84759547527153,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.332Z"
+  },
+  "name": "58",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31247905,
+  "direction": 6.245537742112219,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.356Z"
+  },
+  "name": "4",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 31361637,
+  "direction": 49.31788458529991,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.383Z"
+  },
+  "name": "35",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 32905547,
+  "direction": 45.38645269250702,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.410Z"
+  },
+  "name": "74",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 32905549,
+  "direction": 40.35639003365088,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.431Z"
+  },
+  "name": "36",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 32923954,
+  "direction": 143.2214049750869,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.462Z"
+  },
+  "name": "44",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 32923956,
+  "direction": 84.41611304983132,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.484Z"
+  },
+  "name": "47",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 32927806,
+  "direction": 153.77448867580324,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.505Z"
+  },
+  "name": "73",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 32955211,
+  "direction": 112.16306445983014,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.531Z"
+  },
+  "name": "45",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 32955213,
+  "direction": 334.6338946882924,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.551Z"
+  },
+  "name": "57",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 33048612,
+  "direction": 52.8630126512291,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.572Z"
+  },
+  "name": "37",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 47189076,
+  "direction": 12.20258465144724,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.592Z"
+  },
+  "name": "25",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884601,
+  "direction": 11.041678307908967,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.612Z"
+  },
+  "name": "36",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884603,
+  "direction": 358.8625297417133,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.632Z"
+  },
+  "name": "15",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884607,
+  "direction": 354.319282990493,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.653Z"
+  },
+  "name": "4",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884608,
+  "direction": 10.960873025043838,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.674Z"
+  },
+  "name": "63",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884609,
+  "direction": 326.3016106873191,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.695Z"
+  },
+  "name": "34",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884611,
+  "direction": 359.09543598773064,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.718Z"
+  },
+  "name": "77",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884612,
+  "direction": 354.8217441456705,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.738Z"
+  },
+  "name": "61",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884615,
+  "direction": 3.4320519952059954,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.763Z"
+  },
+  "name": "31",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884617,
+  "direction": 326.49717587307185,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.785Z"
+  },
+  "name": "4",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884618,
+  "direction": 342.45213000761044,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.812Z"
+  },
+  "name": "4",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884619,
+  "direction": 124.69947321087977,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.831Z"
+  },
+  "name": "54",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884622,
+  "direction": 326.4527900808769,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.851Z"
+  },
+  "name": "15",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884624,
+  "direction": 3.372555764002186,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.872Z"
+  },
+  "name": "59",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884625,
+  "direction": 346.8013765939673,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.894Z"
+  },
+  "name": "15",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884631,
+  "direction": 352.7126048458745,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.916Z"
+  },
+  "name": "15",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884632,
+  "direction": 115.05590481564661,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.937Z"
+  },
+  "name": "35",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 50884635,
+  "direction": 343.3805308270384,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.957Z"
+  },
+  "name": "36",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 52006904,
+  "direction": 135.02826335703605,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.976Z"
+  },
+  "name": "80",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 52006914,
+  "direction": 311.8823952708245,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:17.996Z"
+  },
+  "name": "19",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55069774,
+  "direction": 5.4325543505778455,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.016Z"
+  },
+  "name": "63",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55069775,
+  "direction": 351.93957401735923,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.038Z"
+  },
+  "name": "31",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55097595,
+  "direction": 58.897741521296496,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.059Z"
+  },
+  "name": "42",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55097612,
+  "direction": 109.51475703566689,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.082Z"
+  },
+  "name": "72",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55097614,
+  "direction": 25.265813562246137,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.103Z"
+  },
+  "name": "71",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55097616,
+  "direction": 145.38016373427558,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.125Z"
+  },
+  "name": "43",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55097618,
+  "direction": 161.64509372277143,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.146Z"
+  },
+  "name": "43",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55097621,
+  "direction": 11.477550236412583,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.173Z"
+  },
+  "name": "41",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55284155,
+  "direction": 29.826345757877903,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.196Z"
+  },
+  "name": "50",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55284158,
+  "direction": 94.91610659756896,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.218Z"
+  },
+  "name": "40",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55606461,
+  "direction": 0.9828046364651755,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.241Z"
+  },
+  "name": "14",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55606465,
+  "direction": 325.508545770626,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.261Z"
+  },
+  "name": "16",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55606482,
+  "direction": 355.9901693119779,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.284Z"
+  },
+  "name": "18",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 55606487,
+  "direction": 176.87168928718916,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.306Z"
+  },
+  "name": "68",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102000939,
+  "direction": 298.16687948442905,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.326Z"
+  },
+  "name": "19",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102000955,
+  "direction": 17.05883222356624,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.346Z"
+  },
+  "name": "39",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102000987,
+  "direction": 322.1597944121976,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.368Z"
+  },
+  "name": "32;34",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102000989,
+  "direction": 7.975822229279117,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.389Z"
+  },
+  "name": "61",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102000995,
+  "direction": 23.650302291590663,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.414Z"
+  },
+  "name": "32",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001002,
+  "direction": 43.792985178669426,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.436Z"
+  },
+  "name": "78",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001048,
+  "direction": 93.56287360226656,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.457Z"
+  },
+  "name": "39",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001062,
+  "direction": 67.1814791916882,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.477Z"
+  },
+  "name": "35",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001070,
+  "direction": 2.3553896784206927,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.499Z"
+  },
+  "name": "39",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001074,
+  "direction": 33.47145146072711,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.521Z"
+  },
+  "name": "78",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001089,
+  "direction": 334.42646171768047,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.542Z"
+  },
+  "name": "(30)",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001095,
+  "direction": 328.4660445047815,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.564Z"
+  },
+  "name": "39",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001100,
+  "direction": 4.060715458274899,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.584Z"
+  },
+  "name": "51",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001114,
+  "direction": 87.31141928931481,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.605Z"
+  },
+  "name": "35",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001122,
+  "direction": 359.45038195190983,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.625Z"
+  },
+  "name": "36",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001139,
+  "direction": 353.17615109775215,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.644Z"
+  },
+  "name": "13",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 102001151,
+  "direction": 4.7903678496936095,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.664Z"
+  },
+  "name": "60",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 147186226,
+  "direction": 97.93557487044336,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.686Z"
+  },
+  "name": "53",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 147187320,
+  "direction": 143.6224745136684,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.708Z"
+  },
+  "name": "53",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 194202245,
+  "direction": 15.541128788893332,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.733Z"
+  },
+  "name": "63",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 261626555,
+  "direction": 3.7768792944464167,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.754Z"
+  },
+  "name": "21",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 394543085,
+  "direction": 0.1273200221117463,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.775Z"
+  },
+  "name": "77",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 394652136,
+  "direction": 40.53339328364683,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.796Z"
+  },
+  "name": "84",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 444377077,
+  "direction": 337.2029758844228,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.817Z"
+  },
+  "name": "31",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 444377080,
+  "direction": 3.8299634999572163,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.843Z"
+  },
+  "name": "71",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 474923962,
+  "direction": 146.97075430142047,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.873Z"
+  },
+  "name": "Transport",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 597297558,
+  "direction": 57.3617397819275,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.896Z"
+  },
+  "name": "36",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 769955763,
+  "direction": 334.7258615762306,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.919Z"
+  },
+  "name": "5",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 779066686,
+  "direction": 45.309926430213466,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.939Z"
+  },
+  "name": "41",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1073941106,
+  "direction": 192.15998806001522,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.962Z"
+  },
+  "name": "38",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145421100,
+  "direction": 336.63064107824357,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:18.982Z"
+  },
+  "name": "11",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145421102,
+  "direction": 312.8210751542921,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.002Z"
+  },
+  "name": "16",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145421104,
+  "direction": 255.95184821213655,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.023Z"
+  },
+  "name": "27",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145421105,
+  "direction": 5.11610475783624,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.051Z"
+  },
+  "name": "1",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145421108,
+  "direction": 28.237532398356564,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.072Z"
+  },
+  "name": "10",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145421109,
+  "direction": 359.9348606551699,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.093Z"
+  },
+  "name": "3",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145622573,
+  "direction": 3.396177897894745,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.114Z"
+  },
+  "name": "35",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145622580,
+  "direction": 342.24929446395413,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.138Z"
+  },
+  "name": "34",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145622581,
+  "direction": 18.664743497817597,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.159Z"
+  },
+  "name": "35",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145689742,
+  "direction": 1.36247743920336,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.179Z"
+  },
+  "name": "56",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1214145679,
+  "direction": 51.53389364963084,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.204Z"
+  },
+  "name": "78",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1242184819,
+  "direction": 352.31128802761214,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.226Z"
+  },
+  "name": "2",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1242184820,
+  "direction": 32.753923147687146,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.247Z"
+  },
+  "name": "55",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1245639592,
+  "direction": 41.55411005536314,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.268Z"
+  },
+  "name": "76",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1245639593,
+  "direction": 353.38785771160946,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:12:19.290Z"
+  },
+  "name": "75",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 394543081,
+  "direction": 179.07538554216637,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:15:08.007Z"
+  },
+  "name": "24",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 394543087,
+  "direction": 179.31408174827493,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:15:08.045Z"
+  },
+  "name": "24",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145622576,
+  "direction": 182.26064273765502,
+  "modifiedAt": {
+    "$date": "2024-04-12T09:15:08.339Z"
+  },
+  "name": "24",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+},
+{
+  "id": 1145622577,
+  "direction": 24.0083527078242,
+  "modifiedAt": {
+    "$date": "2024-04-15T07:22:59.925Z"
+  },
+  "name": "25",
+  "skiAreaId": {
+    "$oid": "65d4a9dbecaa09d942314101"
+  }
+}]
