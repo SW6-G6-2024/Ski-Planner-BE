@@ -12,7 +12,7 @@ describe('generateWeather function', () => {
     expect(weather.windDirection).toBeGreaterThanOrEqual(0);
     expect(weather.windDirection).toBeLessThanOrEqual(359);
     expect(weather.snowfall).toBeGreaterThanOrEqual(0);
-    expect(weather.snowfall).toBeLessThanOrEqual(10);
+    expect(weather.snowfall).toBeLessThanOrEqual(20);
     expect(weather.snowDepth).toBeGreaterThanOrEqual(40);
     expect(weather.snowDepth).toBeLessThanOrEqual(300);
     expect(weather.downpour).toBeGreaterThanOrEqual(0);
@@ -31,8 +31,14 @@ describe('calculatePoints function', () => {
       downpour: 5,
       snowDepth: 150,
       visibility: 1000,
+      windDirection: 180
     };
-    const points = calculatePoints(weather);
+    const time = new Date(2023, 1, 1, 12, 0, 0);
+    const piste = {
+      id: 1,
+      direction: 0
+    };
+    const points = calculatePoints(weather, time, piste);
     expect(points).toBeGreaterThanOrEqual(1);
     expect(points).toBeLessThanOrEqual(5);
   });

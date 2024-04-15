@@ -1,9 +1,9 @@
 
 /**
  * Calculate the effect of the wind on the skiing conditions
- * @param {*} windDir 
- * @param {*} pisteDir 
- * @returns 
+ * @param {Number} windDir direction of the wind in degrees (0-359)
+ * @param {Number} pisteDir direction of the piste in degrees (0-359)
+ * @returns {Number} a number between 0 and 1 representing the effect of the wind on the skiing conditions
  */
 function calculateWindEffect(windDir, pisteDir) {
 	

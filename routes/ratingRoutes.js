@@ -37,7 +37,7 @@ async (req, res) => {
 		return;
 	}
 	
-	const piste = await PisteModel.findOne({ _id: id });
+	const piste = await PisteModel.findOne({ id: id });
 
 	if (!piste) {
 		return res.status(400).send(err.pistes.notFound);
@@ -79,6 +79,7 @@ async (req, res) => {
 		await newRating.save();
 		res.status(200).send("Successfully rated piste");
 	} catch (error) {
+		console.log(error)
 		res.status(400).send(error);
 	}
 });

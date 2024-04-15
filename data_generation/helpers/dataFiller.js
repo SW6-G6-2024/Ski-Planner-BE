@@ -29,7 +29,7 @@ function getTimeFactor(time) {
 /**
  * Generates a random weather object based on the given time
  * @param {Date} time The time to generate the weather for
- * @returns a weather object with random values
+ * @returns {import("../generateData.js").weather} a weather object with random values
  */ 
 function generateWeather(time) {
   const weatherCodes = [
@@ -96,9 +96,9 @@ function generateWeather(time) {
 
 /**
  * Calculates the points for a given set of weather conditions
- * @param {object} weather The weather conditions to calculate the points for
- * @param {object} piste The piste to calculate the points for
- * @returns the points for the given weather conditions
+ * @param {import("../generateData.js").weather} weather The weather conditions to calculate the points for
+ * @param {import("../generateData.js").piste} piste The piste to calculate the points for
+ * @returns {Number} the points for the given weather conditions
  */
 function calculatePoints(weather, time, piste) {
   // Generate a random number of points between 1 and 5 based on a normal distribution
@@ -124,10 +124,10 @@ function calculatePoints(weather, time, piste) {
 
 /**
  * // Generates random numbers between bounds with a skew. Heavily inspired by https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
- * @param {number} min Minimum bound
- * @param {number} max Maximum bound
- * @param {number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution
- * @returns 
+ * @param {Number} min Minimum bound
+ * @param {Number} max Maximum bound
+ * @param {Number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution
+ * @returns {Number} a random number between min and max with a skew
  */
 function randn_bm(min, max, skew) {
   let u = 0, v = 0;

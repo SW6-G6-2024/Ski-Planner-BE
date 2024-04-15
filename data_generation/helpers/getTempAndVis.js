@@ -15,7 +15,7 @@ const weightData = [
 /**
  * Finds the appropriate weight for temperature and visibility based on the given time and weather code
  * @param {Date} time 
- * @param {number} weatherCode 
+ * @param {Number} weatherCode 
  * @returns object with temperature and visibility weights
  */
 export function getTempAndVisWeight(time, weatherCode) {

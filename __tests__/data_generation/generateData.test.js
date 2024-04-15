@@ -1,14 +1,17 @@
-import { generateRatings } from '../../data_generation/generateData.js';
+import generateRatings from '../../data_generation/generateData.js';
 
 describe('generateRatings', () => {
-	it('should generate an array of ratings with the specified number of entries', () => {
+	it('should generate an array of ratings with the specified number of entries', async () => {
 		const numEntries = 10;
-		const ratings = generateRatings(numEntries);
+		const ratings = await generateRatings(numEntries);
 		
-		expect(ratings).toHaveLength(numEntries);
+		expect(ratings).toHaveLength(numEntries * 133 /* number of pistes */);
 		ratings.forEach((rating) => {
 			expect(rating).toMatchObject({
-				piste: expect.any(String),
+				piste: {
+					id: expect.any(Number),
+					direction: expect.any(Number),
+				},
 				user: null,
 				points: expect.any(Number),
 				year: expect.any(Number),
