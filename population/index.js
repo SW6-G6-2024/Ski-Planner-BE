@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { connectToDb } from '../db';
+import { connectToDb } from '../db/index.js';
 import env from '../config/keys.js';
-import { getQuery } from '../overpass/getQuery';
-import { overpassToGeoJson } from '../overpass/overpassToGeoJson';
-import savePistesFromArea from './savePistesFromArea';
+import getQuery from '../utils/getQuery.js';
+import { overpassToGeoJson } from '../utils/dataFormatter.js';
+import savePistesFromArea from './savePistesFromArea.js';
 
 const query = getQuery([
   61.29560770030594,

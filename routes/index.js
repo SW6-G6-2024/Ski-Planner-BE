@@ -13,7 +13,6 @@ router.get('/api', (req, res) => {
 });
 
 // Route definitions
-router.use('/api/test', testRoutes);
 router.use('/api/routes', routingRoutes);
 router.use('/api/ski-areas', skiAreaRoutes);
 router.use('/api/rate-piste', ratePisteRoutes);

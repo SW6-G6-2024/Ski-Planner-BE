@@ -1,6 +1,11 @@
-function getPisteDirection(coordinates) {
-	const factor = 0.5;
+import { get } from "mongoose";
 
+/**
+ * Returns the angle of the piste in degrees based on the start and end points
+ * @param {Array<Array<Number>>} coordinates Array of coordinates of the piste path
+ * @returns {Number} The angle of the piste in degrees (0-360)
+ */
+export default function getPisteDirection(coordinates) {
   // Get the first and last points of the piste
   const firstPoint = coordinates[0];
   const lastPoint = coordinates[coordinates.length - 1];
@@ -10,15 +15,20 @@ function getPisteDirection(coordinates) {
   return pisteAngle;
 }
 
-function angle(cx, cy, ex, ey) {
-  var dy = ey - cy;
-  var dx = ex - cx;
+/**
+ * Calcutates the angle between two points given their coordinates
+ * @param {Number} sx x-coordinate of the start point
+ * @param {Number} sy y-coordinate of the start point
+ * @param {Number} ex x-coordinate of the end point
+ * @param {Number} ey y-coordinate of the end point
+ * @returns {Number} The angle between the two points in degrees (0-360)
+ */
+export function angle(sx, sy, ex, ey) {
+  var dy = ey - sy;
+  var dx = ex - sx;
   var theta = Math.atan2(dy, dx); // range (-PI, PI]
+  theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
   theta = (theta + 360) % 360; // range [0, 360)
-  //if (theta < 0) theta = 360 + theta; // range [0, 360)
+  if (theta < 0) theta = 360 + theta; // range [0, 360)
   return theta;
 }
-
-getPisteDirection([ [ 12.1272371, 61.2956077 ], [ 12.2668695, 61.3324028 ] ]);
-
-export default getPisteDirection;
