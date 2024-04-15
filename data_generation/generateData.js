@@ -1,8 +1,6 @@
 import { generateWeather, calculatePoints } from './helpers/dataFiller.js';
 import { daysInMonth, getWinterMonth } from './utils/dates.js';
-import PistesModel from '../models/Pistes.js';
-import { connectToDb } from '../db/index.js';
-import keys from '../config/keys.js';
+import getPistes from './utils/getPistes.js';
 
 /**
  * Generates an array of ratings based on generated weather and time
@@ -55,19 +53,7 @@ function getRating(piste) {
 }
 
 
-/**
- * Opens connection to database and finds all piste entries in database
- * @returns {Array<piste>} array of piste objects
- */
-async function getPistes() {
-  /* istanbul ignore next */
-  const db = connectToDb(keys.mongoURI, {
-    dbName: process.env.NODE_ENV === 'production' ? 'prod' : 'test',
-  });
-  const pistes = await PistesModel.find({});
-  db.close();
-  return pistes;
-}
+
 
 
 /**
