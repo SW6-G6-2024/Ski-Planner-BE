@@ -2,7 +2,7 @@ import fs from 'fs';
 
 /**
  * Generate piste ratings and save to file
- * @param {number} entries number of entries to generate
+ * @param {Number} entries number of entries to generate
  */
 function saveToFile(data, fileName, test = false) {
     // Write data to JSON file

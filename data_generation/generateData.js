@@ -6,9 +6,8 @@ import keys from '../config/keys.js';
 
 /**
  * Generates an array of ratings based on generated weather and time
- * @param {number} numEntries number of ratings to generate for each piste
- * @param {string} piste id of piste to generate ratings for
- * @returns array of ratings
+ * @param {Number} numEntries number of ratings to generate for each piste
+ * @returns {Array<rating>} array of ratings
  */
 async function generateRatings(numEntries) {
   const ratings = [];
@@ -58,7 +57,7 @@ function getRating(piste) {
 
 /**
  * Opens connection to database and finds all piste entries in database
- * @returns {} object containing all pistes
+ * @returns {Array<piste>} array of piste objects
  */
 async function getPistes() {
   const db = connectToDb(keys.mongoURI, {
@@ -74,31 +73,31 @@ async function getPistes() {
  * @typedef {object} rating
  * @property {piste} piste piste object
  * @property {string} user user id
- * @property {number} points points for the rating
- * @property {number} year year of the rating
- * @property {number} month month of the rating
- * @property {number} day day of the rating
- * @property {number} hours hours of the rating
- * @property {number} minutes minutes of the rating
+ * @property {Number} points points for the rating
+ * @property {Number} year year of the rating
+ * @property {Number} month month of the rating
+ * @property {Number} day day of the rating
+ * @property {Number} hours hours of the rating
+ * @property {Number} minutes minutes of the rating
  * @property {weather} weather weather object
  */
 
 /**
  * @typedef {object} weather
- * @property {number} code weather code
- * @property {number} temperature temperature in celsius
- * @property {number} visibility visibility in meters
- * @property {number} windDirection wind direction in degrees
- * @property {number} windSpeed wind speed (km/h)
- * @property {number} snowfall snowfall in cm
- * @property {number} snowDepth snow depth in cm
- * @property {number} downpour downpour in mm
+ * @property {Number} code weather code
+ * @property {Number} temperature temperature in celsius
+ * @property {Number} visibility visibility in meters
+ * @property {Number} windDirection wind direction in degrees
+ * @property {Number} windSpeed wind speed (km/h)
+ * @property {Number} snowfall snowfall in cm
+ * @property {Number} snowDepth snow depth in cm
+ * @property {Number} downpour downpour in mm
  */
 
 /**
  * @typedef {object} piste
  * @property {string} name name of the piste
  * @property {string} direction direction of the piste
- * @property {number} id id of the piste
+ * @property {Number} id id of the piste
  * @property {string} skiArea id for ski area of the piste
  */
