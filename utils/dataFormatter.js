@@ -1,6 +1,4 @@
-import axios from "axios";
 import err from "./errorCodes.js";
-import getQuery from "./getQuery.js";
 
 /**
  * Converts overpass api data to geojson format
