@@ -6,7 +6,7 @@ import getPistes from './utils/getPistes.js';
 /**
  * Generates an array of ratings based on generated weather and time
  * @param {Number} numEntries number of ratings to generate for each piste
- * @returns {Array<rating>} array of ratings
+ * @returns {Array<Rating>} array of ratings
  */
 async function generateRatings(numEntries, test = false) {
   const ratings = [];
@@ -30,8 +30,8 @@ export default generateRatings;
 
 /**
  * Generates a rating for a single piste instance based on generated weather and time
- * @param {piste} piste object containing specific information for a single piste instance
- * @returns {rating} rating object
+ * @param {Piste} piste object containing specific information for a single piste instance
+ * @returns {Rating} rating object
  */
 function getRating(piste) {
   const year = 2023; // Year is locked to 2023
@@ -57,40 +57,3 @@ function getRating(piste) {
 
   return rating;
 }
-
-
-
-
-
-/**
- * @typedef {object} rating
- * @property {piste} piste piste object
- * @property {string} user user id
- * @property {Number} points points for the rating
- * @property {Number} year year of the rating
- * @property {Number} month month of the rating
- * @property {Number} day day of the rating
- * @property {Number} hours hours of the rating
- * @property {Number} minutes minutes of the rating
- * @property {weather} weather weather object
- */
-
-/**
- * @typedef {object} weather
- * @property {Number} code weather code
- * @property {Number} temperature temperature in celsius
- * @property {Number} visibility visibility in meters
- * @property {Number} windDirection wind direction in degrees
- * @property {Number} windSpeed wind speed (km/h)
- * @property {Number} snowfall snowfall in cm
- * @property {Number} snowDepth snow depth in cm
- * @property {Number} downpour downpour in mm
- */
-
-/**
- * @typedef {object} piste
- * @property {string} name name of the piste
- * @property {string} direction direction of the piste
- * @property {Number} id id of the piste
- * @property {string} skiArea id for ski area of the piste
- */

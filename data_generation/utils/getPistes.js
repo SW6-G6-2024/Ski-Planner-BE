@@ -4,7 +4,7 @@ import PistesModel from '../../models/Pistes.js';
 
 /**
  * Opens connection to database and finds all piste entries in database
- * @returns {Array<piste>} array of piste objects
+ * @returns {Promise<Array<Piste>>} array of piste objects
  */
 async function getPistes() {
 	/* istanbul ignore next */

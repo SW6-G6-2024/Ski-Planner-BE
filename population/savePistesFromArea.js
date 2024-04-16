@@ -5,7 +5,7 @@ import getPisteDirection from "../utils/getPisteDirection.js";
 
 /**
  * Function that saves pistes from a ski area to the database
- * @param {Object} geoJson - The geoJson object with the pistes/ or other features
+ * @param {Feature | FeatureCollection} obj - The geoJson object with the pistes/ or other features
  * @param {String} skiAreaId - The id of the ski area
  */
 async function savePistesFromArea(obj, skiAreaId) {
@@ -37,8 +37,8 @@ export default savePistesFromArea;
  * Function that checks the parameters of the function savePistesFromArea
  * The object must be a valid GeoJson object and the skiAreaId must be a valid ObjectId
  * Throws an error if the parameters are invalid
- * @param {*} obj the geoJson object with the pistes
- * @param {*} skiAreaId the id of the ski area
+ * @param {Feature | FeatureCollection} obj the geoJson object with the pistes
+ * @param {String} skiAreaId the id of the ski area
  */
 function checkParams(obj, skiAreaId) {
   // Check if the skiAreaId is a valid ObjectId

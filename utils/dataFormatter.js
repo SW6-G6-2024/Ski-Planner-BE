@@ -1,8 +1,10 @@
+import axios from "axios";
 import err from "./errorCodes.js";
+import getQuery from "./getQuery.js";
 
 /**
  * Converts overpass api data to geojson format
- * @param {{elements: Array}} data overpass api data to be converted to geojson
+ * @param {OverpassResult} data overpass api data to be converted to geojson
  * @returns {JSON} geojson data
  */
 const overpassToGeoJson = (data) => {
@@ -35,8 +37,8 @@ const overpassToGeoJson = (data) => {
 
 /**
  * Filters data to only include pistes and lifts
- * @param {Array<overpassRes>} data array of elements to be filtered
- * @returns {Array<overpassRes>} filtered array
+ * @param {Array<OverpassFeature>} data array of elements to be filtered
+ * @returns {Array<OverpassFeature>} filtered array
  */
 const filterData = (data) => {
   return data.filter(element => {
@@ -57,8 +59,3 @@ const filterData = (data) => {
 };
 
 export { overpassToGeoJson };
-
-/**
- * @typedef {Object} overpassRes
- * @property {Object} tags - The tags of the element
- */
