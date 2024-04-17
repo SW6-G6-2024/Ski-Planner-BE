@@ -28,11 +28,13 @@ describe('generateRatings', () => {
 				},
 				user: null,
 				points: expect.any(Number),
-				year: expect.any(Number),
-				month: expect.any(Number),
-				day: expect.any(Number),
-				hours: expect.any(Number),
-				minutes: expect.any(Number),
+				date: {
+					year: expect.any(Number),
+					month: expect.any(Number),
+					day: expect.any(Number),
+					hours: expect.any(Number),
+					minutes: expect.any(Number),
+				},
 				weather: {
 					temperature: expect.any(Number),
 					weatherCode: expect.any(Number),

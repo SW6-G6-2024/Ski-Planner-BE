@@ -34,24 +34,23 @@ export default generateRatings;
  * @returns {Rating} rating object
  */
 function getRating(piste) {
-  const year = 2023; // Year is locked to 2023
-  const month = getWinterMonth(); // Random month between nov and mar
-  const day = Math.floor(Math.random() * daysInMonth(month, year)) + 1; // Random day between 1 and length of month
-  const hours = Math.floor(Math.random() * (17 - 9 + 1)) + 9; // Random hour between 9 and 17
-  const minutes = Math.floor(Math.random() * 60); // Random minute between 0 and 59
-  const time = new Date(year, month - 1, day, hours, minutes);
+  const year = 2023;
+  const month = getWinterMonth();
+  const date = {
+    year: year,
+    month: month,
+    day: Math.floor(Math.random() * daysInMonth(month, year)) + 1,
+    hours: Math.floor(Math.random() * (17 - 9 + 1)) + 9,
+    minutes: Math.floor(Math.random() * 60)
+  }
+  const time = new Date(date.year, date.month - 1, date.day, date.hours, date.minutes);
   const weather = generateWeather(time);
   const points = calculatePoints(weather, time, piste);
-
   const rating = {
     piste: piste,
     user: null,
     points: points,
-    year: time.getFullYear(),
-    month: time.getMonth() + 1,
-    day: time.getDate(),
-    hours: time.getHours(),
-    minutes: time.getMinutes(),
+    date: date,
     weather: weather
   };
 

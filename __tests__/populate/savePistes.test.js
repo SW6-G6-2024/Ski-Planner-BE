@@ -17,6 +17,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await db.collection('ski-areas').deleteMany({});
+  await db.collection('pistes').deleteMany({});
   await mongoose.connection.close();
 });
 

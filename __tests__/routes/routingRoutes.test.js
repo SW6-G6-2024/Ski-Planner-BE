@@ -157,6 +157,7 @@ describe('Routing Routes', () => {
 afterAll(async () => {
 	// You're my wonderwaaaaallllll
 	await db.collection('ski-areas').deleteMany({});
+  await db.collection('pistes').deleteMany({});
 	await mongoose.connection.close();
 	server.close();
 });
