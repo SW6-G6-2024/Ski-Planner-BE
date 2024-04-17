@@ -78,7 +78,6 @@ async (req, res) => {
 		await newRating.save();
 		res.status(200).send("Successfully rated piste");
 	} catch (error) {
-		console.log(error);
 		res.status(400).send(error);
 	}
 });
