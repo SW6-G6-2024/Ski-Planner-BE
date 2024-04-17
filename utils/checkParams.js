@@ -3,13 +3,8 @@ import mongoose from 'mongoose';
 
 /**
  * Checks if the parameters are valid
- * @param {Array<Object>} params - Array of objects containing the parameters to be checked
- * @param {String} params.name - The name of the parameter
- * @param {Object} params.value - The value to be checked
- * @param {Boolean} params.id - (Optional) Whether the parameter is an id
- * @param {Function} params.func - (Optional) The function to be used to check the parameter
- * @param {Object} params.funcErr - (Optional) The error to be sent if the parameter is invalid
- * @param {Object} res - Express response object
+ * @param {Array<Param>} params - Array of objects containing the parameters to be checked
+ * @param {Express.Response} res - Express response object
  */
 export default (params, res) => {
 	for (const param of params) {

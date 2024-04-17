@@ -5,7 +5,6 @@ const PistesSchema = new Schema({
   _id: {
     type: Number,
     required: [true, 'Id is required'],
-    unique: true,
   },
   name: {
     type: String,
@@ -16,8 +15,12 @@ const PistesSchema = new Schema({
     ref: 'ski-areas',
     required: [true, 'Ski Area Id is required'],
   },
+  direction: {
+    type: Number,
+    required: [true, 'Direction is required'],
+  },
   modifiedAt: { type: Date, default: Date.now },
-}, { _id: false });
+});
 
 const PistesModel = model('pistes', PistesSchema);
 export default PistesModel;

@@ -1,3 +1,4 @@
+import calculateWindEffect from "./calcWindEffect.js";
 import { getTempAndVisWeight } from "./getTempAndVis.js";
 import fs from "fs";
 
@@ -8,13 +9,29 @@ const wsFactor = 2.25;
 const tFactor = 1.75;
 const sfFactor = 2;
 const dpFactor = 2.5;
-const sdFactor = 1.5;
-const vFactor = 1.75;
+const sdFactor = 1.65;
+const vFactor = 1.5;
+const timeFactor = 0.20;
+
+/**
+ * Calculates the time factor for a given date object
+ * @param {Date} time The time to calculate the factor for
+ * @returns {Number} the time factor for the given time
+ */
+function getTimeFactor(time) {
+  const hours = time.getHours();
+  const minutes = time.getMinutes();
+  const totalMinutes = hours * 60 + minutes;
+
+  const minSince9 = totalMinutes - 9 * 60;
+  const factor = 1 - (minSince9 / (8 * 60)) * timeFactor;
+  return factor;
+}
 
 /**
  * Generates a random weather object based on the given time
  * @param {Date} time The time to generate the weather for
- * @returns a weather object with random values
+ * @returns {import("../generateData.js").weather} a weather object with random values
  */ 
 function generateWeather(time) {
   const weatherCodes = [
@@ -73,7 +90,7 @@ function generateWeather(time) {
     windDirection: Math.floor(Math.random() * 360), // Random wind direction between 0 and 359 degrees
     snowfall: (Math.ceil(Math.random() * 10) + 1) * weatherWeights.snowfall, // Random snowfall between 1 and 10 cm
     snowDepth: randn_bm(40, 300, 3), // Random snow depth between 40 and 100 cm
-    downpour: (Math.ceil(Math.random() * 10) + 1) * weatherWeights.downpour, // Random downpour between 1 and 10 mm
+    rain: (Math.ceil(Math.random() * 10) + 1) * weatherWeights.rain, // Random rain between 1 and 10 mm
     visibility: (500 + Math.random() * 1500) * temperatureWeights.visibility // Random visibility between 500 and 2000 meters
   };
   
@@ -81,44 +98,38 @@ function generateWeather(time) {
 
 /**
  * Calculates the points for a given set of weather conditions
- * @param {object} weather The weather conditions to calculate the points for
- * @returns the points for the given weather conditions
+ * @param {import("../generateData.js").weather} weather The weather conditions to calculate the points for
+ * @param {import("../generateData.js").piste} piste The piste to calculate the points for
+ * @returns {Number} the points for the given weather conditions
  */
-function calculatePoints(weather) {
+function calculatePoints(weather, time, piste) {
+  // Generate a random number of points between 1 and 5 based on a normal distribution
   const points = Math.round(randn_bm(1, 5, 1));
-  //console.log("p: ", points)
 
-  const wSpeedWeight = 1 - (weather.windSpeed / (25 * wsFactor));
-  //console.log("ws: ", wSpeedWeight)
+  const wSpeedWeight = 1 - (weather.windSpeed * calculateWindEffect(weather.windDirection, piste.direction) / (25 * wsFactor));
+  // Calculate the wind effect on the skiing conditions and multyiply it with the wind speed weight
+  const windWeight = wSpeedWeight;
   const tempWeight = 1 - (Math.abs(weather.temperature / (16 * tFactor))); 
-  //console.log("t: ", tempWeight)
   const snowfallWeight = 1 - (weather.snowfall / (10 * sfFactor));
-  //console.log("sf: ",snowfallWeight)
-  const downpourWeight = 1 - (weather.downpour / (10 * dpFactor));
-  //console.log("dp: ",downpourWeight)
+  const rainWeight = 1 - (weather.rain / (10 * dpFactor));
   const snowDepthWeight = 1 + (weather.snowDepth / (300 * sdFactor));
-  //console.log("sd: ",snowDepthWeight)
   const visibilityWeight = 1 + (weather.visibility / (2000 * vFactor));
-  //console.log("vis: ",visibilityWeight)
-  //console.log("---------------------")
+  
+  const timeWeight = getTimeFactor(time);
+  
 
-  const finalPoints = Math.round(points * wSpeedWeight * tempWeight * snowfallWeight * downpourWeight * snowDepthWeight * visibilityWeight);
+  const finalPoints = Math.round(points * windWeight * tempWeight * snowfallWeight * rainWeight * snowDepthWeight * visibilityWeight * timeWeight);
 
-  // Points can't exceed 5
-  if (finalPoints > 5) {
-    return 5;
-  }
-  else {
-    return finalPoints;
-  }
+  // Points can't exceed 5 or go below 1
+  return Math.min(Math.max(1, finalPoints), 5);
 }
 
 /**
- * // Generates random numbers between bounds with a skew. Heavily inspired by https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
- * @param {number} min Minimum bound
- * @param {number} max Maximum bound
- * @param {number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution
- * @returns 
+ * // Generates random numbers between bounds with a skew. Taken from: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+ * @param {Number} min Minimum bound
+ * @param {Number} max Maximum bound
+ * @param {Number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution
+ * @returns {Number} a random number between min and max with a skew
  */
 function randn_bm(min, max, skew) {
   let u = 0, v = 0;
@@ -127,6 +138,7 @@ function randn_bm(min, max, skew) {
   let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
   
   num = num / 10.0 + 0.5; // Translate to 0 -> 1
+  /* istanbul ignore next */
   if (num > 1 || num < 0) 
     num = randn_bm(min, max, skew); // resample between 0 and 1 if out of range
   

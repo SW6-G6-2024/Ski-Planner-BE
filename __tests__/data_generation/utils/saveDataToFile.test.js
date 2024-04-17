@@ -10,20 +10,20 @@ describe('saveDataToFile', () => {
 
 		// Test case 1: Save data to file and check if the file exists
 		const data = { name: 'John Doe', age: 30 };
-		saveDataToFile(data, filePath);
+		saveDataToFile(data, filePath, true);
 		// TODO: Add assertion to check if the file exists
 		expect(fs.existsSync(filePath)).toBe(true);
 		expect(fs.readFileSync(filePath).toString()).toBe(JSON.stringify(data, null, 2));
 
 		// Test case 2: Save empty data to same file and check if the file has been overwritten
 		const emptyData = {};
-		saveDataToFile(emptyData, filePath);
+		saveDataToFile(emptyData, filePath, true);
 		expect(fs.existsSync(filePath)).toBe(true);
 		expect(fs.readFileSync(filePath).toString()).toBe(JSON.stringify(emptyData, null, 2));
 
 		// Test case 3: Save new data to same file and check if the file has been overwritten
 		const newData = { name: 'Jane Doe', age: 25 };
-		saveDataToFile(newData, filePath);
+		saveDataToFile(newData, filePath, true);
 		expect(fs.existsSync(filePath)).toBe(true);
 		expect(fs.readFileSync(filePath).toString()).toBe(JSON.stringify(newData, null, 2));
 	});
@@ -34,7 +34,7 @@ describe('saveDataToFile', () => {
 
 		// Test case 1: Save empty data to file and check if the file exists
 		const data = {};
-		saveDataToFile(data, filePath);
+		saveDataToFile(data, filePath, true);
 		expect(fs.existsSync(filePath)).toBe(true);
 		expect(fs.readFileSync(filePath).toString()).toBe(JSON.stringify(data, null, 2));
 	});

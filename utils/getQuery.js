@@ -1,7 +1,6 @@
-
 /**
  * Returns the Overpass API query string for fetching downhill pistes and ski lifts within a bounding box
- * @param {Array} bounds - [minLon, minLat, maxLon, maxLat]
+ * @param {Array<Number>} bounds - [minLon, minLat, maxLon, maxLat]
  * @returns {String} Overpass API query string
  */
 export default (bounds) => (

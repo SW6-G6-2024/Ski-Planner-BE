@@ -11,8 +11,8 @@ const router = express.Router();
 router.get('/:id', 
 /**
  * GET request for ski area by ID
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Express.Request} req request object
+ * @param {Express.Response} res response object
  * @returns 
  */
 async (req, res) => {

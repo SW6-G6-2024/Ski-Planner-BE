@@ -50,7 +50,8 @@
             "/node_modules/",
             "/__tests__/",
             "/models/",
-            "/config/"
+            "/config/",
+            "/db/"
         ],
         "transform": {},
         "modulePathIgnorePatterns": [

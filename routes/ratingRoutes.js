@@ -36,8 +36,7 @@ async (req, res) => {
 	], res)) {
 		return;
 	}
-	
-	const piste = await PisteModel.findOne({ _id: id });
+	const piste = await PisteModel.findById(id);
 
 	if (!piste) {
 		return res.status(400).send(err.pistes.notFound);
