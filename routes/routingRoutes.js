@@ -23,7 +23,7 @@ router.post('/generate-route',
 			return;
 		}
 
-		let skiAreaInstance
+		let skiAreaInstance;
 
 		try {
 			skiAreaInstance = await findSkiArea(skiArea);
@@ -103,7 +103,7 @@ function checkInput(start, end, skiArea, res) {
 		value: skiArea,
 		id: true,
 	}
-	], res)
+	], res);
 }
 
 export default router;
