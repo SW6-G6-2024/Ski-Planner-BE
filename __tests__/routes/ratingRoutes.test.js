@@ -31,17 +31,17 @@ describe('Rating routes', () => {
     
     await db.collection('pistes').insertOne({
       name: 'Test Piste',
-      id: 1234,
+      _id: 1234,
       skiAreaId: skiArea.insertedId,
     });
 
-    piste = await db.collection('pistes').findOne({ id: 1234 });
+    piste = await db.collection('pistes').findOne({ _id: 1234 });
   });
 
   test('should successfully rate a piste', async () => {
     axios.post = jest.fn().mockResolvedValue({data: weatherData});
     const response = await request(app)
-      .post('/api/rate-piste/' + piste.id)
+      .post('/api/rate-piste/' + piste._id)
       .send({ rating: 4 });
     
     expect(response.statusCode).toBe(200);
@@ -70,14 +70,13 @@ describe('Rating routes', () => {
     // First a brand new piste is created with a fake skiAreaId
     const insertedPiste = await db.collection('pistes').insertOne({
       name: 'Test Piste 2',
-      id: 12345,
+      _id: 12345,
       skiAreaId: "not a valid skiAreaId",
     });
 
     piste = await db.collection('pistes').findOne({ _id: insertedPiste.insertedId });
-
     const response = await request(app)
-      .post('/api/rate-piste/' + piste.id)
+      .post('/api/rate-piste/' + piste._id)
       .send({ rating: 4 });
       
     expect(response.statusCode).toBe(400);

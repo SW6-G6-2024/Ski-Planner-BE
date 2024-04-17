@@ -6,7 +6,7 @@ import getPistes from './utils/getPistes.js';
 /**
  * Generates an array of ratings based on generated weather and time
  * @param {Number} numEntries number of ratings to generate for each piste
- * @returns {Array<Rating>} array of ratings
+ * @returns {Promise<Array<Rating>>} array of ratings
  */
 async function generateRatings(numEntries, test = false) {
   const ratings = [];

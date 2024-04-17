@@ -15,15 +15,16 @@ async function savePistesFromArea(obj, skiAreaId) {
     /* istanbul ignore next */
     if (pisteData.properties["piste:type"] === "downhill") {
       try {
-        await PistesModel.findOneAndUpdate({ id: pisteData.id }, {
+        await PistesModel.findOneAndUpdate({ _id: pisteData.id }, {
           $set: {
-            id: pisteData.id,
+            _id: pisteData.id,
             name: pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown",
             skiAreaId: skiAreaId,
             direction: getPisteDirection(pisteData.geometry.coordinates),
           }
         }, { upsert: true });
       } catch (error) {
+        console.error(error);
         /* istanbul ignore next */
         throw err.pistes.saveError;
       }
