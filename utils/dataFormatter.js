@@ -43,8 +43,8 @@ const filterData = (data) => {
     const isPiste = element.tags["piste:type"] === "downhill";
     const isLift = element.tags["aerialway"]; // Add specific lift types to include or exclude here
     const difficulty = element.tags["piste:difficulty"];
-    const ref = element.tags["ref"];
-    const name = element.tags["name"];
+    const ref = element.tags["ref"] || element.tags["piste:ref"];
+    const name = element.tags["name"] || element.tags["piste:name"];
 
     if (isPiste) {
       // Exclude specific difficulties and ensure 'ref' is present for pistes

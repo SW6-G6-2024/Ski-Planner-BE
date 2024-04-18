@@ -9,6 +9,8 @@ export default (bounds) => (
 (
   way["piste:type"="downhill"]["piste:difficulty"!="freeride"]["piste:difficulty"]["ref"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]}); 
   way["piste:type"="downhill"]["piste:difficulty"!="freeride"]["piste:difficulty"]["name"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});
+  way["piste:type"="downhill"]["piste:difficulty"!="freeride"]["piste:difficulty"]["piste:ref"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]}); 
+  way["piste:type"="downhill"]["piste:difficulty"!="freeride"]["piste:difficulty"]["piste:name"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});
   // Fetch downhill pistes within the bounding box
   way["piste:type"="downhill"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});
   // Fetch all ski lifts within the bounding box
