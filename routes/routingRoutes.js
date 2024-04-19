@@ -26,7 +26,7 @@ router.post('/generate-route',
 			return;
 		}
 
-		let skiAreaInstance
+		let skiAreaInstance;
 
 		try {
 			skiAreaInstance = await findSkiArea(skiArea);
@@ -40,16 +40,16 @@ router.post('/generate-route',
 		if (!apiRes?.data)
 			return res.status(500).send(err.routeGeneration.overpassApiError);
 
-    const centerBounds = getAreaCenter(skiAreaInstance.bounds);
+		const centerBounds = getAreaCenter(skiAreaInstance.bounds);
 		let weatherObj, prediction;
 		try {
 			weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
-    	prediction = await getPredictedRatings(apiRes.data, weatherObj);
+			prediction = await getPredictedRatings(apiRes.data, weatherObj);
 		} catch (error) {
 			return res.status(500).send(error);
 		}
 
-    const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
+		const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
 
 		// Call the route generation service
 		let result;
@@ -117,7 +117,7 @@ function checkInput(start, end, skiArea, res) {
 		value: skiArea,
 		id: true,
 	}
-	], res)
+	], res);
 }
 
 export default router;

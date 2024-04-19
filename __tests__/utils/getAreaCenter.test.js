@@ -17,7 +17,7 @@ describe('getAreaCenter', () => {
     });
 
     it('should return the center of the area when bounds are positive', () => {
-        const bounds5 = [10, 6, 8, 4]
+        const bounds5 = [10, 6, 8, 4];
         expect(getAreaCenter(bounds5)).toEqual({ lat: 9, lon: 5 });
     });
 

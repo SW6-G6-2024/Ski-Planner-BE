@@ -12,4 +12,4 @@ async function findSkiArea(id) {
 	return skiArea;
 }
 
-export { findSkiArea }
+export { findSkiArea };

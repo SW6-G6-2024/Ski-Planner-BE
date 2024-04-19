@@ -25,4 +25,4 @@ export default [
     { piste: 31143308, rating: 2 },
     { piste: 31143536, rating: 2 },
     { piste: 31143566, rating: 2 },
-]
+];

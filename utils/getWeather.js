@@ -14,7 +14,7 @@ async function getCurrentWeather(lat, lon) {
   const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,rain,snowfall,weather_code,wind_speed_10m,wind_direction_10m&hourly=snow_depth,visibility&start_date=${today}&end_date=${today}`;
   let res;
   try {
-    res = await axios.get(apiUrl)
+    res = await axios.get(apiUrl);
   } catch (error) {
     console.error('Error getting weather', error);
     throw errorCodes.routeGeneration.weatherError;

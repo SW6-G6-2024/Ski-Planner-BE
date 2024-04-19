@@ -1,5 +1,5 @@
 import axios from "axios";
-import getPisteDirection from "./getPisteDirection.js"
+import getPisteDirection from "./getPisteDirection.js";
 import env from '../config/keys.js';
 import getLatestArrayElement from "./getLatestArrayElement.js";
 import errorCodes from "./errorCodes.js";
@@ -15,7 +15,7 @@ async function getPredictedRatings(body, weather) {
         return {
           'id': element.id,
           'direction': getPisteDirection(element.geometry)
-        }
+        };
       }),
     'weather': {
       'temperature': weather.current.temperature_2m,
