@@ -45,6 +45,7 @@ router.post('/generate-route',
     const weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
     const prediction = await getPredictedRatings(apiRes.data, weatherObj);
     const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
+	console.log(geoJson)
 
 		// Call the route generation service
 		let result;

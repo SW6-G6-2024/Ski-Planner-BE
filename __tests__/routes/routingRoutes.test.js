@@ -8,6 +8,8 @@ import { jest } from '@jest/globals';
 import axios from 'axios';
 import overpassExampleData from '../fixtures/overpassExampleData.js';
 import generatedRouteExample from '../fixtures/generatedRouteExample.js';
+import weatherResponseExample from '../fixtures/weatherResponse.js';
+import ratingResponseExample from '../fixtures/ratingResponseExample.js';
 
 const app = express();
 app.use(express.json());
@@ -32,8 +34,15 @@ let skiArea = {
 };
 
 axios.post = jest.fn()
+	// overpass response
 	.mockResolvedValueOnce({ data: overpassExampleData })
+	// weather response
+	.mockResolvedValueOnce({ data: weatherResponseExample})
+	// predicted ratings response
+	.mockResolvedValueOnce({ data: ratingResponseExample})
+	// route generation response
 	.mockResolvedValueOnce({ data: generatedRouteExample});
+	
 
 describe('Routing Routes', () => {
 	let id;

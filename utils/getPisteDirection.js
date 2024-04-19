@@ -9,7 +9,7 @@ export default function getPisteDirection(coordinates) {
   const lastPoint = coordinates[coordinates.length - 1];
   let pisteAngle;
 
-  if (typeof firstPoint === Array || typeof lastPoint === Array) {
+  if (Array.isArray(firstPoint) || Array.isArray(lastPoint)) {
     pisteAngle = angle(firstPoint[0], firstPoint[1], lastPoint[0], lastPoint[1]);
   } else {
     pisteAngle = angle(firstPoint.lat, firstPoint.lon, lastPoint.lat, lastPoint.lon);
