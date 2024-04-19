@@ -26,12 +26,20 @@ export default {
 			code: "E0102",
 			message: "Could not fetch data from overpass API",
 		},
-		routeGenerationError: {
+		weatherError: {
 			code: "E0103",
+			message: "Weather service is currently not responding",
+		},
+		predictionError: {
+			code: "E0104",
+			message: "Prediction service is currently not responding",
+		},
+		routeGenerationError: {
+			code: "E0105",
 			message: "Route generation service is currently not responding",
 		},
 		noRouteFound: {
-			code: "E0104",
+			code: "E0106",
 			message: "No route found",
 		},
 	}, 

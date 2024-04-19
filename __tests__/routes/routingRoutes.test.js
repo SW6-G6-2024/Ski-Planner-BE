@@ -33,16 +33,7 @@ let skiArea = {
 	facilities: []
 };
 
-axios.post = jest.fn()
-	// overpass response
-	.mockResolvedValueOnce({ data: overpassExampleData })
-	// weather response
-	.mockResolvedValueOnce({ data: weatherResponseExample})
-	// predicted ratings response
-	.mockResolvedValueOnce({ data: ratingResponseExample})
-	// route generation response
-	.mockResolvedValueOnce({ data: generatedRouteExample});
-	
+
 
 describe('Routing Routes', () => {
 	let id;
@@ -53,6 +44,16 @@ describe('Routing Routes', () => {
 	});
 
 	test('POST /api/routes/generate-route should return shortest route from a to b', async () => {
+		// overpass response
+		axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
+			// predicted ratings response
+			.mockResolvedValueOnce({ data: ratingResponseExample })
+			// route generation response
+			.mockResolvedValueOnce({ data: generatedRouteExample });
+		
+		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
+
 		const data = {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
@@ -67,7 +68,7 @@ describe('Routing Routes', () => {
 			res: generatedRouteExample
 		});
 	});
-
+	
 	test('POST /api/routes/generate-route should return 400 if start or end is missing', async () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
@@ -146,27 +147,39 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.routeGeneration.overpassApiError);
 	});
 
+	// TODO: test for invalid weather data
+
+	// TODO: test for invalid rating data
+
 	test('POST /api/routes/generate-route should return 500 if route generation service is not responding or result is empty', async () => {
-		axios.post.mockResolvedValueOnce({ data: overpassExampleData }).mockRejectedValueOnce();
+		axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
+			.mockResolvedValueOnce({ data: ratingResponseExample })
+			.mockRejectedValueOnce();
+		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data(id));
 		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.routeGenerationError);
 
-		axios.post.mockResolvedValueOnce({ data: overpassExampleData }).mockResolvedValueOnce({ data: null });
+		axios.post.mockResolvedValueOnce({ data: overpassExampleData })
+			.mockResolvedValueOnce({ data: ratingResponseExample })
+			.mockResolvedValueOnce({ data: null });
+		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
 		const response2 = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data(id));
 		expect(response2.status).toBe(500);
 		expect(response2.body).toEqual(err.routeGeneration.routeGenerationError);
 	});
+	
 });
 
 afterAll(async () => {
 	// You're my wonderwaaaaallllll
 	await db.collection('ski-areas').deleteMany({});
-  await db.collection('pistes').deleteMany({});
+	await db.collection('pistes').deleteMany({});
 	await mongoose.connection.close();
 	server.close();
 });

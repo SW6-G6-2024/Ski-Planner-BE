@@ -40,10 +40,15 @@ router.post('/generate-route',
 		if (!apiRes?.data)
 			return res.status(500).send(err.routeGeneration.overpassApiError);
 
-
     const centerBounds = getAreaCenter(skiAreaInstance.bounds);
-    const weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
-    const prediction = await getPredictedRatings(apiRes.data, weatherObj);
+		let weatherObj, prediction;
+		try {
+			weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
+    	prediction = await getPredictedRatings(apiRes.data, weatherObj);
+		} catch (error) {
+			return res.status(500).send(error);
+		}
+
     const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
 
 		// Call the route generation service
