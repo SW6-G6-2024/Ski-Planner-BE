@@ -42,7 +42,7 @@ function getRating(piste) {
     day: Math.floor(Math.random() * daysInMonth(month, year)) + 1,
     hours: Math.floor(Math.random() * (17 - 9 + 1)) + 9,
     minutes: Math.floor(Math.random() * 60)
-  }
+  };
   const time = new Date(date.year, date.month - 1, date.day, date.hours, date.minutes);
   const weather = generateWeather(time);
   const points = calculatePoints(weather, time, piste);

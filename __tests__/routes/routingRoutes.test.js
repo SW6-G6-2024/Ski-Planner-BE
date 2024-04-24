@@ -8,6 +8,9 @@ import { jest } from '@jest/globals';
 import axios from 'axios';
 import overpassExampleData from '../fixtures/overpassExampleData.js';
 import generatedRouteExample from '../fixtures/generatedRouteExample.js';
+import weatherResponseExample from '../fixtures/weatherResponse.js';
+import ratingResponseExample from '../fixtures/ratingResponseExample.js';
+import errorCodes from '../../utils/errorCodes.js';
 
 const app = express();
 app.use(express.json());
@@ -31,9 +34,7 @@ let skiArea = {
 	facilities: []
 };
 
-axios.post = jest.fn()
-	.mockResolvedValueOnce({ data: overpassExampleData })
-	.mockResolvedValueOnce({ data: generatedRouteExample});
+
 
 describe('Routing Routes', () => {
 	let id;
@@ -44,6 +45,16 @@ describe('Routing Routes', () => {
 	});
 
 	test('POST /api/routes/generate-route should return shortest route from a to b', async () => {
+		// overpass response
+		axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
+			// predicted ratings response
+			.mockResolvedValueOnce({ data: ratingResponseExample })
+			// route generation response
+			.mockResolvedValueOnce({ data: generatedRouteExample });
+		
+		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
+
 		const data = {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
@@ -58,7 +69,7 @@ describe('Routing Routes', () => {
 			res: generatedRouteExample
 		});
 	});
-
+	
 	test('POST /api/routes/generate-route should return 400 if start or end is missing', async () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
@@ -137,27 +148,62 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.routeGeneration.overpassApiError);
 	});
 
+
+	test('POST /api/routes/generate-route should return error if failed to fetch weather data', async () => {
+    axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
+		axios.get = jest.fn().mockRejectedValueOnce();
+
+    const response = await request(app)
+      .post('/api/routes/generate-route')
+      .send(data(id));
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual(errorCodes.routeGeneration.weatherError);
+  });
+
+	// TODO: test for invalid rating data
+  test('POST /api/routes/generate-route should return error if invalid rating', async () => {
+    axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
+      .mockRejectedValueOnce();
+		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
+
+    const response = await request(app)
+      .post('/api/routes/generate-route')
+      .send(data(id));
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual(errorCodes.routeGeneration.predictionError);
+  });
+
 	test('POST /api/routes/generate-route should return 500 if route generation service is not responding or result is empty', async () => {
-		axios.post.mockResolvedValueOnce({ data: overpassExampleData }).mockRejectedValueOnce();
+		axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
+			.mockResolvedValueOnce({ data: ratingResponseExample })
+			.mockRejectedValueOnce();
+		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data(id));
 		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.routeGenerationError);
 
-		axios.post.mockResolvedValueOnce({ data: overpassExampleData }).mockResolvedValueOnce({ data: null });
+		axios.post.mockResolvedValueOnce({ data: overpassExampleData })
+			.mockResolvedValueOnce({ data: ratingResponseExample })
+			.mockResolvedValueOnce({ data: null });
+		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
 		const response2 = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data(id));
 		expect(response2.status).toBe(500);
 		expect(response2.body).toEqual(err.routeGeneration.routeGenerationError);
 	});
+	
 });
 
 afterAll(async () => {
 	// You're my wonderwaaaaallllll
 	await db.collection('ski-areas').deleteMany({});
-  await db.collection('pistes').deleteMany({});
+	await db.collection('pistes').deleteMany({});
 	await mongoose.connection.close();
 	server.close();
 });

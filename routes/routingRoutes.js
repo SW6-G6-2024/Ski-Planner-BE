@@ -7,6 +7,9 @@ import checkParams from '../utils/checkParams.js';
 import getQuery from '../utils/getQuery.js';
 import env from '../config/keys.js';
 import { findSkiArea } from '../utils/queryInDB.js';
+import getAreaCenter from '../utils/getAreaCenter.js';
+import getCurrentWeather from '../utils/getWeather.js';
+import { getPredictedRatings, consolidateRatingInGeoJSON } from '../utils/predictedRatings.js';
 
 const router = express.Router();
 
@@ -23,7 +26,7 @@ router.post('/generate-route',
 			return;
 		}
 
-		let skiAreaInstance
+		let skiAreaInstance;
 
 		try {
 			skiAreaInstance = await findSkiArea(skiArea);
@@ -37,6 +40,17 @@ router.post('/generate-route',
 		if (!apiRes?.data)
 			return res.status(500).send(err.routeGeneration.overpassApiError);
 
+		const centerBounds = getAreaCenter(skiAreaInstance.bounds);
+		let weatherObj, prediction;
+		try {
+			weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
+			prediction = await getPredictedRatings(apiRes.data, weatherObj);
+		} catch (error) {
+			return res.status(500).send(error);
+		}
+
+		const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
+
 		// Call the route generation service
 		let result;
 		try {
@@ -44,7 +58,7 @@ router.post('/generate-route',
 				data: {
 					start: start,
 					end: end,
-					geoJson: apiRes.data,
+					geoJson: geoJson,
 				}
 			});
 		} catch (error) {
@@ -103,7 +117,7 @@ function checkInput(start, end, skiArea, res) {
 		value: skiArea,
 		id: true,
 	}
-	], res)
+	], res);
 }
 
 export default router;
