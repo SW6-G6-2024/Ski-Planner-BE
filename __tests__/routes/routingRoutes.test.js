@@ -10,6 +10,7 @@ import overpassExampleData from '../fixtures/overpassExampleData.js';
 import generatedRouteExample from '../fixtures/generatedRouteExample.js';
 import weatherResponseExample from '../fixtures/weatherResponse.js';
 import ratingResponseExample from '../fixtures/ratingResponseExample.js';
+import errorCodes from '../../utils/errorCodes.js';
 
 const app = express();
 app.use(express.json());
@@ -147,9 +148,32 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.routeGeneration.overpassApiError);
 	});
 
-	// TODO: test for invalid weather data
+
+	test('POST /api/routes/generate-route should return error if failed to fetch weather data', async () => {
+    axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
+		axios.get = jest.fn().mockRejectedValueOnce();
+
+    const response = await request(app)
+      .post('/api/routes/generate-route')
+      .send(data(id));
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual(errorCodes.routeGeneration.weatherError);
+  });
 
 	// TODO: test for invalid rating data
+  test('POST /api/routes/generate-route should return error if invalid rating', async () => {
+    axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
+      .mockRejectedValueOnce();
+		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
+
+    const response = await request(app)
+      .post('/api/routes/generate-route')
+      .send(data(id));
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual(errorCodes.routeGeneration.predictionError);
+  });
 
 	test('POST /api/routes/generate-route should return 500 if route generation service is not responding or result is empty', async () => {
 		axios.post = jest.fn()
