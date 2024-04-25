@@ -84,12 +84,3 @@ const filterData = (data) => {
 };
 
 export { overpassToGeoJson };
-
-import overpassExampleData from "../__tests__/fixtures/overpassExampleData.js";
-
-const geoJson = overpassToGeoJson(overpassExampleData);
-
-geoJson.features.forEach((feature, index, array) => {
-  console.log(`Props ${feature.properties.name} at index ${index} of ${array.length - 1}`);
-  console.log(`Properties: ${Object.keys(feature.properties).join(', ')}`);
-});
