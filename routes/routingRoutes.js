@@ -49,7 +49,6 @@ router.post('/generate-route',
 
 			const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
 
-			console.log('generateRoute(', start, end, geoJson, ')');
 			result = await generateRoute(start, end, geoJson);
 		} catch (error) {
 			return res.status(500).send(error);
