@@ -21,6 +21,25 @@ export default {
 		},
 		{
 			"type": "way",
+			"id": 123,
+			"geometry": [
+				{
+					"lat": 60.305757,
+					"lon": 12.1913807
+				},
+				{
+					"lat": 61.3069892,
+					"lon": 12.1943646
+				}
+			],
+			"tags": {
+				"piste:type": "downhill",
+				"piste:difficulty": "easy",
+				"piste:name": "Example Piste 2"
+			}
+		},
+		{
+			"type": "way",
 			"id": 456,
 			"geometry": [
 				{
@@ -34,7 +53,7 @@ export default {
 			],
 			"tags": {
 				"aerialway": "gondola",
-				"name": "Example Lift"
+				"ref": "Example Lift"
 			}
 		},
 		{
@@ -52,7 +71,7 @@ export default {
 			],
 			"tags": {
 				"highway": "path",
-				"name": "Example Path"
+				"ref": "Example Path"
 			}
 		}
 	]
