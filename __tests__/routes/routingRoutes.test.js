@@ -43,7 +43,7 @@ let skiArea = {
  */
 function setupRequestResponses(overpassResolve, ratingResolve, routeResolve, weatherResolve) {
 	axios.post = jest.fn()
-		.mockResolvedValueOnce(overpassResolve ? {  data: overpassExampleData } : { data: null})
+		.mockResolvedValueOnce(overpassResolve ? {  data: overpassExampleData } : { data: null});
 	ratingResolve ? axios.post.mockResolvedValueOnce({ data: ratingResponseExample }) : axios.post.mockRejectedValueOnce();
 	routeResolve ? axios.post.mockResolvedValueOnce({ data: generatedRouteExample }) : axios.post.mockRejectedValueOnce();
 	axios.get = weatherResolve ? jest.fn().mockResolvedValueOnce({ data: weatherResponseExample }) : jest.fn().mockRejectedValueOnce();
@@ -146,12 +146,6 @@ describe('Routing Routes', () => {
 		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.overpassApiError);
 	});
-
-	async function send(data) {
-		return await request(app)
-			.post('/api/routes/generate-route')
-			.send(data);
-	}
 
 	test('POST /api/routes/generate-route should return error if failed to fetch weather data', async () => {
 		setupRequestResponses(true, true, true, false);

@@ -5,7 +5,6 @@ import err from '../utils/errorCodes.js';
 import { isPoint } from '../utils/validators/pointValidator.js';
 import checkParams from '../utils/validators/checkParams.js';
 import getQuery from '../utils/helpers/getQuery.js';
-import env from '../config/keys.js';
 import { findSkiArea } from '../utils/helpers/queryInDB.js';
 import getAreaCenter from '../utils/helpers/getAreaCenter.js';
 import getCurrentWeather from '../utils/helpers/getWeather.js';
