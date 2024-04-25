@@ -118,7 +118,7 @@ function calculatePoints(weather, time, piste) {
   const timeWeight = getTimeFactor(time);
   
 
-  const finalPoints = Math.round(points * windWeight * tempWeight * snowfallWeight * rainWeight * snowDepthWeight * visibilityWeight * timeWeight);
+  const finalPoints = Math.round((points * windWeight * tempWeight * snowfallWeight * rainWeight * snowDepthWeight * visibilityWeight * timeWeight) * piste.weight);
 
   // Points can't exceed 5 or go below 1
   return Math.min(Math.max(1, finalPoints), 5);
@@ -150,4 +150,4 @@ function randn_bm(min, max, skew) {
   return num;
 }
 
-export { generateWeather, calculatePoints };
+export { generateWeather, calculatePoints, randn_bm };

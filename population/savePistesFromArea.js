@@ -2,6 +2,7 @@ import PistesModel from "../models/Pistes.js";
 import err from "../utils/errorCodes.js";
 import mongoose from "mongoose";
 import getPisteDirection from "../utils/getPisteDirection.js";
+import { randn_bm } from "../data_generation/helpers/dataFiller.js";
 
 /**
  * Function that saves pistes from a ski area to the database
@@ -21,6 +22,7 @@ async function savePistesFromArea(obj, skiAreaId) {
             name: pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown",
             skiAreaId: skiAreaId,
             direction: getPisteDirection(pisteData.geometry.coordinates),
+            weight: randn_bm(0.5, 1.5, 1)
           }
         }, { upsert: true });
       } catch (error) {

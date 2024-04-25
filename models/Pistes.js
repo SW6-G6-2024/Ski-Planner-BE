@@ -20,6 +20,10 @@ const PistesSchema = new Schema({
     required: [true, 'Direction is required'],
   },
   modifiedAt: { type: Date, default: Date.now },
+  weight: {
+    type: Number,
+    default: 1,
+  },
 });
 
 const PistesModel = model('pistes', PistesSchema);
