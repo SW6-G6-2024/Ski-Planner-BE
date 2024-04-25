@@ -16,8 +16,7 @@ async function getCurrentWeather(lat, lon) {
   try {
     res = await axios.get(apiUrl);
   } catch (error) {
-    console.log(res?.data);
-    console.error('Error getting weather', error);
+    //console.error('Error getting weather', error);
     throw errorCodes.routeGeneration.weatherError;
   }
   return res.data;

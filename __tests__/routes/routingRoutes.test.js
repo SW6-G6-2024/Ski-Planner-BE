@@ -64,10 +64,8 @@ describe('Routing Routes', () => {
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data);
-		console.log(response.body)
 		expect(response.status).toBe(200);
 		expect(response.body).toMatchObject({
-			route: 'Dis way!',
 			res: generatedRouteExample
 		});
 	});
@@ -135,12 +133,6 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(err.general.invalidId('skiArea'));
 	});
 
-	const data = (id) => ({
-		start: { lat: 1, lon: 1 },
-		end: { lat: 2, lon: 2 },
-		skiArea: id
-	});
-
 	test('POST /api/routes/generate-route should return 500 if failed to fetch from overpass api', async () => {
 		axios.post.mockResolvedValueOnce({ data: null });
 		const response = await request(app)
@@ -159,8 +151,6 @@ describe('Routing Routes', () => {
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data(id));
-
-		console.log(response.body)
 		expect(response.status).toBe(500);
 		expect(response.body).toEqual(errorCodes.routeGeneration.weatherError);
 	});
@@ -180,6 +170,11 @@ describe('Routing Routes', () => {
 		expect(response.body).toEqual(errorCodes.routeGeneration.predictionError);
 	});
 
+	const data = (id) => ({
+		start: { lat: 1, lon: 1 },
+		end: { lat: 2, lon: 2 },
+		skiArea: id
+	});
 	test('POST /api/routes/generate-route should return 500 if route generation service is not responding or result is empty', async () => {
 		axios.post = jest.fn()
 			.mockResolvedValueOnce({ data: overpassExampleData })
@@ -189,11 +184,11 @@ describe('Routing Routes', () => {
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data(id));
-
 		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.routeGenerationError);
 
-		axios.post.mockResolvedValueOnce({ data: overpassExampleData })
+		axios.post = jest.fn()
+			.mockResolvedValueOnce({ data: overpassExampleData })
 			.mockResolvedValueOnce({ data: ratingResponseExample })
 			.mockResolvedValueOnce({ data: null });
 		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });

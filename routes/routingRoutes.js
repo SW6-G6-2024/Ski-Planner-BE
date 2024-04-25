@@ -5,6 +5,7 @@ import err from '../utils/errorCodes.js';
 import { isPoint } from '../utils/validators/pointValidator.js';
 import checkParams from '../utils/validators/checkParams.js';
 import getQuery from '../utils/helpers/getQuery.js';
+import env from '../config/keys.js';
 import { findSkiArea } from '../utils/helpers/queryInDB.js';
 import getAreaCenter from '../utils/helpers/getAreaCenter.js';
 import getCurrentWeather from '../utils/helpers/getWeather.js';
@@ -41,27 +42,25 @@ router.post('/generate-route',
 			return res.status(500).send(err.routeGeneration.overpassApiError);
 
 		const centerBounds = getAreaCenter(skiAreaInstance.bounds);
-		let weatherObj, prediction, result;
+		let result;
 		try {
-			weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
-			prediction = await getPredictedRatings(apiRes.data, weatherObj);
+			const weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
+			const prediction = await getPredictedRatings(apiRes.data, weatherObj);
 
 			const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
 
+			console.log('generateRoute(', start, end, geoJson, ')');
 			result = await generateRoute(start, end, geoJson);
-
 		} catch (error) {
-			console.error(error)
 			return res.status(500).send(error);
 		}
 
-
 		// Only pass the shortest route and not the step-by-step guide
-		if (checkResult(result[0], res)) {
+		if (checkResult(result?.[0], res)) {
 			return;
 		}
 
-		return res.status(200).send({ route: 'Dis way!', res: result });
+		return res.status(200).send({ res: result });
 	});
 
 /**
