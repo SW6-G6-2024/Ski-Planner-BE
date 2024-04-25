@@ -1,8 +1,8 @@
 import express from 'express'; 
 import SkiAreaModel from '../models/SkiAreas.js';
 import err from '../utils/errorCodes.js';
-import checkParams from '../utils/checkParams.js';
-import getQuery from '../utils/getQuery.js';
+import checkParams from '../utils/validators/checkParams.js';
+import getQuery from '../utils/helpers/getQuery.js';
 import axios from 'axios';
 import { overpassToGeoJson } from '../utils/dataFormatter.js';
 

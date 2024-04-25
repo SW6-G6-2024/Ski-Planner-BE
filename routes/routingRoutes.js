@@ -2,14 +2,14 @@ import axios from 'axios';
 import express from 'express';
 import err from '../utils/errorCodes.js';
 // eslint-disable-next-line no-unused-vars
-import { isPoint } from '../utils/pointValidator.js';
-import checkParams from '../utils/checkParams.js';
-import getQuery from '../utils/getQuery.js';
-import env from '../config/keys.js';
-import { findSkiArea } from '../utils/queryInDB.js';
-import getAreaCenter from '../utils/getAreaCenter.js';
-import getCurrentWeather from '../utils/getWeather.js';
-import { getPredictedRatings, consolidateRatingInGeoJSON } from '../utils/predictedRatings.js';
+import { isPoint } from '../utils/validators/pointValidator.js';
+import checkParams from '../utils/validators/checkParams.js';
+import getQuery from '../utils/helpers/getQuery.js';
+import { findSkiArea } from '../utils/helpers/queryInDB.js';
+import getAreaCenter from '../utils/helpers/getAreaCenter.js';
+import getCurrentWeather from '../utils/helpers/getWeather.js';
+import { getPredictedRatings, consolidateRatingInGeoJSON } from '../utils/helpers/predictedRatings.js';
+import generateRoute from '../utils/helpers/generateRoute.js';
 
 const router = express.Router();
 
@@ -41,36 +41,27 @@ router.post('/generate-route',
 			return res.status(500).send(err.routeGeneration.overpassApiError);
 
 		const centerBounds = getAreaCenter(skiAreaInstance.bounds);
-		let weatherObj, prediction;
+		let weatherObj, prediction, result;
 		try {
 			weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
 			prediction = await getPredictedRatings(apiRes.data, weatherObj);
+
+			const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
+
+			result = await generateRoute(start, end, geoJson);
+
 		} catch (error) {
+			console.error(error)
 			return res.status(500).send(error);
 		}
 
-		const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
-
-		// Call the route generation service
-		let result;
-		try {
-			result = await axios.post(env.pathFindingUrl + '/generate-route', {
-				data: {
-					start: start,
-					end: end,
-					geoJson: geoJson,
-				}
-			});
-		} catch (error) {
-			return res.status(500).send(err.routeGeneration.routeGenerationError);
-		}
 
 		// Only pass the shortest route and not the step-by-step guide
-		if (checkResult(result?.data?.[0], res)) {
+		if (checkResult(result[0], res)) {
 			return;
 		}
 
-		return res.status(200).send({ route: 'Dis way!', res: result.data });
+		return res.status(200).send({ route: 'Dis way!', res: result });
 	});
 
 /**

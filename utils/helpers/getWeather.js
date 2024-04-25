@@ -1,5 +1,5 @@
 import axios from "axios";
-import errorCodes from "./errorCodes.js";
+import errorCodes from "../errorCodes.js";
 
 /**
  * Call the Open-Meteo API to get the current weather
@@ -16,6 +16,7 @@ async function getCurrentWeather(lat, lon) {
   try {
     res = await axios.get(apiUrl);
   } catch (error) {
+    console.log(res?.data);
     console.error('Error getting weather', error);
     throw errorCodes.routeGeneration.weatherError;
   }

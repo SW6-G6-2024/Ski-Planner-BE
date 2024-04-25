@@ -11,6 +11,7 @@ import generatedRouteExample from '../fixtures/generatedRouteExample.js';
 import weatherResponseExample from '../fixtures/weatherResponse.js';
 import ratingResponseExample from '../fixtures/ratingResponseExample.js';
 import errorCodes from '../../utils/errorCodes.js';
+import predictionResponse from '../fixtures/predictionResponse.js';
 
 const app = express();
 app.use(express.json());
@@ -52,7 +53,7 @@ describe('Routing Routes', () => {
 			.mockResolvedValueOnce({ data: ratingResponseExample })
 			// route generation response
 			.mockResolvedValueOnce({ data: generatedRouteExample });
-		
+
 		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
 
 		const data = {
@@ -63,13 +64,14 @@ describe('Routing Routes', () => {
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data);
+		console.log(response.body)
 		expect(response.status).toBe(200);
 		expect(response.body).toMatchObject({
 			route: 'Dis way!',
 			res: generatedRouteExample
 		});
 	});
-	
+
 	test('POST /api/routes/generate-route should return 400 if start or end is missing', async () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
@@ -150,30 +152,33 @@ describe('Routing Routes', () => {
 
 
 	test('POST /api/routes/generate-route should return error if failed to fetch weather data', async () => {
-    axios.post = jest.fn()
+		axios.post = jest.fn()
 			.mockResolvedValueOnce({ data: overpassExampleData })
 		axios.get = jest.fn().mockRejectedValueOnce();
 
-    const response = await request(app)
-      .post('/api/routes/generate-route')
-      .send(data(id));
-    expect(response.status).toBe(500);
-    expect(response.body).toEqual(errorCodes.routeGeneration.weatherError);
-  });
+		const response = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data(id));
+
+		console.log(response.body)
+		expect(response.status).toBe(500);
+		expect(response.body).toEqual(errorCodes.routeGeneration.weatherError);
+	});
 
 	// TODO: test for invalid rating data
-  test('POST /api/routes/generate-route should return error if invalid rating', async () => {
-    axios.post = jest.fn()
+	test('POST /api/routes/generate-route should return error if invalid rating', async () => {
+		axios.post = jest.fn()
 			.mockResolvedValueOnce({ data: overpassExampleData })
-      .mockRejectedValueOnce();
+			.mockRejectedValueOnce();
 		axios.get = jest.fn().mockResolvedValueOnce({ data: weatherResponseExample });
 
-    const response = await request(app)
-      .post('/api/routes/generate-route')
-      .send(data(id));
-    expect(response.status).toBe(500);
-    expect(response.body).toEqual(errorCodes.routeGeneration.predictionError);
-  });
+		const response = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data(id));
+
+		expect(response.status).toBe(500);
+		expect(response.body).toEqual(errorCodes.routeGeneration.predictionError);
+	});
 
 	test('POST /api/routes/generate-route should return 500 if route generation service is not responding or result is empty', async () => {
 		axios.post = jest.fn()
@@ -184,6 +189,7 @@ describe('Routing Routes', () => {
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data(id));
+
 		expect(response.status).toBe(500);
 		expect(response.body).toEqual(err.routeGeneration.routeGenerationError);
 
@@ -197,7 +203,7 @@ describe('Routing Routes', () => {
 		expect(response2.status).toBe(500);
 		expect(response2.body).toEqual(err.routeGeneration.routeGenerationError);
 	});
-	
+
 });
 
 afterAll(async () => {

@@ -1,10 +1,10 @@
 import express from 'express';
 import err from '../utils/errorCodes.js';
 // eslint-disable-next-line no-unused-vars
-import { isRating } from '../utils/ratingValidator.js';
-import { isPisteId } from '../utils/pisteIdValidator.js';
-import checkParams from '../utils/checkParams.js';
-import getCurrentWeather from '../utils/getWeather.js';
+import { isRating } from '../utils/validators/ratingValidator.js';
+import { isPisteId } from '../utils/validators/pisteIdValidator.js';
+import checkParams from '../utils/validators/checkParams.js';
+import getCurrentWeather from '../utils/helpers/getWeather.js';
 import SkiAreaModel from '../models/SkiAreas.js';
 import PisteModel from '../models/Pistes.js';
 import RatingsModel from '../models/Ratings.js';
