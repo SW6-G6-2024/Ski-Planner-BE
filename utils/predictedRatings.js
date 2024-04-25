@@ -35,7 +35,7 @@ async function getPredictedRatings(body, weather) {
     }
   };
   try {
-    const response = await axios.post(env.ratingPredictionUrl + 'ratings/predict', req);
+    const response = await axios.post(env.ratingPredictionUrl + '/ratings/predict', req);
     return response.data;
   } catch (error) {
     console.error('Error getting predicted ratings', error);
