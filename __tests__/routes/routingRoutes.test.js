@@ -58,6 +58,7 @@ describe('Routing Routes', () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
+			isBestRoute: false,
 			skiArea: id
 		};
 		const response = await request(app)
@@ -73,6 +74,7 @@ describe('Routing Routes', () => {
 	test('POST /api/routes/generate-route should return 400 if start or end is missing', async () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
+			isBestRoute: false,
 			skiArea: id
 		};
 		const response = await request(app)
@@ -85,7 +87,8 @@ describe('Routing Routes', () => {
 	test('POST /api/routes/generate-route should return 400 if skiArea is missing', async () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
-			end: { lat: 2, lon: 2 }
+			end: { lat: 2, lon: 2 },
+			isBestRoute: false,
 		};
 		const response = await request(app)
 			.post('/api/routes/generate-route')
@@ -98,6 +101,7 @@ describe('Routing Routes', () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
+			isBestRoute: false,
 			skiArea: '5f9f6c3f9d5c1c2a3c3e3c3d'
 		};
 		const response = await request(app)
@@ -111,6 +115,7 @@ describe('Routing Routes', () => {
 		const data = {
 			start: 1,
 			end: { lat: 2, lon: 2 },
+			isBestRoute: false,
 			skiArea: id
 		};
 		const response = await request(app)
@@ -124,6 +129,7 @@ describe('Routing Routes', () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
+			isBestRoute: false,
 			skiArea: 'invalid'
 		};
 		const response = await request(app)
@@ -136,6 +142,7 @@ describe('Routing Routes', () => {
 	const data = (id) => ({
 		start: { lat: 1, lon: 1 },
 		end: { lat: 2, lon: 2 },
+		isBestRoute: false,
 		skiArea: id
 	});
 
@@ -197,7 +204,33 @@ describe('Routing Routes', () => {
 		expect(response2.status).toBe(500);
 		expect(response2.body).toEqual(err.routeGeneration.routeGenerationError);
 	});
-	
+
+	test('POST /api/routes/generate-route should return 400 if best route input is invalid', async () => {
+		const data = {
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 },
+			isBestRoute: 'invalid',
+			skiArea: id
+		};
+		const response = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data);
+		expect(response.status).toBe(400);
+		expect(response.body).toEqual(err.routeGeneration.invalidBestRouteInput);
+	});
+
+	test('POST /api/routes/generate-route should return 400 if best route input is missing', async () => {
+		const data = {
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 },
+			skiArea: id
+		};
+		const response = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data);
+		expect(response.status).toBe(400);
+		expect(response.body).toEqual(err.general.missingParam('isBestRoute'));
+	});
 });
 
 afterAll(async () => {
