@@ -1,4 +1,4 @@
-import regexPatterns from '../../utils/patterns.js';
+import regexPatterns from '../../utils/validators/patterns.js';
 
 describe('Regex Patterns', () => {
 	test('Website URL pattern', () => {

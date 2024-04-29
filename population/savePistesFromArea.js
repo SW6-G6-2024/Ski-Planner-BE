@@ -1,7 +1,7 @@
 import PistesModel from "../models/Pistes.js";
 import err from "../utils/errorCodes.js";
 import mongoose from "mongoose";
-import getPisteDirection from "../utils/getPisteDirection.js";
+import getPisteDirection from "../utils/helpers/getPisteDirection.js";
 
 /**
  * Function that saves pistes from a ski area to the database

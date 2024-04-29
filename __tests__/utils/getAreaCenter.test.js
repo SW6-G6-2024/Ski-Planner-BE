@@ -1,4 +1,4 @@
-import getAreaCenter from "../../utils/getAreaCenter";
+import getAreaCenter from "../../utils/helpers/getAreaCenter";
 
 describe('getAreaCenter', () => {
     it('should return the center of the area when bounds are within range', () => {

@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
-import regexPatterns from '../utils/patterns.js';
+import regexPatterns from '../utils/validators/patterns.js';
 
 const SkiAreaSchema = new Schema({
   name: {
