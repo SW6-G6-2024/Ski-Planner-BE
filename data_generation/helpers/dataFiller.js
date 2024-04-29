@@ -7,10 +7,10 @@ const weatherCodeWeights = JSON.parse(fs.readFileSync("data_generation/helpers/w
 // Factors to be used when calculating points
 const wsFactor = 2.25;
 const tFactor = 1.75;
-const sfFactor = 2;
-const dpFactor = 2.5;
-const sdFactor = 1.65;
-const vFactor = 1.5;
+const sfFactor = 2.70;
+const dpFactor = 2.25;
+const sdFactor = 1.75;
+const vFactor = 1.45;
 const timeFactor = 0.20;
 
 /**
@@ -104,7 +104,7 @@ function generateWeather(time) {
  */
 function calculatePoints(weather, time, piste) {
   // Generate a random number of points between 1 and 5 based on a normal distribution
-  const points = Math.round(randn_bm(1, 5, 1));
+  const points = Math.round(randn_bm(1, 5, 1.25));
 
   const wSpeedWeight = 1 - (weather.windSpeed * calculateWindEffect(weather.windDirection, piste.direction) / (25 * wsFactor));
   // Calculate the wind effect on the skiing conditions and multyiply it with the wind speed weight
@@ -128,7 +128,7 @@ function calculatePoints(weather, time, piste) {
  * // Generates random numbers between bounds with a skew. Taken from: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
  * @param {Number} min Minimum bound
  * @param {Number} max Maximum bound
- * @param {Number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution
+ * @param {Number} skew Skews the distribution. 1 is a normal distribution, lower than 1 is a right-skewed distribution, higher than 1 is a left-skewed distribution
  * @returns {Number} a random number between min and max with a skew
  */
 function randn_bm(min, max, skew) {

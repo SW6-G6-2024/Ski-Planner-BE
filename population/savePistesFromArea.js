@@ -22,7 +22,7 @@ async function savePistesFromArea(obj, skiAreaId) {
             name: pisteData.properties.name ?? pisteData.properties.ref ?? "Unknown",
             skiAreaId: skiAreaId,
             direction: getPisteDirection(pisteData.geometry.coordinates),
-            weight: randn_bm(0.5, 1.5, 1)
+            weight: randn_bm(0.25, 2.25, 1.4)
           }
         }, { upsert: true });
       } catch (error) {
