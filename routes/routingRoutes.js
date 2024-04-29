@@ -21,8 +21,8 @@ router.post('/generate-route',
 	 * @returns 
 	 */
 	async (req, res) => {
-		const { start, end, skiArea } = req.body;
-		if (checkInput(start, end, skiArea, res)) {
+		const { start, end, skiArea, isBestRoute } = req.body;
+		if (checkInput(start, end, skiArea, isBestRoute, res)) {
 			return;
 		}
 
@@ -86,10 +86,11 @@ function checkResult(result, res) {
  * @param {node} start The start point of the route
  * @param {node} end The end point of the route
  * @param {String} skiArea The ID of the ski area
+ * @param {Boolean} isBestRoute Whether the route is the best route or not
  * @param {Express.Response} res The express response object
  * @returns Sends the appropriate response if the input is invalid and returns true, otherwise returns false
  */
-function checkInput(start, end, skiArea, res) {
+function checkInput(start, end, skiArea, isBestRoute, res) {
 	return checkParams([{
 		name: 'start point',
 		value: start,
@@ -104,7 +105,12 @@ function checkInput(start, end, skiArea, res) {
 		name: 'skiArea',
 		value: skiArea,
 		id: true,
-	}
+	}, {
+		name: 'isBestRoute',
+		value: isBestRoute,
+		func: (val) => typeof val === 'boolean',
+		funcErr: err.routeGeneration.invalidBestRouteInput,
+	},
 	], res);
 }
 

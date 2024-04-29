@@ -42,6 +42,10 @@ export default {
 			code: "E0106",
 			message: "No route found",
 		},
+		invalidBestRouteInput: {
+			code: "E0107",
+			message: "Invalid input for best route generation",
+		},
 	}, 
 
 	skiArea: {
