@@ -1,4 +1,4 @@
-import err from "./errorCodes.js";
+import err from "../errorCodes.js";
 import mongoose from 'mongoose';
 
 /**
