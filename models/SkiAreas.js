@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 import regexPatterns from '../utils/validators/patterns.js';
+import c from 'ansi-colors';
 
 const SkiAreaSchema = new Schema({
   name: {
@@ -49,6 +50,11 @@ SkiAreaSchema.plugin(uniqueValidator);
 SkiAreaSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
   this.set({ modifiedAt: Date.now() });
   next();
+});
+
+SkiAreaSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
+  if (this.getOptions().disablePrint) return;
+	console.log(c.magenta('[DB]'), '-', c.cyan('Ski area'), 'updated:', c.green(doc._id));
 });
 
 const SkiAreaModel = model('ski-area', SkiAreaSchema);

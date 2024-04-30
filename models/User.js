@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import c from "ansi-colors"
 
 const userSchema = new mongoose.Schema({
   _id: {
@@ -61,13 +62,14 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
-userSchema.pre(['update', 'findOneAndUpdate', 'updateOne'], function (next) {
+userSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
 	this.set({ modifiedAt: Date.now() });
 	next();
 });
 
 userSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
-	console.log('User updated:', doc._id);
+	if (this.getOptions().disablePrint) return;
+	console.log(c.magenta('[DB]'), '-', c.cyan('User'), 'updated:', c.green(doc._id));
 });
 
 const UserModel = mongoose.model('User', userSchema);

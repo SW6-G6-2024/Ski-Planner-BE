@@ -1,5 +1,6 @@
 // Create model for Pistes
 import { Schema, model } from 'mongoose';
+import c from 'ansi-colors';
 
 const PistesSchema = new Schema({
   _id: {
@@ -19,6 +20,10 @@ const PistesSchema = new Schema({
     type: Number,
     required: [true, 'Direction is required'],
   },
+  weight: {
+    type: Number,
+    default: 1,
+  },
   createdAt: { type: Date, default: Date.now },
   modifiedAt: { type: Date, default: Date.now },
 });
@@ -26,6 +31,11 @@ const PistesSchema = new Schema({
 PistesSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
   this.set({ modifiedAt: Date.now() });
   next();
+});
+
+PistesSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
+  if (this.getOptions().disablePrint) return;
+	console.log(c.magenta('[DB]'), '-', c.cyan('Piste'), 'updated:', c.green(doc._id));
 });
 
 const PistesModel = model('pistes', PistesSchema);

@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import c from 'ansi-colors';
 
 const ratingsSchema = new Schema({
 	piste: {
@@ -28,6 +29,11 @@ const ratingsSchema = new Schema({
 ratingsSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
   this.set({ modifiedAt: Date.now() });
   next();
+});
+
+ratingsSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
+	if (this.getOptions().disablePrint) return;
+	console.log(c.magenta('[DB]'), '-', c.cyan('Rating'), 'updated:', c.green(doc._id));
 });
 
 const RatingsModel = model('ratings', ratingsSchema);
