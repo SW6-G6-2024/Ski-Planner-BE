@@ -83,7 +83,21 @@ export default {
       code: "E0402",
       message: "Invalid data: Must contain elements with geometry.",
     },
-  }
+  },
 
-  //
+  // User creation
+	userCreation: {
+		invalidId: (id) => ({
+			code: "E0501",
+			message: "Invalid id: " + id,
+		}),
+		duplicateUser: {
+			code: "E0502",
+			message: "User already exists",
+		},
+		invalidUser: {
+			code: "E0503",
+			message: "Invalid user",
+		},
+	}
 };
