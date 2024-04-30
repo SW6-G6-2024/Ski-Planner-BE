@@ -3,7 +3,7 @@ import env from '../config/keys.js';
 import { ManagementClient } from 'auth0';
 import { checkJwt, checkScopes } from '../utils/authorization.js';
 import UserModel from '../models/User.js';
-import { handleError, checkForDuplicateUser } from '../utils/helpers/userErrorHandling.js';
+import { handleError } from '../utils/helpers/userErrorHandling.js';
 
 const router = express.Router();
 const scopeCheck = checkScopes('update:user');
@@ -18,8 +18,6 @@ router.put('/:id', async (req, res) => {
 	});
 
 	management.users.get({ id }).then(async (user) => {
-		if (await checkForDuplicateUser(id, res))
-			return;
 		const newUser = new UserModel({
 			_id: id,
 			pistePreferences: {

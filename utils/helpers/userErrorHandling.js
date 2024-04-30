@@ -10,11 +10,4 @@ function handleError(error, res, id) {
 	}
 }
 
-async function checkForDuplicateUser(id, res) {
-	const user = await UserModel.findById(id);
-	if (user) {
-		return res.status(400).send(err.userCreation.duplicateUser);
-	}
-}
-
-export { handleError, checkForDuplicateUser };
+export { handleError };
