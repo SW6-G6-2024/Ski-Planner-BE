@@ -5,26 +5,28 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-	pistePreferences: {
-		green: {
-			type: Boolean,
-			required: true,
-			default: true,
-		},
-		blue: {
-			type: Boolean,
-			required: true,
-			default: true,
-		},
-		red: {
-			type: Boolean,
-			required: true,
-			default: true,
-		},
-		black: {
-			type: Boolean,
-			required: true,
-			default: true,
+	preferences: {
+		pisteDifficulties: {
+			green: {
+				type: Boolean,
+				required: true,
+				default: true,
+			},
+			blue: {
+				type: Boolean,
+				required: true,
+				default: true,
+			},
+			red: {
+				type: Boolean,
+				required: true,
+				default: true,
+			},
+			black: {
+				type: Boolean,
+				required: true,
+				default: true,
+			},
 		},
 	},
 	createdAt: {
