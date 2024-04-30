@@ -25,6 +25,11 @@ const ratingsSchema = new Schema({
 	}
 });
 
+ratingsSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
+  this.set({ modifiedAt: Date.now() });
+  next();
+});
+
 const RatingsModel = model('ratings', ratingsSchema);
 
 export default RatingsModel;

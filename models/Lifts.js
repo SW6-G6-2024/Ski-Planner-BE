@@ -12,6 +12,11 @@ const liftSchema = new Schema({
 	modifiedAt: { type: Date, default: Date.now },
 });
 
+liftSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
+  this.set({ modifiedAt: Date.now() });
+  next();
+});
+
 const LiftModel = model('lifts', liftSchema);
 
 export default LiftModel;

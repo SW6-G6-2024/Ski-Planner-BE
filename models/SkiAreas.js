@@ -40,10 +40,16 @@ const SkiAreaSchema = new Schema({
       message: 'Invalid bounds array (length must be 4)'
     }
   },
+  createdAt: { type: Date, default: Date.now, immutable: false},
   modifiedAt: { type: Date, default: Date.now }
 });
 
 SkiAreaSchema.plugin(uniqueValidator);
+
+SkiAreaSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
+  this.set({ modifiedAt: Date.now() });
+  next();
+});
 
 const SkiAreaModel = model('ski-area', SkiAreaSchema);
 export default SkiAreaModel;

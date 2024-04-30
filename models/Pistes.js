@@ -19,7 +19,13 @@ const PistesSchema = new Schema({
     type: Number,
     required: [true, 'Direction is required'],
   },
+  createdAt: { type: Date, default: Date.now },
   modifiedAt: { type: Date, default: Date.now },
+});
+
+PistesSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
+  this.set({ modifiedAt: Date.now() });
+  next();
 });
 
 const PistesModel = model('pistes', PistesSchema);

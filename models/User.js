@@ -28,6 +28,28 @@ const userSchema = new mongoose.Schema({
 				default: true,
 			},
 		},
+		liftTypes: {
+			gondola: {
+				type: Boolean,
+				required: true,
+				default: true,
+			},
+			chairlift: {
+				type: Boolean,
+				required: true,
+				default: true,
+			},
+			tBar: {
+				type: Boolean,
+				required: true,
+				default: true,
+			},
+			platter: {
+				type: Boolean,
+				required: true,
+				default: true,
+			},
+		},
 	},
 	createdAt: {
 		type: Date,
@@ -37,6 +59,15 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
+});
+
+userSchema.pre(['update', 'findOneAndUpdate', 'updateOne'], function (next) {
+	this.set({ modifiedAt: Date.now() });
+	next();
+});
+
+userSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
+	console.log('User updated:', doc._id);
 });
 
 const UserModel = mongoose.model('User', userSchema);
