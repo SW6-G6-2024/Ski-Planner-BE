@@ -6,6 +6,9 @@ import FacilityModel from '../models/Facilities.js';
 import RatingModel from '../models/Ratings.js';
 import c from 'ansi-colors';
 
+/**
+ * Update all users in the database
+ */
 async function updateUsers() {
 	const users = await UserModel.find();
 	for (const user of users) {
@@ -31,6 +34,9 @@ async function updateUsers() {
 	console.log(c.green('[Success] Users have been updated'));
 }
 
+/**
+ * Update all pistes in the database
+ */
 async function updatePistes() {
 	const pistes = await PisteModel.find();
 	for (const piste of pistes) {
@@ -45,6 +51,9 @@ async function updatePistes() {
 	console.log(c.green('[Success] Pistes have been updated'));
 }
 
+/**
+ * Update all lifts in the database
+ */
 async function updateLifts() {
 	const lifts = await LiftModel.find();
 	for (const lift of lifts) {
@@ -57,6 +66,9 @@ async function updateLifts() {
 	console.log(c.green('[Success] Lifts have been updated'));
 }
 
+/**
+ * Update all ski areas in the database
+ */
 async function updateSkiAreas() {
 	const skiAreas = await SkiAreaModel.find();
 	for (const skiArea of skiAreas) {
@@ -72,6 +84,9 @@ async function updateSkiAreas() {
 	console.log(c.green('[Success] Ski areas have been updated'));
 }
 
+/**
+ * Update all facilities in the database
+ */
 async function updateFacilities() {
 	const facilities = await FacilityModel.find();
 	for (const facility of facilities) {
@@ -84,6 +99,9 @@ async function updateFacilities() {
 	console.log(c.green('[Success] Facilities have been updated'));
 }
 
+/**
+ * Update all ratings in the database
+ */
 async function updateRatings() {
 	const ratings = await RatingModel.find();
 	for (const rating of ratings) {
