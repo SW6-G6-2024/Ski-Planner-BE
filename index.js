@@ -37,6 +37,7 @@ app.use(pspt.session());
 app.use(json());
 app.use(cors);
 app.use('', router);
+app.use('/files', express.static('public'))
 
 // Run server
 app.listen(PORT, () => {
