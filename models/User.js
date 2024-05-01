@@ -62,11 +62,13 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
+// Update the 'modifiedAt' field before saving or updating the document
 userSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
 	this.set({ modifiedAt: Date.now() });
 	next();
 });
 
+// Print a message after saving or updating the document
 userSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
 	if (this.getOptions().disablePrint) return;
 	console.log(c.magenta('[DB]'), '-', c.cyan('User'), 'updated:', c.green(doc._id));

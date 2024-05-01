@@ -26,11 +26,13 @@ const ratingsSchema = new Schema({
 	}
 });
 
+// Update the 'modifiedAt' field before saving or updating the document
 ratingsSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
   this.set({ modifiedAt: Date.now() });
   next();
 });
 
+// Print a message after saving or updating the document
 ratingsSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
 	if (this.getOptions().disablePrint) return;
 	console.log(c.magenta('[DB]'), '-', c.cyan('Rating'), 'updated:', c.green(doc._id));

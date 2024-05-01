@@ -47,11 +47,13 @@ const SkiAreaSchema = new Schema({
 
 SkiAreaSchema.plugin(uniqueValidator);
 
+// Update the 'modifiedAt' field before saving or updating the document
 SkiAreaSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (next) {
   this.set({ modifiedAt: Date.now() });
   next();
 });
 
+// Print a message after saving or updating the document
 SkiAreaSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
   if (this.getOptions().disablePrint) return;
 	console.log(c.magenta('[DB]'), '-', c.cyan('Ski area'), 'updated:', c.green(doc._id));
