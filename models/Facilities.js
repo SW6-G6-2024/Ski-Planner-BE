@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import printDbUpdate from '../utils/helpers/printDbUpdate.js';
 
 const facilitiesSchema = new Schema({
 	name: {
@@ -22,7 +23,7 @@ facilitiesSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], functi
 // Print a message after saving or updating the document
 facilitiesSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
 	if (this.getOptions().disablePrint) return;
-	console.log(c.magenta('[DB]'), '-', c.cyan('Facility'), 'updated:', c.green(doc._id));
+	printDbUpdate('Facility', doc._id);
 });
 
 const FacilitiesModel = model('facilities', facilitiesSchema);

@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import printDbUpdate from '../utils/helpers/printDbUpdate.js';
 
 const liftSchema = new Schema({
 	name: {
@@ -22,7 +23,7 @@ liftSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (ne
 // Print a message after saving or updating the document
 liftSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
 	if (this.getOptions().disablePrint) return;
-	console.log(c.magenta('[DB]'), '-', c.cyan('Lift'), 'updated:', c.green(doc._id));
+	printDbUpdate('Lift', doc._id);
 });
 
 const LiftModel = model('lifts', liftSchema);

@@ -1,6 +1,6 @@
 // Create model for Pistes
 import { Schema, model } from 'mongoose';
-import c from 'ansi-colors';
+import printDbUpdate from '../utils/helpers/printDbUpdate.js';
 
 const PistesSchema = new Schema({
   _id: {
@@ -37,7 +37,7 @@ PistesSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (
 // Print a message after saving or updating the document
 PistesSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
   if (this.getOptions().disablePrint) return;
-	console.log(c.magenta('[DB]'), '-', c.cyan('Piste'), 'updated:', c.green(doc._id));
+	printDbUpdate('Piste', doc._id)
 });
 
 const PistesModel = model('pistes', PistesSchema);

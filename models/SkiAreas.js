@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 import regexPatterns from '../utils/validators/patterns.js';
-import c from 'ansi-colors';
+import printDbUpdate from '../utils/helpers/printDbUpdate.js';
 
 const SkiAreaSchema = new Schema({
   name: {
@@ -56,7 +56,7 @@ SkiAreaSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function 
 // Print a message after saving or updating the document
 SkiAreaSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
   if (this.getOptions().disablePrint) return;
-	console.log(c.magenta('[DB]'), '-', c.cyan('Ski area'), 'updated:', c.green(doc._id));
+	printDbUpdate('Ski area', doc._id);
 });
 
 const SkiAreaModel = model('ski-area', SkiAreaSchema);

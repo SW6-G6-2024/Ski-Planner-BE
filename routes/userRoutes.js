@@ -1,7 +1,7 @@
 import express from 'express';
 import env from '../config/keys.js';
 import { ManagementClient } from 'auth0';
-import { checkJwt, checkScopes } from '../utils/authorization.js';
+import { checkJwt, checkScopes, checkUser } from '../utils/authorization.js';
 import UserModel from '../models/User.js';
 import { handleError } from '../utils/helpers/userErrorHandling.js';
 
@@ -24,16 +24,7 @@ router.put('/:id',
 		});
 
 		management.users.get({ id }).then(async (user) => {
-			const newUser = new UserModel({
-				_id: id,
-				pistePreferences: {
-					green: true,
-					blue: true,
-					red: true,
-					black: true,
-				},
-			});
-			newUser.save();
+			UserModel.findByIdAndUpdate(id, {});
 			return res.status(200).send('User created');
 		}).catch((error) => {
 			console.error(error);
@@ -44,7 +35,7 @@ router.put('/:id',
 	});
 
 // Routes
-router.patch('/:id', checkJwt, scopeCheck,
+router.patch('/:id', checkJwt, scopeCheck, checkUser,
 	/**
 	 * Update an existing user in the database
 	 * @param {Express.Request} req
@@ -72,6 +63,54 @@ router.patch('/:id', checkJwt, scopeCheck,
 		}
 
 		return res.status(200).send('User updated');
+	});
+
+router.patch('/:id/preferences', checkJwt, checkScopes('update:preferences'), checkUser,
+	/**
+	 * Update the preferences of an existing user in the database
+	 * @param {Express.Request} req 
+	 * @param {Express.Response} res 
+	 * @returns 
+	 */
+	async (req, res) => {
+		const { id } = req.params;
+		const body = req.body;
+
+		let updatedUser;
+
+		try {
+			const user = await UserModel.findById(id);
+			if (!user) {
+				return res.status(404).send('User not found');
+			}
+
+			await UserModel.findByIdAndUpdate(id, {
+				preferences: {
+					pisteDifficulties: {
+						green: body.pisteDifficulties?.green ?? user.preferences.pisteDifficulties.green,
+						blue: body.pisteDifficulties?.blue ?? user.preferences.pisteDifficulties.blue,
+						red: body.pisteDifficulties?.red ?? user.preferences.pisteDifficulties.red,
+						black: body.pisteDifficulties?.black ?? user.preferences.pisteDifficulties.black,
+					},
+					liftTypes: {
+						gondola: body.liftTypes?.gondola ?? user.preferences.liftTypes.gondola,
+						chairlift: body.liftTypes?.chairlift ?? user.preferences.liftTypes.chairlift,
+						tBar: body.liftTypes?.tBar ?? user.preferences.liftTypes.tBar,
+						platter: body.liftTypes?.platter ?? user.preferences.liftTypes.platter,
+					},
+				}
+			});
+
+			updatedUser = await UserModel.findById(id);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send('Error updating user preferences');
+		}
+
+		return res.status(200).send({
+			message: 'User preferences updated successfully',
+			user: updatedUser
+		});
 	});
 
 export default router;

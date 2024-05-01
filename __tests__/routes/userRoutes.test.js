@@ -1,9 +1,7 @@
 import request from 'supertest';
 import express from 'express';
 import router from '../../routes/userRoutes.js';
-/*import { ManagementClient } from 'auth0';
-import { requiredScopes } from 'express-oauth2-jwt-bearer';
-import { checkJwt } from '../../utils/authorization.js';*/
+import { ManagementClient } from 'auth0';
 import { jest } from '@jest/globals';
 
 const app = express();
@@ -27,44 +25,47 @@ jest.mock('auth0', () => {
 	};
 });
 
-jest.mock('express-oauth2-jwt-bearer', () => {
-	return {
-		requiredScopes: jest.fn().mockImplementation(() => {
-			return (req, res, next) => {
-				if (req.headers.authorization === 'Bearer ') {
-					return next();
-				}
-				return res.status(401).send('Unauthorized');
-			};
-		}),
-	};
-});
+jest.mock('../../utils/authorization.js', () => ({
+	checkJwt: jest.fn().mockImplementation(() => {
+		return (req, res, next) => {
+			console.log("checkJwt called")
+			next();
+		};
+	}),
+	checkScopes: jest.fn().mockImplementation(() => {
+		return (req, res, next) => {
+			if (req.headers.authorization === 'Bearer test') {
+				return next();
+			}
+			return res.status(401).send('Unauthorized');
+		};
+	}),
+	checkUser: jest.fn().mockImplementation(() => {
+		return (req, res, next) => {
+			next();
+		};
+	}),
+}));
 
-jest.mock('../../utils/authorization.js', () => {
-	return {
-		checkJwt: jest.fn().mockImplementation(() => {
-			return (req, res, next) => {
-				req.user = {
-					sub: 'user-id',
-				};
-				next();
-			};
-		}),
-		checkScopes: jest.fn().mockImplementation(() => {
-			return (req, res, next) => {
-				if (req.headers.authorization === 'Bearer ') {
-					return next();
-				}
-				return res.status(401).send('Unauthorized');
-			};
-		}),
-	};
-});
+jest.mock('express-oauth2-jwt-bearer', () => ({
+	auth: jest.fn().mockImplementation(() => {
+		return (req, res, next) => {
+			console.log("auth called")
+			next();
+		};
+	}),
+	requiredScopes: jest.fn().mockImplementation(() => {
+		return (req, res, next) => {
+			console.log("requiredScopes called")
+			next();
+		};
+	}),
+}));
 
 describe('User Routes', () => {
 	describe('PATCH /users/:id', () => {
 		// eslint-disable-next-line jest/no-commented-out-tests
-		/*it('should update the user', async () => {
+		it('should update the user', async () => {
 			const userId = 'user-id';
 			const updatedUser = {
 				name: 'John Doe',
@@ -81,19 +82,20 @@ describe('User Routes', () => {
 
 			const response = await request(url)
 				.patch(`/api/users/${userId}`)
-				.set('Authorization', 'Bearer ')
+				.set('authorization', 'Bearer test')
 				.send(updatedUser);
 
 			expect(response.status).toBe(200);
 			expect(response.body).toEqual(updatedUser);
 			expect(management.users.update).toHaveBeenCalledWith({ id: userId }, updatedUser);
-		});*/
+		});
 
 		it('should return 401 if not authorized', async () => {
 			const response = await request(url)
 				.patch('/api/users/user-id');
 
 			expect(response.status).toBe(401);
+			console.log(response.res.text)
 		});
 	});
 });

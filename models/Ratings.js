@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import c from 'ansi-colors';
+import printDbUpdate from '../utils/helpers/printDbUpdate.js';
 
 const ratingsSchema = new Schema({
 	piste: {
@@ -35,7 +35,7 @@ ratingsSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function 
 // Print a message after saving or updating the document
 ratingsSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
 	if (this.getOptions().disablePrint) return;
-	console.log(c.magenta('[DB]'), '-', c.cyan('Rating'), 'updated:', c.green(doc._id));
+	printDbUpdate('Rating', doc._id);
 });
 
 const RatingsModel = model('ratings', ratingsSchema);

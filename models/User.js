@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import c from "ansi-colors"
+import printDbUpdate from "../utils/helpers/printDbUpdate.js";
 
 const userSchema = new mongoose.Schema({
   _id: {
@@ -71,7 +71,7 @@ userSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (ne
 // Print a message after saving or updating the document
 userSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
 	if (this.getOptions().disablePrint) return;
-	console.log(c.magenta('[DB]'), '-', c.cyan('User'), 'updated:', c.green(doc._id));
+	printDbUpdate('User', doc._id);
 });
 
 const UserModel = mongoose.model('User', userSchema);

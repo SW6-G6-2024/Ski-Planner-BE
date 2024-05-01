@@ -24,7 +24,7 @@ async function savePistesFromArea(obj, skiAreaId) {
           }
         }, { upsert: true });
       } catch (error) {
-        console.error(error);
+        //console.error(error);
         /* istanbul ignore next */
         throw err.pistes.saveError;
       }
