@@ -2,11 +2,14 @@ import axios from 'axios';
 import express from 'express';
 import err from '../utils/errorCodes.js';
 // eslint-disable-next-line no-unused-vars
-import { isPoint } from '../utils/pointValidator.js';
-import checkParams from '../utils/checkParams.js';
-import getQuery from '../utils/getQuery.js';
-import env from '../config/keys.js';
-import { findSkiArea } from '../utils/queryInDB.js';
+import { isPoint } from '../utils/validators/pointValidator.js';
+import checkParams from '../utils/validators/checkParams.js';
+import getQuery from '../utils/helpers/getQuery.js';
+import { findSkiArea } from '../utils/helpers/queryInDB.js';
+import getAreaCenter from '../utils/helpers/getAreaCenter.js';
+import getCurrentWeather from '../utils/helpers/getWeather.js';
+import { getPredictedRatings, consolidateRatingInGeoJSON } from '../utils/helpers/predictedRatings.js';
+import generateRoute from '../utils/helpers/generateRoute.js';
 
 const router = express.Router();
 
@@ -18,12 +21,12 @@ router.post('/generate-route',
 	 * @returns 
 	 */
 	async (req, res) => {
-		const { start, end, skiArea } = req.body;
-		if (checkInput(start, end, skiArea, res)) {
+		const { start, end, skiArea, isBestRoute } = req.body;
+		if (checkInput(start, end, skiArea, isBestRoute, res)) {
 			return;
 		}
 
-		let skiAreaInstance
+		let skiAreaInstance;
 
 		try {
 			skiAreaInstance = await findSkiArea(skiArea);
@@ -37,26 +40,25 @@ router.post('/generate-route',
 		if (!apiRes?.data)
 			return res.status(500).send(err.routeGeneration.overpassApiError);
 
-		// Call the route generation service
+		const centerBounds = getAreaCenter(skiAreaInstance.bounds);
 		let result;
 		try {
-			result = await axios.post(env.pathFindingUrl + '/generate-route', {
-				data: {
-					start: start,
-					end: end,
-					geoJson: apiRes.data,
-				}
-			});
+			const weatherObj = await getCurrentWeather(centerBounds.lat, centerBounds.lon);
+			const prediction = await getPredictedRatings(apiRes.data, weatherObj);
+
+			const geoJson = await consolidateRatingInGeoJSON(prediction, apiRes.data);
+
+			result = await generateRoute(start, end, isBestRoute, geoJson);
 		} catch (error) {
-			return res.status(500).send(err.routeGeneration.routeGenerationError);
+			return res.status(500).send(error);
 		}
 
 		// Only pass the shortest route and not the step-by-step guide
-		if (checkResult(result?.data?.[0], res)) {
+		if (checkResult(result?.[0], res)) {
 			return;
 		}
 
-		return res.status(200).send({ route: 'Dis way!', res: result.data });
+		return res.status(200).send({ res: result });
 	});
 
 /**
@@ -84,10 +86,11 @@ function checkResult(result, res) {
  * @param {node} start The start point of the route
  * @param {node} end The end point of the route
  * @param {String} skiArea The ID of the ski area
+ * @param {Boolean} isBestRoute Whether the route is the best route or not
  * @param {Express.Response} res The express response object
  * @returns Sends the appropriate response if the input is invalid and returns true, otherwise returns false
  */
-function checkInput(start, end, skiArea, res) {
+function checkInput(start, end, skiArea, isBestRoute, res) {
 	return checkParams([{
 		name: 'start point',
 		value: start,
@@ -102,8 +105,13 @@ function checkInput(start, end, skiArea, res) {
 		name: 'skiArea',
 		value: skiArea,
 		id: true,
-	}
-	], res)
+	}, {
+		name: 'isBestRoute',
+		value: isBestRoute,
+		func: (val) => typeof val === 'boolean',
+		funcErr: err.routeGeneration.invalidBestRouteInput,
+	},
+	], res);
 }
 
 export default router;

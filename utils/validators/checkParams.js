@@ -1,4 +1,4 @@
-import err from "./errorCodes.js";
+import err from "../errorCodes.js";
 import mongoose from 'mongoose';
 
 /**
@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
  */
 export default (params, res) => {
 	for (const param of params) {
-		if (!param.value) {
+		if (param.value === undefined || param.value === null || param.value === "") {
 			return res.status(400).send(err.general.missingParam(param.name));
 		}
 		if (param.id && !mongoose.Types.ObjectId.isValid(param.value)) {

@@ -1,4 +1,4 @@
-import { isPoint } from '../../utils/pointValidator.js';
+import { isPoint } from '../../utils/validators/pointValidator.js';
 
 describe('Point Validator (isPoint)', () => {
 	test('should return true for valid point', () => {

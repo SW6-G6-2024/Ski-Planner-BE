@@ -1,4 +1,4 @@
-import SkiArea from '../models/SkiAreas.js';
+import SkiArea from '../../models/SkiAreas.js';
 
 /**
  * This function finds the ski area with the given ID
@@ -12,4 +12,4 @@ async function findSkiArea(id) {
 	return skiArea;
 }
 
-export { findSkiArea }
+export { findSkiArea };

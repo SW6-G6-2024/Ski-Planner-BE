@@ -23,8 +23,22 @@ describe('toGeoJson', () => {
 							[12.1943646, 61.3069892]
 						]
 					}
-				},
-				{
+				}, {
+					type: 'Feature',
+					properties: {
+						'piste:type': 'downhill',
+						'piste:difficulty': 'easy',
+						name: 'Example Piste 2'
+					},
+					id: 123,
+					geometry: {
+						type: 'LineString',
+						coordinates: [
+							[12.1913807, 60.305757],
+							[12.1943646, 61.3069892]
+						]
+					}
+				}, {
 					type: 'Feature',
 					properties: {
 						aerialway: 'gondola',

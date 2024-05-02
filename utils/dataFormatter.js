@@ -16,9 +16,13 @@ const overpassToGeoJson = (data) => {
   const filtered = filterData(dataArr);
 
   const features = filtered.map(way => {
+    const tags = filterTags(way.tags);
     return {
       type: "Feature",
-      properties: way.tags,
+      properties: {
+        name: way.tags["name"] || way.tags["piste:name"] || way.tags["ref"] || way.tags["piste:ref"],
+        ...tags
+      },
       id: way.id,
       geometry: {
         type: "LineString",
@@ -32,6 +36,29 @@ const overpassToGeoJson = (data) => {
     features: features
   };
 };
+
+/**
+ * Checks if a key is a name or ref field
+ * @param {String} key 
+ * @returns {Boolean} true if key is a name or ref field, false otherwise
+ */
+function isNameRefField(key) {
+  return key === "name" || key === "piste:name" || key === "ref" || key === "piste:ref";
+}
+
+/**
+ * Filters out name and ref fields from tags to avoid duplication/confusion
+ * @param {*} tags 
+ * @returns {*} tags object without name and ref fields
+ */
+function filterTags(tags) {
+  return Object.keys(tags).reduce((acc, key) => {
+    if (!isNameRefField(key)) {
+      acc[key] = tags[key];
+    }
+    return acc;
+  }, {});
+}
 
 /**
  * Filters data to only include pistes and lifts
