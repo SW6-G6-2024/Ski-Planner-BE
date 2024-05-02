@@ -12,7 +12,6 @@ router.get('/:id', checkJwt, checkScopes('read:user'), checkUser, async (req, re
 	const { id } = req.params;
 
 	try {
-			console.log('id', id)
 			const user = await UserModel.findById(id);
 			if (!user) {
 					return res.status(404).send('User not found');
