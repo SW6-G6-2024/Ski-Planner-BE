@@ -14,20 +14,19 @@ const management = new ManagementClient({
 	clientSecret: env.auth0ClientSecret
 });
 
-router.get('/:id', checkJwt, checkScopes('read:user'), checkUser, (req, res) => {
+router.get('/:id', checkJwt, checkScopes('read:current_user'), checkUser, async (req, res) => {
 	const { id } = req.params;
 
-	UserModel.findById(id, (err, user) => {
-		if (err) {
+	try {
+			console.log('id', id)
+			const user = await UserModel.findById(id);
+			if (!user) {
+					return res.status(404).send('User not found');
+			}
+			return res.status(200).send(user);
+	} catch (err) {
 			return res.status(500).send('Error getting user');
-		}
-
-		if (!user) {
-			return res.status(404).send('User not found');
-		}
-
-		return res.status(200).send(user);
-	});
+	}
 });
 
 router.put('/:id',
