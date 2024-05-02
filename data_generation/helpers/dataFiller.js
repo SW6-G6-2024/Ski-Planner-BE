@@ -5,13 +5,13 @@ import fs from "fs";
 const weatherCodeWeights = JSON.parse(fs.readFileSync("data_generation/helpers/weatherCodes.json", "utf8"));
 
 // Factors to be used when calculating points
-const wsFactor = 2.25;
-const tFactor = 1.75;
-const sfFactor = 2.70;
-const dpFactor = 2.25;
-const sdFactor = 1.75;
-const vFactor = 1.45;
-const timeFactor = 0.20;
+const wsFactor = 1;
+const tFactor = 1;
+const sfFactor = 1;
+const dpFactor = 1;
+const sdFactor = 1.1;
+const vFactor = 1.2;
+const timeFactor = 0.15;
 
 /**
  * Calculates the time factor for a given date object
@@ -104,7 +104,7 @@ function generateWeather(time) {
  */
 function calculatePoints(weather, time, piste) {
   // Generate a random number of points between 1 and 5 based on a normal distribution
-  const points = Math.round(randn_bm(1, 5, 1.25));
+  const points = Math.round(randn_bm(1, 5, 1));
 
   const wSpeedWeight = 1 - (weather.windSpeed * calculateWindEffect(weather.windDirection, piste.direction) / (25 * wsFactor));
   // Calculate the wind effect on the skiing conditions and multyiply it with the wind speed weight
