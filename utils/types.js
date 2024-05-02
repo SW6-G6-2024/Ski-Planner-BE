@@ -84,3 +84,30 @@
  * @property {Number} maxlat The maximum latitude of the bounds
  * @property {Number} maxlon The maximum longitude of the bounds
  */
+
+/**
+ * @typedef {Object} Input
+ * @property {point} start The starting point of the route
+ * @property {point} end The ending point of the route
+ * @property {string} skiArea The ID of the ski area
+ * @property {Preference} settings The user's preferences
+ * @property {boolean} isBestRoute Whether to generate the best route or the shortest route
+ */
+
+/**
+ * @typedef {Object} point
+ * @property {Number} lat Latitude of the point
+ * @property {Number} lon Longitude of the point
+ */
+
+/**
+ * @typedef {Object} Preference
+ * @property {Boolean} green Whether to include green pistes
+ * @property {Boolean} blue Whether to include blue pistes
+ * @property {Boolean} red Whether to include red pistes
+ * @property {Boolean} black Whether to include black pistes
+ * @property {Boolean} button Whether to include button lifts
+ * @property {Boolean} tBar Whether to include t-bar lifts
+ * @property {Boolean} chair Whether to include chair lifts
+ * @property {Boolean} gondola Whether to include gondola lifts
+ */ 

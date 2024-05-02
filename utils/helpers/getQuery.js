@@ -5,29 +5,29 @@
  */
 export default (bounds, settings) => {
   const PISTE_DIFFICULTY_MAPPING = {
-    'Very easy piste': 'novice',
-    'Easy piste': 'easy',
-    'Medium piste': 'intermediate',
-    'Expert piste': ['advanced', 'expert']
+    green: 'novice',
+    blue: 'easy',
+    red: 'intermediate',
+    black: ['advanced', 'expert']
   };
   
   const LIFT_TYPE_MAPPING = {
-    'Button lift': ['drag_lift', 'platter'],
-    'Chair lift': 'chair_lift',
-    'Gondola lift': 'gondola',
-    'Lift': 't-bar'
+    button: ['drag_lift', 'platter'],
+    tBar: 't-bar',
+    gondola: 'gondola',
+    chair: 'chair_lift'
   };
 
   if (settings === undefined) {
     settings = {
-      'Very easy piste': true,
-      'Easy piste': true,
-      'Medium piste': true,
-      'Expert piste': true,
-      'Button lift': true,
-      'Chair lift': true,
-      'Gondola lift': true,
-      'Lift': true
+      green: true,
+      blue: true,
+      red: true,
+      black: true,
+      button: true,
+      tBar: true,
+      chair: true,
+      gondola: true
     };
   }
   
