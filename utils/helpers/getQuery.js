@@ -12,10 +12,10 @@ export default (bounds, settings) => {
   };
   
   const LIFT_TYPE_MAPPING = {
-    buttonLift: ['drag_lift', 'platter'],
-    tBarLift: 't-bar',
-    gondolaLift: 'gondola',
-    chairLift: 'chair_lift'
+    platter: ['drag_lift', 'platter'],
+    tBar: 't-bar',
+    gondola: 'gondola',
+    chair: 'chair_lift'
   };
 
   if (settings === undefined) {
