@@ -3,6 +3,7 @@ import express from 'express';
 import err from '../utils/errorCodes.js';
 // eslint-disable-next-line no-unused-vars
 import { isPoint } from '../utils/validators/pointValidator.js';
+import { isPreference } from '../utils/validators/preferenceValidator.js';
 import checkParams from '../utils/validators/checkParams.js';
 import getQuery from '../utils/helpers/getQuery.js';
 import { findSkiArea } from '../utils/helpers/queryInDB.js';
@@ -21,8 +22,8 @@ router.post('/generate-route',
 	 * @returns 
 	 */
 	async (req, res) => {
-		const { start, end, skiArea, isBestRoute } = req.body;
-		if (checkInput(start, end, skiArea, isBestRoute, res)) {
+		const { start, end, skiArea, settings, isBestRoute } = req.body;
+		if (checkInput(start, end, skiArea, settings, isBestRoute, res)) {
 			return;
 		}
 
@@ -34,7 +35,7 @@ router.post('/generate-route',
 			return res.status(400).send(err.skiArea.notFound);
 		}
 
-		const query = getQuery(skiAreaInstance.bounds);
+		const query = getQuery(skiAreaInstance.bounds, settings);
 
 		const apiRes = await axios.post('https://overpass-api.de/api/interpreter', query);
 		if (!apiRes?.data)
@@ -90,7 +91,7 @@ function checkResult(result, res) {
  * @param {Express.Response} res The express response object
  * @returns Sends the appropriate response if the input is invalid and returns true, otherwise returns false
  */
-function checkInput(start, end, skiArea, isBestRoute, res) {
+function checkInput(start, end, skiArea, settings, isBestRoute, res) {
 	return checkParams([{
 		name: 'start point',
 		value: start,
@@ -105,6 +106,11 @@ function checkInput(start, end, skiArea, isBestRoute, res) {
 		name: 'skiArea',
 		value: skiArea,
 		id: true,
+	}, {
+		name: 'settings',
+		value: settings,
+		func: isPreference,
+		funcErr: err.routeGeneration.invalidPreferenceInput,
 	}, {
 		name: 'isBestRoute',
 		value: isBestRoute,
