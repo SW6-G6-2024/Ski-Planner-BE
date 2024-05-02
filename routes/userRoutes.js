@@ -4,8 +4,15 @@ import { ManagementClient } from 'auth0';
 import { checkJwt, checkScopes, checkUser } from '../utils/authorization.js';
 import UserModel from '../models/User.js';
 import { handleError } from '../utils/helpers/userErrorHandling.js';
+import { updateAuth0User } from '../utils/helpers/updateAuth0User.js';
 
 const router = express.Router();
+
+const management = new ManagementClient({
+	domain: env.auth0Domain,
+	clientId: env.auth0ClientId,
+	clientSecret: env.auth0ClientSecret
+});
 
 router.get('/:id', checkJwt, checkScopes('read:user'), checkUser, (req, res) => {
 	const { id } = req.params;
@@ -65,18 +72,8 @@ router.patch('/:id', /*checkJwt, checkScopes('update:user'), checkUser,*/
 			name: req.body.name
 		};
 
-		const management = new ManagementClient({
-			domain: env.auth0Domain,
-			clientId: env.auth0ClientId,
-			clientSecret: env.auth0ClientSecret
-		});
-
-		try {
-			await management.users.update({ id }, body,);
-		} catch (error) {
-			console.error(error);
-			return res.status(500).send('Error updating user');
-		}
+		if(await updateAuth0User(management, id, body, res))
+			return;
 
 		return res.status(200).send('User updated');
 	});

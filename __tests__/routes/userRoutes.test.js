@@ -12,11 +12,14 @@ const PORT = 1234;
 const server = app.listen(PORT);
 const url = `http://localhost:${PORT}`;
 
-jest.mock('auth0', () => {
-	return jest.fn();
-});
+jest.mock('../../utils/helpers/updateAuth0User.js', () => ({
+	updateAuth0User: jest.fn().mockImplementation(async (managementClient, id, body, res) => {
+		console.log('updateAuth0User called')
+		return Promise.resolve();
+	})
+}));
 
-jest.mock('../../utils/authorization.js', () => ({
+/*jest.mock('../../utils/authorization.js', () => ({
 	checkJwt: jest.fn().mockImplementation(() => {
 		return (req, res, next) => {
 			console.log("checkJwt called")
@@ -36,7 +39,7 @@ jest.mock('../../utils/authorization.js', () => ({
 			next();
 		};
 	}),
-}));
+}));*/
 
 describe('User Routes', () => {
 	describe('PATCH /users/:id', () => {
