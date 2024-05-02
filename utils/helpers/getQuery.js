@@ -24,10 +24,10 @@ export default (bounds, settings) => {
       blue: true,
       red: true,
       black: true,
-      button: true,
-      tBar: true,
-      chair: true,
-      gondola: true
+      buttonLift: true,
+      tBarLift: true,
+      chairLift: true,
+      gondolaLift: true
     };
   }
   
