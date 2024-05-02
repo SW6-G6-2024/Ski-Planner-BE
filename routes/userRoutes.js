@@ -6,7 +6,22 @@ import UserModel from '../models/User.js';
 import { handleError } from '../utils/helpers/userErrorHandling.js';
 
 const router = express.Router();
-const scopeCheck = checkScopes('update:user');
+
+router.get('/:id', checkJwt, checkScopes('read:user'), checkUser, (req, res) => {
+	const { id } = req.params;
+
+	UserModel.findById(id, (err, user) => {
+		if (err) {
+			return res.status(500).send('Error getting user');
+		}
+
+		if (!user) {
+			return res.status(404).send('User not found');
+		}
+
+		return res.status(200).send(user);
+	});
+});
 
 router.put('/:id',
 	/**
@@ -35,14 +50,14 @@ router.put('/:id',
 	});
 
 // Routes
-router.patch('/:id', checkJwt, scopeCheck, checkUser,
+router.patch('/:id', /*checkJwt, checkScopes('update:user'), checkUser,*/
 	/**
 	 * Update an existing user in the database
 	 * @param {Express.Request} req
 	 * @param {Express.Response} res 
 	 * @returns 
 	 */
-	(req, res) => {
+	async (req, res) => {
 		const { id } = req.params;
 		const body = {
 			given_name: req.body.given_name,
@@ -57,8 +72,9 @@ router.patch('/:id', checkJwt, scopeCheck, checkUser,
 		});
 
 		try {
-			management.users.update({ id }, body,);
+			await management.users.update({ id }, body,);
 		} catch (error) {
+			console.error(error);
 			return res.status(500).send('Error updating user');
 		}
 

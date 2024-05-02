@@ -1,7 +1,6 @@
 import request from 'supertest';
 import express from 'express';
 import router from '../../routes/userRoutes.js';
-import { ManagementClient } from 'auth0';
 import { jest } from '@jest/globals';
 
 const app = express();
@@ -14,15 +13,7 @@ const server = app.listen(PORT);
 const url = `http://localhost:${PORT}`;
 
 jest.mock('auth0', () => {
-	return {
-		ManagementClient: jest.fn().mockImplementation(() => {
-			return {
-				users: {
-					update: jest.fn(),
-				},
-			};
-		}),
-	};
+	return jest.fn();
 });
 
 jest.mock('../../utils/authorization.js', () => ({
@@ -47,21 +38,6 @@ jest.mock('../../utils/authorization.js', () => ({
 	}),
 }));
 
-jest.mock('express-oauth2-jwt-bearer', () => ({
-	auth: jest.fn().mockImplementation(() => {
-		return (req, res, next) => {
-			console.log("auth called")
-			next();
-		};
-	}),
-	requiredScopes: jest.fn().mockImplementation(() => {
-		return (req, res, next) => {
-			console.log("requiredScopes called")
-			next();
-		};
-	}),
-}));
-
 describe('User Routes', () => {
 	describe('PATCH /users/:id', () => {
 		// eslint-disable-next-line jest/no-commented-out-tests
@@ -71,14 +47,6 @@ describe('User Routes', () => {
 				name: 'John Doe',
 				email: 'john.doe@example.com',
 			};
-
-			const management = new ManagementClient(
-				{
-					domain: 'auth0-domain',
-					clientId: 'auth0-client',
-					clientSecret: 'auth0-secret',
-				}
-			);
 
 			const response = await request(url)
 				.patch(`/api/users/${userId}`)
