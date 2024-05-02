@@ -8,7 +8,7 @@ import { updateAuth0User } from '../utils/helpers/updateAuth0User.js';
 
 const router = express.Router();
 
-router.get('/:id', checkJwt, checkScopes('read:user'), checkUser, async (req, res) => {
+router.get('/:id', checkJwt, checkScopes('read:current_user'), checkUser, async (req, res) => {
 	const { id } = req.params;
 
 	try {
