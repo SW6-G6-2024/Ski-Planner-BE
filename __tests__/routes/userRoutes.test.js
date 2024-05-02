@@ -71,7 +71,7 @@ describe('User Routes', () => {
 					}),
 					send: jest.fn()
 				},
-				managementMock.users.update);
+				managementMock);
 			expect(res.status).toBe(200);
 			expect(res.body).toBe('User updated');
 			expect(managementMock).toHaveBeenCalledWith('user-id', {
