@@ -56,7 +56,7 @@ router.put('/:id',
 	});
 
 // Routes
-router.patch('/:id', /*checkJwt, checkScopes('update:user'), checkUser,*/
+router.patch('/:id', checkJwt, checkScopes('update:user'), checkUser,
 	/**
 	 * Update an existing user in the database
 	 * @param {Express.Request} req

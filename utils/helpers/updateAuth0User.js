@@ -7,9 +7,10 @@ const management = new ManagementClient({
 	clientSecret: env.auth0ClientSecret
 });
 
-async function updateAuth0User(id, body, res, managementClient = management) {
+async function updateAuth0User(id, body, res, updateFunc = management.users.update) {
 	try {
-		await managementClient.users.update({ id }, body); 
+		await updateFunc({ id }, body); 
+		return res.status(200).send('User updated');
 	} catch (error) {
 		console.error(error);
 		return res.status(500).send('Error updating user');

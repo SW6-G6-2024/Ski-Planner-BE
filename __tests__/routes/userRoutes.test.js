@@ -13,23 +13,9 @@ const PORT = 1234;
 const server = app.listen(PORT);
 const url = `http://localhost:${PORT}`;
 
-const managementMock = jest.fn().mockImplementation(() => {
-	return {
-		users: {
-			update: jest.fn().mockImplementation(() => {
-				return Promise.resolve();
-			}
-			)
-		}
-	};
+const updateMock = jest.fn().mockImplementation(() => {
+	return Promise.resolve();
 });
-
-jest.mock('../../utils/helpers/updateAuth0User.js', () => ({
-	updateAuth0User: jest.fn().mockImplementation(async (managementClient, id, body, res) => {
-		console.log('updateAuth0User called')
-		return Promise.resolve();
-	})
-}));
 
 /*jest.mock('../../utils/authorization.js', () => ({
 	checkJwt: jest.fn().mockImplementation(() => {
@@ -63,18 +49,17 @@ describe('User Routes', () => {
 				{
 					status: jest.fn().mockImplementation(() => {
 						return {
-							send: jest.fn().mockImplementation(() => ({
+							send: jest.fn().mockImplementation((body) => ({
 								status: 200,
-								body: 'User updated'
+								body: body
 							}))
 						}
 					}),
-					send: jest.fn()
 				},
-				managementMock);
+				updateMock);
 			expect(res.status).toBe(200);
 			expect(res.body).toBe('User updated');
-			expect(managementMock).toHaveBeenCalledWith('user-id', {
+			expect(updateMock).toHaveBeenCalledWith({ id: 'user-id' }, {
 				name: 'John Doe',
 				email: 'john.doe@example.com'
 			});
