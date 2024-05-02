@@ -2,6 +2,7 @@ import request from 'supertest';
 import express from 'express';
 import router from '../../routes/userRoutes.js';
 import { jest } from '@jest/globals';
+import { updateAuth0User } from '../../utils/helpers/updateAuth0User.js';
 
 const app = express();
 app.use(express.json());
@@ -11,6 +12,17 @@ const PORT = 1234;
 
 const server = app.listen(PORT);
 const url = `http://localhost:${PORT}`;
+
+const managementMock = jest.fn().mockImplementation(() => {
+	return {
+		users: {
+			update: jest.fn().mockImplementation(() => {
+				return Promise.resolve();
+			}
+			)
+		}
+	};
+});
 
 jest.mock('../../utils/helpers/updateAuth0User.js', () => ({
 	updateAuth0User: jest.fn().mockImplementation(async (managementClient, id, body, res) => {
@@ -43,6 +55,30 @@ jest.mock('../../utils/helpers/updateAuth0User.js', () => ({
 
 describe('User Routes', () => {
 	describe('PATCH /users/:id', () => {
+		it('should update the user', async () => {
+			const res = await updateAuth0User('user-id', {
+				name: 'John Doe',
+				email: 'john.doe@example.com'
+			},
+				{
+					status: jest.fn().mockImplementation(() => {
+						return {
+							send: jest.fn().mockImplementation(() => ({
+								status: 200,
+								body: 'User updated'
+							}))
+						}
+					}),
+					send: jest.fn()
+				},
+				managementMock.users.update);
+			expect(res.status).toBe(200);
+			expect(res.body).toBe('User updated');
+			expect(managementMock).toHaveBeenCalledWith('user-id', {
+				name: 'John Doe',
+				email: 'john.doe@example.com'
+			});
+		});
 		// eslint-disable-next-line jest/no-commented-out-tests
 		/*
 		it('should update the user', async () => {

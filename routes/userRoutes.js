@@ -8,12 +8,6 @@ import { updateAuth0User } from '../utils/helpers/updateAuth0User.js';
 
 const router = express.Router();
 
-const management = new ManagementClient({
-	domain: env.auth0Domain,
-	clientId: env.auth0ClientId,
-	clientSecret: env.auth0ClientSecret
-});
-
 router.get('/:id', checkJwt, checkScopes('read:user'), checkUser, (req, res) => {
 	const { id } = req.params;
 
@@ -45,9 +39,16 @@ router.put('/:id',
 			clientSecret: env.auth0ClientSecret
 		});
 
+		console.log('Creating user with id:', id)
+
 		management.users.get({ id }).then(async (user) => {
-			UserModel.findByIdAndUpdate(id, {});
-			return res.status(200).send('User created');
+			UserModel.findByIdAndUpdate(id, {}, { upsert: true, new: true, setDefaultsOnInsert: true })
+				.then(() => {
+					console.log('User created/updated');
+					return res.status(200).send('User created');
+				}).catch((error) => {
+					console.error(error);
+				})
 		}).catch((error) => {
 			console.error(error);
 			handleError(error, res, id);
@@ -72,7 +73,7 @@ router.patch('/:id', /*checkJwt, checkScopes('update:user'), checkUser,*/
 			name: req.body.name
 		};
 
-		if(await updateAuth0User(management, id, body, res))
+		if (await updateAuth0User(id, body, res))
 			return;
 
 		return res.status(200).send('User updated');
