@@ -1,4 +1,4 @@
-const allowedKeys = ['green', 'red', 'blue', 'black', 'buttonLift', 'tBarLift', 'gondolaLift', 'chairLift'];
+const allowedKeys = ['green', 'red', 'blue', 'black', 'platter', 'tBar', 'gondola', 'chair'];
 
 /**
  * Check if all entries in the object are boolean values
