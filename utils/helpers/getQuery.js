@@ -10,10 +10,11 @@ export default (bounds, settings) => {
     red: 'intermediate',
     black: ['advanced', 'expert']
   };
-  
+
+  // Updated lift mapping to handle both cases for platter
   const LIFT_TYPE_MAPPING = {
     platter: ['drag_lift', 'platter'],
-    tBar: 't-bar',
+    tBar: ['drag_lift', 't-bar'],
     gondola: 'gondola',
     chair: 'chair_lift'
   };
@@ -30,12 +31,12 @@ export default (bounds, settings) => {
       gondola: true
     };
   }
-  
+
   let query = `
   [out:json];
   (
     `;
-    
+
     // Add pistes based on settings
     Object.entries(PISTE_DIFFICULTY_MAPPING).forEach(([key, value]) => {
       if (settings[key]) {
@@ -52,10 +53,12 @@ export default (bounds, settings) => {
     // Add lifts based on settings
     Object.entries(LIFT_TYPE_MAPPING).forEach(([key, value]) => {
       if (settings[key]) {
-        if (Array.isArray(value)) {
+        if (key === 'platter') {
           value.forEach(val => {
             query += `way["aerialway"="${val}"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
-          });
+          })
+        } else if (key === 'tBar') {
+          query += `way["aerialway"="${value[0]}"]["aerialway:${value[0]}"="${value[1]}"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
         } else {
           query += `way["aerialway"="${value}"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
         }
