@@ -22,9 +22,10 @@ async function updateUsers() {
 				},
 				liftTypes: {
 					gondola: user._doc.preferences.liftTypes?.gondola,
-					chairlift: user._doc.preferences.liftTypes?.chairlift,
+					chair: user._doc.preferences.liftTypes?.chair,
 					tBar: user._doc.preferences.liftTypes?.tBar,
 					platter: user._doc.preferences.liftTypes?.platter,
+					chairlift: undefined,
 				},
 			},
 		}, { disablePrint: true }

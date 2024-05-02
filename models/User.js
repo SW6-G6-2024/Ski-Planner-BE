@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
 				required: true,
 				default: true,
 			},
-			chairlift: {
+			chair: {
 				type: Boolean,
 				required: true,
 				default: true,

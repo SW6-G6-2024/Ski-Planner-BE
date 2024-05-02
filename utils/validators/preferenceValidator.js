@@ -1,3 +1,5 @@
+const allowedKeys = ['green', 'red', 'blue', 'black', 'buttonLift', 'tBarLift', 'gondolaLift', 'chairLift'];
+
 /**
  * Check if all entries in the object are boolean values
  * @param {Object} settings object to be checked
@@ -5,9 +7,11 @@
  */
 const isPreference = (settings) => {
   for (let key in settings) {
-      if (typeof settings[key] !== 'boolean') {
-          return false;
-      }
+    if(!allowedKeys.includes(key))
+      return false;
+    if (typeof settings[key] !== 'boolean') {
+      return false;
+    }
   }
   return true;
 };
