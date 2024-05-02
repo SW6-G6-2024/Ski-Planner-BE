@@ -1,5 +1,3 @@
-
-
 async function updateAuth0User(managementClient, id, body, res) {
 	try {
 		await managementClient.users.update({ id }, body); 
