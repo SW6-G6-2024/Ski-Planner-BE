@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { connectToDb } from '../db/index.js';
 import env from '../config/keys.js';
-import getQuery from '../utils/getQuery.js';
+import getQuery from '../utils/helpers/getQuery.js';
 import { overpassToGeoJson } from '../utils/dataFormatter.js';
 import savePistesFromArea from './savePistesFromArea.js';
 

@@ -8,8 +8,7 @@ import getPistes from './utils/getPistes.js';
  * @param {Number} numEntries number of ratings to generate for each piste
  * @returns {Promise<Array<Rating>>} array of ratings
  */
-async function generateRatings(numEntries, test = false) {
-  const ratings = [];
+async function generateRatings(numOfInstances, test = false) {
   let pistes;
   if (!test) {
     pistes = await getPistes();
@@ -17,23 +16,30 @@ async function generateRatings(numEntries, test = false) {
     pistes = await PistesModel.find({});
   }
 
-  for (let i = 0; i < pistes.length; i++) {
-    for (let j = 0; j < numEntries; j++) {
-      ratings.push(getRating(pistes[i]));
+  let environment;
+  const dataEntry = [];
+
+  for (let i = 0; i < numOfInstances; i++) {
+    environment = getInstance();
+    for (let j = 0; j < pistes.length; j++) {
+      dataEntry.push({
+        piste: pistes[j],
+        user: null,
+        points: calculatePoints(environment.weather, environment.time, pistes[j]),
+        date: environment.date,
+        weather: environment.weather,
+      });
     }
   }
-
-  return ratings;
+  return dataEntry;
 }
 
 export default generateRatings;
 
 /**
- * Generates a rating for a single piste instance based on generated weather and time
- * @param {Piste} piste object containing specific information for a single piste instance
- * @returns {Rating} rating object
+ * Generates an instance of weather conditions and time
  */
-function getRating(piste) {
+function getInstance() {
   const year = 2023;
   const month = getWinterMonth();
   const date = {
@@ -45,14 +51,12 @@ function getRating(piste) {
   };
   const time = new Date(date.year, date.month - 1, date.day, date.hours, date.minutes);
   const weather = generateWeather(time);
-  const points = calculatePoints(weather, time, piste);
-  const rating = {
-    piste: piste,
-    user: null,
-    points: points,
+
+  return {
+    year: year,
+    month: month,
     date: date,
+    time: time,
     weather: weather
   };
-
-  return rating;
 }
