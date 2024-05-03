@@ -12,13 +12,13 @@ router.get('/:id', checkJwt, checkScopes('read:current_user'), checkUser, async 
 	const { id } = req.params;
 
 	try {
-			const user = await UserModel.findById(id);
-			if (!user) {
-					return res.status(404).send('User not found');
-			}
-			return res.status(200).send(user);
+		const user = await UserModel.findById(id);
+		if (!user) {
+			return res.status(404).send('User not found');
+		}
+		return res.status(200).send(user);
 	} catch (err) {
-			return res.status(500).send('Error getting user');
+		return res.status(500).send('Error getting user');
 	}
 });
 
@@ -99,16 +99,16 @@ router.patch('/:id/preferences', checkJwt, checkScopes('update:preferences'), ch
 			await UserModel.findByIdAndUpdate(id, {
 				preferences: {
 					pisteDifficulties: {
-						green: body.pisteDifficulties?.green ?? user.preferences.pisteDifficulties.green,
-						blue: body.pisteDifficulties?.blue ?? user.preferences.pisteDifficulties.blue,
-						red: body.pisteDifficulties?.red ?? user.preferences.pisteDifficulties.red,
-						black: body.pisteDifficulties?.black ?? user.preferences.pisteDifficulties.black,
+						green: body.settings?.settings?.green ?? user.preferences.pisteDifficulties.green,
+						blue: body.settings?.settings?.blue ?? user.preferences.pisteDifficulties.blue,
+						red: body.settings?.settings?.red ?? user.preferences.pisteDifficulties.red,
+						black: body.settings?.settings?.black ?? user.preferences.pisteDifficulties.black,
 					},
 					liftTypes: {
-						gondola: body.liftTypes?.gondola ?? user.preferences.liftTypes.gondola,
-						chairlift: body.liftTypes?.chairlift ?? user.preferences.liftTypes.chairlift,
-						tBar: body.liftTypes?.tBar ?? user.preferences.liftTypes.tBar,
-						platter: body.liftTypes?.platter ?? user.preferences.liftTypes.platter,
+						gondola: body.settings?.settings?.gondola ?? user.preferences.liftTypes.gondola,
+						chair: body.settings?.settings?.chair ?? user.preferences.liftTypes.chair,
+						tBar: body.settings?.settings?.tBar ?? user.preferences.liftTypes.tBar,
+						platter: body.settings?.settings?.platter ?? user.preferences.liftTypes.platter,
 					},
 				}
 			});
