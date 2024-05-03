@@ -106,15 +106,14 @@ function calculatePoints(weather, time, piste) {
   // Generate a random number of points between 1 and 5 based on a normal distribution
   const points = Math.round(randn_bm(1, 5, 1));
 
+  // Calculate the weights for each weather condition
   const wSpeedWeight = 1 - (weather.windSpeed * calculateWindEffect(weather.windDirection, piste.direction) / (25 * wsFactor));
-  // Calculate the wind effect on the skiing conditions and multyiply it with the wind speed weight
   const windWeight = wSpeedWeight;
   const tempWeight = 1 - (Math.abs(weather.temperature / (30 * tFactor))); 
   const snowfallWeight = 1 - (weather.snowfall / (10 * sfFactor));
   const rainWeight = 1 - (weather.rain / (1 * dpFactor));
   const snowDepthWeight = 1 + (weather.snowDepth / (100 * sdFactor));
   const visibilityWeight = 1 + (weather.visibility / (25000 * vFactor));
-  
   const timeWeight = getTimeFactor(time);
   
 
