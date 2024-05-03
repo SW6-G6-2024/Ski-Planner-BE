@@ -1,4 +1,7 @@
 import UserModel from '../models/User.js';
+import { handleError } from '../utils/helpers/userErrorHandling.js';
+import { ManagementClient } from 'auth0';
+import env from '../config/keys.js';
 
 async function getUser(req, res) {
 	const { id } = req.params;
@@ -10,6 +13,7 @@ async function getUser(req, res) {
 		}
 		return res.status(200).send(user);
 	} catch (err) {
+		// istanbul ignore next
 		return res.status(500).send('Error getting user');
 	}
 }
@@ -34,10 +38,10 @@ async function patchUserPreferences(req, res) {
 		}
 
 		const updatedPreferences = makeUpdateObject(body, user.preferences);
-		
+
 		updatedUser = await UserModel.findByIdAndUpdate(id, { preferences: updatedPreferences }, { new: true, disablePrint: test });
 	} catch (error) {
-		console.error(error);
+		// istanbul ignore next
 		return res.status(500).send('Error updating user preferences');
 	}
 
@@ -84,10 +88,10 @@ function makeUpdateObject(body, current) {
 	let res = current;
 
 	for (const outerField in body) {
-		if(body[outerField] === undefined) continue;
+		if (body[outerField] === undefined) continue;
 		res[outerField] = updateFields(body[outerField], res[outerField]);
 	}
-	
+
 	return res;
 }
 
@@ -100,10 +104,44 @@ function makeUpdateObject(body, current) {
 function updateFields(field, current) {
 	let res = current;
 	for (const innerField in field) {
-		if(field[innerField] === undefined) continue;
+		if (field[innerField] === undefined) continue;
 		res[innerField] = field[innerField];
 	}
 	return res;
 }
 
-export { getUser, patchUserPreferences };
+const management = new ManagementClient({
+	domain: env.auth0Domain,
+	clientId: env.auth0ClientId,
+	clientSecret: env.auth0ClientSecret
+});
+
+async function addUser(id, res, userManager = management.users) {
+	try {
+		await userManager.get({ id });
+	} catch (error) {
+		return handleError(error, res, id);
+	}
+
+	let user;
+	try {
+		user = await UserModel.findByIdAndUpdate(id, {}, { upsert: true, new: true, setDefaultsOnInsert: true });
+	} catch (error) {
+		// istanbul ignore next
+		return res.status(500).send('Error creating user');
+	}
+
+	return res.status(200).send({ message: 'User created', user: user });
+}
+
+async function updateAuth0User(id, body, res, updateFunc = management.users.update) {
+	try {
+		await updateFunc({ id }, body); 
+		return res.status(200).send('User updated');
+	} catch (error) {
+		// istanbul ignore next
+		return res.status(500).send('Error updating user');
+	}
+}
+
+export { getUser, patchUserPreferences, addUser, updateAuth0User };

@@ -6,6 +6,8 @@ function handleError(error, res, id) {
 			return res.status(400).send(err.userCreation.invalidId(id));
 		case "inexistent_user":
 			return res.status(400).send(err.userCreation.invalidUser);
+		default:
+			return res.status(500).send('Error creating user');
 	}
 }
 
