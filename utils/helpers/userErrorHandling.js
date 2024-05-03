@@ -1,5 +1,4 @@
 import err from "../errorCodes.js"
-import UserModel from "../../models/User.js";
 
 function handleError(error, res, id) {
 	switch (error.errorCode) {

@@ -3,6 +3,10 @@ import express from 'express';
 import router from '../../routes/userRoutes.js';
 import { jest } from '@jest/globals';
 import { updateAuth0User } from '../../utils/helpers/updateAuth0User.js';
+import { getUser, patchUserPreferences } from '../../controllers/userControllers.js';
+import connectDb from '../fixtures/db.js';
+import mongoose from 'mongoose';
+import { fakeUser } from '../fixtures/fakeUser.js';
 
 const app = express();
 app.use(express.json());
@@ -17,27 +21,21 @@ const updateMock = jest.fn().mockImplementation(() => {
 	return Promise.resolve();
 });
 
-/*jest.mock('../../utils/authorization.js', () => ({
-	checkJwt: jest.fn().mockImplementation(() => {
-		return (req, res, next) => {
-			console.log("checkJwt called")
-			next();
-		};
+const resMock = {
+	status: jest.fn().mockImplementation((status) => {
+		return {
+			send: jest.fn().mockImplementation((body) => ({
+				status: status,
+				body: body
+			}))
+		}
 	}),
-	checkScopes: jest.fn().mockImplementation(() => {
-		return (req, res, next) => {
-			if (req.headers.authorization === 'Bearer test') {
-				return next();
-			}
-			return res.status(401).send('Unauthorized');
-		};
-	}),
-	checkUser: jest.fn().mockImplementation(() => {
-		return (req, res, next) => {
-			next();
-		};
-	}),
-}));*/
+};
+
+let db;
+beforeAll(async () => {
+	db = await connectDb();
+});
 
 describe('User Routes', () => {
 	describe('PATCH /users/:id', () => {
@@ -47,10 +45,10 @@ describe('User Routes', () => {
 				email: 'john.doe@example.com'
 			},
 				{
-					status: jest.fn().mockImplementation(() => {
+					status: jest.fn().mockImplementation((status) => {
 						return {
 							send: jest.fn().mockImplementation((body) => ({
-								status: 200,
+								status: status,
 								body: body
 							}))
 						}
@@ -64,35 +62,97 @@ describe('User Routes', () => {
 				email: 'john.doe@example.com'
 			});
 		});
-		// eslint-disable-next-line jest/no-commented-out-tests
-		/*
-		it('should update the user', async () => {
-			const userId = 'user-id';
-			const updatedUser = {
-				name: 'John Doe',
-				email: 'john.doe@example.com',
-			};
+	});
 
-			const response = await request(url)
-				.patch(`/api/users/${userId}`)
-				.set('authorization', 'Bearer test')
-				.send(updatedUser);
-
-			expect(response.status).toBe(200);
-			expect(response.body).toEqual(updatedUser);
-			expect(management.users.update).toHaveBeenCalledWith({ id: userId }, updatedUser);
-		});*/
-
-		it('should return 401 if not authorized', async () => {
-			/*const response = await request(url)
-				.patch('/api/users/user-id');
-
-			expect(response.status).toBe(500);*/
+	describe('GET /users/:id', () => {
+		beforeAll(async () => {
+			await db.collection('users').insertOne(fakeUser);
 		});
+
+		it('should get the user', async () => {
+			const res = await getUser({
+				params: { id: 'user-id' }
+			}, resMock);
+
+			expect(res.status).toBe(200);
+			expect(res.body).toMatchObject({
+				_id: fakeUser._id,	
+				preferences: fakeUser.preferences,
+				createdAt: expect.any(Date),
+				modifiedAt: expect.any(Date)
+			});
+		});
+	});
+
+	describe('PATCH /users/:id/preferences', () => {
+		beforeEach( async () => {
+			await db.collection('users').deleteMany({});
+			await db.collection('users').insertOne(fakeUser);
+		});
+
+		it('should update the user preferences', async () => {
+			const res = await patchUserPreferences({
+				params: { id: 'user-id' },
+				headers: { test: 'true' },
+				body: {
+					pisteDifficulties: { ...fakeUser.preferences.pisteDifficulties, black: false },
+					liftTypes: { ...fakeUser.preferences.liftTypes, platter: false, tBar: false }
+				}
+			}, resMock)
+
+			expect(res.status).toBe(200);
+
+			const updatedUser = await db.collection('users').findOne({ _id: 'user-id' });
+			expect(updatedUser.preferences).toMatchObject({
+				pisteDifficulties: { ...fakeUser.preferences.pisteDifficulties, black: false },
+				liftTypes: { ...fakeUser.preferences.liftTypes, platter: false, tBar: false }
+			});
+		});
+
+		it('should work with partial updates', async () => {
+			const res = await patchUserPreferences({
+				params: { id: 'user-id' },
+				headers: { test: 'true' },
+				body: {
+					pisteDifficulties: {
+						black: false
+					}
+				}
+			}, resMock)
+
+			expect(res.status).toBe(200);
+
+			const updatedUser = await db.collection('users').findOne({ _id: 'user-id' });
+			expect(updatedUser.preferences).toMatchObject({
+				pisteDifficulties: { ...fakeUser.preferences.pisteDifficulties, black: false },
+				liftTypes: fakeUser.preferences.liftTypes
+			});
+		});
+
+		it('should not add new fields', async () => {
+			const res = await patchUserPreferences({
+				params: { id: 'user-id' },
+				headers: { test: 'true' },
+				body: {
+					newField: 'new value'
+				}
+			}, resMock)
+
+			expect(res.status).toBe(200);
+
+			const updatedUser = await db.collection('users').findOne({ _id: 'user-id' });
+			expect(updatedUser).not.toHaveProperty('newField');
+		})
+	});
+
+	afterEach(async () => {
+		await db.collection('users').deleteMany({});
 	});
 });
 
-afterAll(() => {
+afterAll(async () => {
 	// You're my wonderwall
+	await db.collection('users').deleteMany({});
+	await mongoose.connection.close();
 	server.close();
 });

@@ -111,3 +111,25 @@
  * @property {Boolean} chair Whether to include chair lifts
  * @property {Boolean} gondola Whether to include gondola lifts
  */ 
+
+/**
+ * @typedef {Object} FilteredBody
+ * @property {Difficulties} pisteDifficulties The piste difficulties
+ * @property {LiftTypes} liftTypes The lift types
+ */
+
+/**
+ * @typedef {Object} Difficulties
+ * @property {Boolean} green Whether to include green pistes
+ * @property {Boolean} blue Whether to include blue pistes
+ * @property {Boolean} red Whether to include red pistes
+ * @property {Boolean} black Whether to include black pistes
+ */
+
+/**
+ * @typedef {Object} LiftTypes
+ * @property {Boolean} button Whether to include button lifts
+ * @property {Boolean} tBar Whether to include t-bar lifts
+ * @property {Boolean} chair Whether to include chair lifts
+ * @property {Boolean} gondola Whether to include gondola lifts
+ */
