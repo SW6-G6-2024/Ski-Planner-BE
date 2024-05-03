@@ -55,7 +55,8 @@
             "/config/",
             "/db/",
             "/utils/errorCodes.js",
-            "/utils/authorization.js"
+            "/utils/authorization.js",
+            "/data_generation/utils/getPistes.js"
         ],
         "transform": {},
         "modulePathIgnorePatterns": [

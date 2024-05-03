@@ -3,6 +3,12 @@ import { handleError } from '../utils/helpers/userErrorHandling.js';
 import { ManagementClient } from 'auth0';
 import env from '../config/keys.js';
 
+const management = new ManagementClient({
+	domain: env.auth0Domain,
+	clientId: env.auth0ClientId,
+	clientSecret: env.auth0ClientSecret
+});
+
 async function getUser(req, res) {
 	const { id } = req.params;
 
@@ -109,12 +115,6 @@ function updateFields(field, current) {
 	}
 	return res;
 }
-
-const management = new ManagementClient({
-	domain: env.auth0Domain,
-	clientId: env.auth0ClientId,
-	clientSecret: env.auth0ClientSecret
-});
 
 async function addUser(id, res, userManager = management.users) {
 	try {
