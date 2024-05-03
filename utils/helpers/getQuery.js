@@ -56,7 +56,7 @@ export default (bounds, settings) => {
         if (key === 'platter') {
           value.forEach(val => {
             query += `way["aerialway"="${val}"][!"aerialway:drag_lift"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
-          })
+          });
         } else if (key === 'tBar') {
           query += `way["aerialway"="${value[0]}"]["aerialway:${value[0]}"="${value[1]}"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
         } else {

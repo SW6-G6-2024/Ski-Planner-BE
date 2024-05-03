@@ -1,21 +1,9 @@
-import request from 'supertest';
-import express from 'express';
-import router from '../../routes/userRoutes.js';
 import { jest } from '@jest/globals';
 import { addUser, getUser, patchUserPreferences, updateAuth0User } from '../../controllers/userControllers.js';
 import connectDb from '../fixtures/db.js';
 import mongoose from 'mongoose';
 import { fakeUser } from '../fixtures/fakeUser.js';
 import errorCodes from '../../utils/errorCodes.js';
-
-const app = express();
-app.use(express.json());
-app.use('/api/users', router);
-
-const PORT = 1234;
-
-const server = app.listen(PORT);
-const url = `http://localhost:${PORT}`;
 
 const updateMock = jest.fn().mockImplementation(() => {
 	return Promise.resolve();
@@ -28,7 +16,7 @@ const resMock = {
 				status: status,
 				body: body
 			}))
-		}
+		};
 	}),
 };
 
@@ -51,7 +39,7 @@ describe('User Routes', () => {
 								status: status,
 								body: body
 							}))
-						}
+						};
 					}),
 				},
 				updateMock);
@@ -166,7 +154,7 @@ describe('User Routes', () => {
 					pisteDifficulties: { ...fakeUser.preferences.pisteDifficulties, black: false },
 					liftTypes: { ...fakeUser.preferences.liftTypes, platter: false, tBar: false }
 				}
-			}, resMock)
+			}, resMock);
 
 			expect(res.status).toBe(200);
 
@@ -186,7 +174,7 @@ describe('User Routes', () => {
 						black: false
 					}
 				}
-			}, resMock)
+			}, resMock);
 
 			expect(res.status).toBe(200);
 
@@ -204,13 +192,13 @@ describe('User Routes', () => {
 				body: {
 					newField: 'new value'
 				}
-			}, resMock)
+			}, resMock);
 
 			expect(res.status).toBe(200);
 
 			const updatedUser = await db.collection('users').findOne({ _id: 'user-id' });
 			expect(updatedUser).not.toHaveProperty('newField');
-		})
+		});
 
 		it('should return 404 if the user does not exist', async () => {
 			const res = await patchUserPreferences({
@@ -236,5 +224,4 @@ afterAll(async () => {
 	// You're my wonderwall
 	await db.collection('users').deleteMany({});
 	await mongoose.connection.close();
-	server.close();
 });

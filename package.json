@@ -54,7 +54,8 @@
             "/models/",
             "/config/",
             "/db/",
-            "/utils/errorCodes.js"
+            "/utils/errorCodes.js",
+            "/utils/authorization.js"
         ],
         "transform": {},
         "modulePathIgnorePatterns": [

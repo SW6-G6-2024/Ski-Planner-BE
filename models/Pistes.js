@@ -37,7 +37,7 @@ PistesSchema.pre(['save', 'update', 'findOneAndUpdate', 'updateOne'], function (
 // Print a message after saving or updating the document
 PistesSchema.post(['update', 'findOneAndUpdate', 'updateOne'], function (doc) {
   if (this.getOptions().disablePrint) return;
-	printDbUpdate('Piste', doc._id)
+	printDbUpdate('Piste', doc._id);
 });
 
 const PistesModel = model('pistes', PistesSchema);

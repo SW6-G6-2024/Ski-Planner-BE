@@ -14,6 +14,6 @@ const fakeUser = {
 			tBar: true,
 		}
 	}
-}
+};
 
 export { fakeUser };

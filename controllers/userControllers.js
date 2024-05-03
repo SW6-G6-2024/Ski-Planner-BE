@@ -60,21 +60,21 @@ function filterBody(body) {
 	body = {
 		pisteDifficulties: body.pisteDifficulties,
 		liftTypes: body.liftTypes
-	}
+	};
 
 	body.pisteDifficulties = body.pisteDifficulties && {
 		green: body.pisteDifficulties.green,
 		blue: body.pisteDifficulties.blue,
 		red: body.pisteDifficulties.red,
 		black: body.pisteDifficulties.black
-	}
+	};
 
 	body.liftTypes = body.liftTypes && {
 		gondola: body.liftTypes.gondola,
 		chair: body.liftTypes.chair,
 		tBar: body.liftTypes.tBar,
 		platter: body.liftTypes.platter
-	}
+	};
 	return body;
 }
 
