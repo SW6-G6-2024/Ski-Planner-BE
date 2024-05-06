@@ -1,8 +1,8 @@
 import express from 'express'; 
 import SkiAreaModel from '../models/SkiAreas.js';
 import err from '../utils/errorCodes.js';
-import checkParams from '../utils/checkParams.js';
-import getQuery from '../utils/getQuery.js';
+import checkParams from '../utils/validators/checkParams.js';
+import getQuery from '../utils/helpers/getQuery.js';
 import axios from 'axios';
 import { overpassToGeoJson } from '../utils/dataFormatter.js';
 
@@ -11,8 +11,8 @@ const router = express.Router();
 router.get('/:id', 
 /**
  * GET request for ski area by ID
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Express.Request} req request object
+ * @param {Express.Response} res response object
  * @returns 
  */
 async (req, res) => {

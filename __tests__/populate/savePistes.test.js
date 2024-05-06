@@ -5,6 +5,7 @@ import makeFakeSkiArea from '../fixtures/fakeSkiArea.js';
 import savePistesFromArea from '../../population/savePistesFromArea.js';
 import pisteResponse from '../fixtures/pisteGeoJsonExample.js';
 import err from '../../utils/errorCodes.js';
+import updatedPisteResponse from '../fixtures/updatedPisteExample.js';
 
 const app = express();
 // Connect to the database
@@ -16,6 +17,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await db.collection('ski-areas').deleteMany({});
+  await db.collection('pistes').deleteMany({});
   await mongoose.connection.close();
 });
 
@@ -31,7 +34,7 @@ describe('savePistes', () => {
     await db.collection('pistes').deleteMany({});
   });
 
-  it('Saves all pistes by geoJson and sky area id', async () => {
+  it('Saves all pistes by geoJson and ski area id', async () => {
     await savePistesFromArea(pisteResponse, fakeArea._id);
 
     // Check if all the pistes, and only the pistes are saved from the example response
@@ -68,5 +71,24 @@ describe('savePistes', () => {
       .finally(() => {
         expect(error).toEqual(err.geoJson.invalidObject);
       });
+  });
+
+  it('Updates document if it already exists', async () => {
+    // Save the pistes from the example response
+    await savePistesFromArea(pisteResponse, fakeArea._id);
+    // Update the piste from the updated example response
+    await savePistesFromArea(updatedPisteResponse, fakeArea._id);
+
+    // Check no additional pistes are saved, with duplicates
+    expect(await db.collection('pistes').countDocuments()).toBe(3);
+    // Create array of all pistes
+    let totalPistes = await db.collection('pistes').find({}).toArray();
+    // Find piste with specific ID  
+    let updated = await db.collection('pistes').findOne({ _id: 12345678 });
+    // Check if the updated piste has the correct values
+    expect(updated._id).toBe(12345678);
+    expect(updated.name).toBe("69");
+    expect(updated.skiAreaId).toEqual(fakeArea._id);
+    expect(updated['piste:difficulty']).toBe(totalPistes[0]['piste:difficulty']);
   });
 });

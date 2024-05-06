@@ -1,6 +1,6 @@
-import checkParams from "../../utils/checkParams.js";
+import checkParams from "../../../utils/validators/checkParams.js";
 import { jest } from "@jest/globals";
-import errorCodes from "../../utils/errorCodes.js";
+import errorCodes from "../../../utils/errorCodes.js";
 
 describe("checkParams", () => {
 	const res = {

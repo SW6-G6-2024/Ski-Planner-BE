@@ -26,15 +26,31 @@ export default {
 			code: "E0102",
 			message: "Could not fetch data from overpass API",
 		},
-		routeGenerationError: {
+		weatherError: {
 			code: "E0103",
+			message: "Weather service is currently not responding",
+		},
+		predictionError: {
+			code: "E0104",
+			message: "Prediction service is currently not responding",
+		},
+		routeGenerationError: {
+			code: "E0105",
 			message: "Route generation service is currently not responding",
 		},
 		noRouteFound: {
-			code: "E0104",
+			code: "E0106",
 			message: "No route found",
 		},
-	}, 
+		invalidBestRouteInput: {
+			code: "E0107",
+			message: "Invalid input for best route generation",
+		},
+		invalidPreferenceInput: {
+			code: "E0108",
+			message: "Invalid input for preference",
+		},
+	},
 
 	skiArea: {
 		notFound: {
@@ -43,7 +59,7 @@ export default {
 		},
 	},
 
-  pistes: {
+	pistes: {
 		notFound: {
 			code: "E0301",
 			message: "Piste not found",
@@ -60,18 +76,28 @@ export default {
 			code: "E0304",
 			message: "Invalid piste id",
 		},
-  },
+	},
 
-  geoJson: {
-    invalidObject: {
-      code: "E0401",
-      message: "Invalid geoJson object",
-    },
-    missingGeometry: {
-      code: "E0402",
-      message: "Invalid data: Must contain elements with geometry.",
-    },
-  }
+	geoJson: {
+		invalidObject: {
+			code: "E0401",
+			message: "Invalid geoJson object",
+		},
+		missingGeometry: {
+			code: "E0402",
+			message: "Invalid data: Must contain elements with geometry.",
+		},
+	},
 
-  //
+	// User creation
+	userCreation: {
+		invalidId: (id) => ({
+			code: "E0501",
+			message: "Invalid id: " + id,
+		}),
+		invalidUser: {
+			code: "E0502",
+			message: "Invalid user",
+		},
+	}
 };

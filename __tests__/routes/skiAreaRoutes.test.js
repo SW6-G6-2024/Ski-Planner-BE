@@ -85,6 +85,7 @@ describe('ski area routes', () => {
 afterAll(async () => {
   // You´re my wonderwall
   await db.collection('ski-areas').deleteMany({});
+  await db.collection('pistes').deleteMany({});
   await mongoose.connection.close();
   server.close();
 });
