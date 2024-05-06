@@ -65,6 +65,7 @@ describe('Routing Routes', () => {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
 			isBestRoute: false,
+			settings: {},
 			skiArea: id
 		};
 		const response = await request(app)
@@ -107,6 +108,7 @@ describe('Routing Routes', () => {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
 			isBestRoute: false,
+			settings: {},
 			skiArea: '5f9f6c3f9d5c1c2a3c3e3c3d'
 		};
 		const response = await request(app)
@@ -148,6 +150,7 @@ describe('Routing Routes', () => {
 		start: { lat: 1, lon: 1 },
 		end: { lat: 2, lon: 2 },
 		isBestRoute: false,
+		settings: {},
 		skiArea: id
 	});
 
@@ -207,6 +210,7 @@ describe('Routing Routes', () => {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
 			isBestRoute: 'invalid',
+			settings: {},
 			skiArea: id
 		};
 		const response = await request(app)
@@ -220,13 +224,43 @@ describe('Routing Routes', () => {
 		const data = {
 			start: { lat: 1, lon: 1 },
 			end: { lat: 2, lon: 2 },
-			skiArea: id
+			skiArea: id,
+			settings: {}
 		};
 		const response = await request(app)
 			.post('/api/routes/generate-route')
 			.send(data);
 		expect(response.status).toBe(400);
 		expect(response.body).toEqual(err.general.missingParam('isBestRoute'));
+	});
+
+	test('POST /api/routes/generate-route should return 400 if settings is missing', async () => {
+		const data = {
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 },
+			isBestRoute: false,
+			skiArea: id
+		};
+		const response = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data);
+		expect(response.status).toBe(400);
+		expect(response.body).toEqual(err.general.missingParam('settings'));
+	});
+
+	test('POST /api/routes/generate-route should return 400 if settings is not an object', async () => {
+		const data = {
+			start: { lat: 1, lon: 1 },
+			end: { lat: 2, lon: 2 },
+			isBestRoute: false,
+			settings: 'invalid',
+			skiArea: id
+		};
+		const response = await request(app)
+			.post('/api/routes/generate-route')
+			.send(data);
+		expect(response.status).toBe(400);
+		expect(response.body).toEqual(err.routeGeneration.invalidPreferenceInput);
 	});
 });
 

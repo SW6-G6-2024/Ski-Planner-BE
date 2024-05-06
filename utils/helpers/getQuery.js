@@ -3,17 +3,71 @@
  * @param {Array<Number>} bounds - [minLon, minLat, maxLon, maxLat]
  * @returns {String} Overpass API query string
  */
-export default (bounds) => (
-	`
-[out:json];
-(
-  way["piste:type"="downhill"]["piste:difficulty"!="freeride"]["ref"!="(30)"]["piste:difficulty"]["ref"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]}); 
-  way["piste:type"="downhill"]["piste:difficulty"!="freeride"]["piste:difficulty"]["name"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});
-  way["piste:type"="downhill"]["piste:difficulty"!="freeride"]["piste:difficulty"]["piste:ref"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]}); 
-  way["piste:type"="downhill"]["piste:difficulty"!="freeride"]["piste:difficulty"]["piste:name"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});
-  // Fetch all ski lifts within the bounding box
-  way["aerialway"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});
-);
-out geom;
-	`
-);
+export default (bounds, settings) => {
+  const PISTE_DIFFICULTY_MAPPING = {
+    green: 'novice',
+    blue: 'easy',
+    red: 'intermediate',
+    black: ['advanced', 'expert']
+  };
+
+  // Updated lift mapping to handle both cases for platter
+  const LIFT_TYPE_MAPPING = {
+    platter: ['drag_lift', 'platter'],
+    tBar: ['drag_lift', 't-bar'],
+    gondola: 'gondola',
+    chair: 'chair_lift'
+  };
+
+  if (settings === undefined) {
+    settings = {
+      green: true,
+      blue: true,
+      red: true,
+      black: true,
+      platter: true,
+      tBar: true,
+      chair: true,
+      gondola: true
+    };
+  }
+
+  let query = `
+  [out:json];
+  (
+    `;
+
+    // Add pistes based on settings
+    Object.entries(PISTE_DIFFICULTY_MAPPING).forEach(([key, value]) => {
+      if (settings[key]) {
+        if (Array.isArray(value)) {
+          value.forEach(val => {
+            query += `way["piste:type"="downhill"]["piste:difficulty"="${val}"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
+          });
+        } else {
+          query += `way["piste:type"="downhill"]["piste:difficulty"="${value}"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
+        }
+      }
+    });
+
+    // Add lifts based on settings
+    Object.entries(LIFT_TYPE_MAPPING).forEach(([key, value]) => {
+      if (settings[key]) {
+        if (key === 'platter') {
+          value.forEach(val => {
+            query += `way["aerialway"="${val}"][!"aerialway:drag_lift"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
+          });
+        } else if (key === 'tBar') {
+          query += `way["aerialway"="${value[0]}"]["aerialway:${value[0]}"="${value[1]}"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
+        } else {
+          query += `way["aerialway"="${value}"](${bounds[0]},${bounds[1]},${bounds[2]},${bounds[3]});\n`;
+        }
+      }
+    });
+
+    query += `
+  );
+  out geom;
+  `;
+  return query;
+};

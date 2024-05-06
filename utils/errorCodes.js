@@ -46,7 +46,11 @@ export default {
 			code: "E0107",
 			message: "Invalid input for best route generation",
 		},
-	}, 
+		invalidPreferenceInput: {
+			code: "E0108",
+			message: "Invalid input for preference",
+		},
+	},
 
 	skiArea: {
 		notFound: {
@@ -55,7 +59,7 @@ export default {
 		},
 	},
 
-  pistes: {
+	pistes: {
 		notFound: {
 			code: "E0301",
 			message: "Piste not found",
@@ -72,18 +76,28 @@ export default {
 			code: "E0304",
 			message: "Invalid piste id",
 		},
-  },
+	},
 
-  geoJson: {
-    invalidObject: {
-      code: "E0401",
-      message: "Invalid geoJson object",
-    },
-    missingGeometry: {
-      code: "E0402",
-      message: "Invalid data: Must contain elements with geometry.",
-    },
-  }
+	geoJson: {
+		invalidObject: {
+			code: "E0401",
+			message: "Invalid geoJson object",
+		},
+		missingGeometry: {
+			code: "E0402",
+			message: "Invalid data: Must contain elements with geometry.",
+		},
+	},
 
-  //
+	// User creation
+	userCreation: {
+		invalidId: (id) => ({
+			code: "E0501",
+			message: "Invalid id: " + id,
+		}),
+		invalidUser: {
+			code: "E0502",
+			message: "Invalid user",
+		},
+	}
 };

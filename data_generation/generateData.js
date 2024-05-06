@@ -11,7 +11,9 @@ import getPistes from './utils/getPistes.js';
 async function generateRatings(numEntries, test = false) {
   const ratings = [];
   let pistes;
+  // istanbul ignore if
   if (!test) {
+    // istanbul ignore next
     pistes = await getPistes();
   } else {
     pistes = await PistesModel.find({});

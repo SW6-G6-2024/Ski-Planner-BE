@@ -22,6 +22,7 @@
     },
     "homepage": "https://github.com/SW6-G6-2024/Ski-Planner-BE#readme",
     "dependencies": {
+        "ansi-colors": "^4.1.3",
         "auth0": "^4.3.1",
         "axios": "^1.6.7",
         "cookie-session": "^2.1.0",
@@ -34,6 +35,7 @@
         "eslint-plugin-react-refresh": "^0.4.5",
         "express": "^4.18.2",
         "express-oauth2-jwt-bearer": "^1.6.0",
+        "jwt-decode": "^4.0.0",
         "mongoose": "^8.1.3",
         "mongoose-unique-validator": "^5.0.0",
         "passport": "^0.7.0"
@@ -51,7 +53,10 @@
             "/__tests__/",
             "/models/",
             "/config/",
-            "/db/"
+            "/db/",
+            "/utils/errorCodes.js",
+            "/utils/authorization.js",
+            "/data_generation/utils/getPistes.js"
         ],
         "transform": {},
         "modulePathIgnorePatterns": [

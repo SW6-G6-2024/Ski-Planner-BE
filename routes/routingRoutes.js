@@ -3,6 +3,7 @@ import express from 'express';
 import err from '../utils/errorCodes.js';
 // eslint-disable-next-line no-unused-vars
 import { isPoint } from '../utils/validators/pointValidator.js';
+import { isPreference } from '../utils/validators/preferenceValidator.js';
 import checkParams from '../utils/validators/checkParams.js';
 import getQuery from '../utils/helpers/getQuery.js';
 import { findSkiArea } from '../utils/helpers/queryInDB.js';
@@ -21,8 +22,8 @@ router.post('/generate-route',
 	 * @returns 
 	 */
 	async (req, res) => {
-		const { start, end, skiArea, isBestRoute } = req.body;
-		if (checkInput(start, end, skiArea, isBestRoute, res)) {
+		const { start, end, skiArea, settings, isBestRoute } = req.body;
+		if (checkInput({start, end, skiArea, settings, isBestRoute}, res)) {
 			return;
 		}
 
@@ -34,7 +35,7 @@ router.post('/generate-route',
 			return res.status(400).send(err.skiArea.notFound);
 		}
 
-		const query = getQuery(skiAreaInstance.bounds);
+		const query = getQuery(skiAreaInstance.bounds, settings);
 
 		const apiRes = await axios.post('https://overpass-api.de/api/interpreter', query);
 		if (!apiRes?.data)
@@ -83,31 +84,33 @@ function checkResult(result, res) {
 
 /**
  * This function checks if the input is valid or not (i.e. if start and end are valid points and skiArea is a valid ID) and sends the appropriate response if not.
- * @param {node} start The start point of the route
- * @param {node} end The end point of the route
- * @param {String} skiArea The ID of the ski area
- * @param {Boolean} isBestRoute Whether the route is the best route or not
+ * @param 
  * @param {Express.Response} res The express response object
  * @returns Sends the appropriate response if the input is invalid and returns true, otherwise returns false
  */
-function checkInput(start, end, skiArea, isBestRoute, res) {
+function checkInput(input, res) {
 	return checkParams([{
 		name: 'start point',
-		value: start,
+		value: input.start,
 		func: isPoint,
 		funcErr: err.routeGeneration.invalidPoint,
 	}, {
 		name: 'end point',
-		value: end,
+		value: input.end,
 		func: isPoint,
 		funcErr: err.routeGeneration.invalidPoint,
 	}, {
 		name: 'skiArea',
-		value: skiArea,
+		value: input.skiArea,
 		id: true,
 	}, {
+		name: 'settings',
+		value: input.settings,
+		func: isPreference,
+		funcErr: err.routeGeneration.invalidPreferenceInput,
+	}, {
 		name: 'isBestRoute',
-		value: isBestRoute,
+		value: input.isBestRoute,
 		func: (val) => typeof val === 'boolean',
 		funcErr: err.routeGeneration.invalidBestRouteInput,
 	},

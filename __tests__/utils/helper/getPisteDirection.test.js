@@ -1,4 +1,4 @@
-import getPisteDirection from '../../utils/helpers/getPisteDirection';
+import getPisteDirection from '../../../utils/helpers/getPisteDirection';
 
 describe('getPisteDirection', () => {
 	it('should return the correct angle of the piste for arrays', () => {

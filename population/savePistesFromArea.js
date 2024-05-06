@@ -22,7 +22,7 @@ async function savePistesFromArea(obj, skiAreaId) {
             skiAreaId: skiAreaId,
             direction: getPisteDirection(pisteData.geometry.coordinates),
           }
-        }, { upsert: true });
+        }, { upsert: true, disablePrint: true});
       } catch (error) {
         console.error(error);
         /* istanbul ignore next */
