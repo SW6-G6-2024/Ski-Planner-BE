@@ -20,6 +20,10 @@ const ratingsSchema = new Schema({
 		type: Object,
 		required: [true, 'Weather is required'],
 	},
+	createdAt: {
+		type: Date,
+		default: Date.now
+	},
 	modifiedAt: {
 		type: Date,
 		default: Date.now
