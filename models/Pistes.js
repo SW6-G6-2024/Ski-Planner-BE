@@ -26,6 +26,10 @@ const PistesSchema = new Schema({
   },
   createdAt: { type: Date, default: Date.now },
   modifiedAt: { type: Date, default: Date.now },
+  weight: {
+    type: Number,
+    default: 1,
+  },
 });
 
 // Update the 'modifiedAt' field before saving or updating the document

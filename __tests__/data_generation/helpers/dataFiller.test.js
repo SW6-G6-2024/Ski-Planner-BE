@@ -30,7 +30,8 @@ describe('calculatePoints function', () => {
     const time = new Date(2023, 1, 1, 12, 0, 0);
     const piste = {
       id: 1,
-      direction: 0
+      direction: 0,
+      weight: 1
     };
     const points = calculatePoints(weather, time, piste);
     expect(points).toBeGreaterThanOrEqual(1);
