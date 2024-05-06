@@ -5,13 +5,13 @@ import fs from "fs";
 const weatherCodeWeights = JSON.parse(fs.readFileSync("data_generation/helpers/weatherCodes.json", "utf8"));
 
 // Factors to be used when calculating points
-const wsFactor = 2.25;
-const tFactor = 1.75;
-const sfFactor = 2;
-const dpFactor = 2.5;
-const sdFactor = 1.65;
+const wsFactor = 1;
+const tFactor = 2;
+const sfFactor = 1;
+const dpFactor = 1;
+const sdFactor = 1.5;
 const vFactor = 1.5;
-const timeFactor = 0.20;
+const timeFactor = 0.15;
 
 /**
  * Calculates the time factor for a given date object
@@ -84,14 +84,14 @@ function generateWeather(time) {
   const temperatureWeights = getTempAndVisWeight(time, selectedWeatherCode);
 
   return {
-    temperature: (Math.round((Math.random() * (8 - (-8)) - 8) * 10) / 10) * temperatureWeights.temp, // Random temperature between -8 and 8 degrees
+    temperature: randn_bm(-30, 20, 1.15) * temperatureWeights.temp, // Random temperature between -8 and 8 degrees
     weatherCode: selectedWeatherCode, // Random weather code from defined list
-    windSpeed: randn_bm(8, 25, 4) * weatherWeights.wspeed, // Random wind speed between 5 and 25 km/h
+    windSpeed: randn_bm(0, 70, 3.5) * weatherWeights.wspeed, // Random wind speed between 0 and 70 km/h
     windDirection: Math.floor(Math.random() * 360), // Random wind direction between 0 and 359 degrees
-    snowfall: (Math.ceil(Math.random() * 10) + 1) * weatherWeights.snowfall, // Random snowfall between 1 and 10 cm
-    snowDepth: randn_bm(40, 300, 3), // Random snow depth between 40 and 100 cm
-    rain: (Math.ceil(Math.random() * 10) + 1) * weatherWeights.rain, // Random rain between 1 and 10 mm
-    visibility: (500 + Math.random() * 1500) * temperatureWeights.visibility // Random visibility between 500 and 2000 meters
+    snowfall: randn_bm(0, 10, 4) * weatherWeights.snowfall, // Random snowfall between 1 and 10 cm
+    snowDepth: randn_bm(0, 1, 0.85), // Random snow depth between 0 and 1 meters
+    rain: randn_bm(0, 5, 4.5) * weatherWeights.rain, // Random rain between 0 and 5 mm
+    visibility: randn_bm(0, 25000, 0.25) * temperatureWeights.visibility // Random visibility between 0 and 25000 meters
   };
   
 }
@@ -106,19 +106,18 @@ function calculatePoints(weather, time, piste) {
   // Generate a random number of points between 1 and 5 based on a normal distribution
   const points = Math.round(randn_bm(1, 5, 1));
 
+  // Calculate the weights for each weather condition
   const wSpeedWeight = 1 - (weather.windSpeed * calculateWindEffect(weather.windDirection, piste.direction) / (25 * wsFactor));
-  // Calculate the wind effect on the skiing conditions and multyiply it with the wind speed weight
   const windWeight = wSpeedWeight;
-  const tempWeight = 1 - (Math.abs(weather.temperature / (16 * tFactor))); 
+  const tempWeight = 1 - (Math.abs(weather.temperature / (30 * tFactor))); 
   const snowfallWeight = 1 - (weather.snowfall / (10 * sfFactor));
-  const rainWeight = 1 - (weather.rain / (10 * dpFactor));
-  const snowDepthWeight = 1 + (weather.snowDepth / (300 * sdFactor));
-  const visibilityWeight = 1 + (weather.visibility / (2000 * vFactor));
-  
+  const rainWeight = 1 - (weather.rain / (1 * dpFactor));
+  const snowDepthWeight = 1 + (weather.snowDepth / (100 * sdFactor));
+  const visibilityWeight = 1 + (weather.visibility / (25000 * vFactor));
   const timeWeight = getTimeFactor(time);
   
 
-  const finalPoints = Math.round(points * windWeight * tempWeight * snowfallWeight * rainWeight * snowDepthWeight * visibilityWeight * timeWeight);
+  const finalPoints = Math.round((points * windWeight * tempWeight * snowfallWeight * rainWeight * snowDepthWeight * visibilityWeight * timeWeight) * piste.weight);
 
   // Points can't exceed 5 or go below 1
   return Math.min(Math.max(1, finalPoints), 5);
@@ -128,7 +127,7 @@ function calculatePoints(weather, time, piste) {
  * // Generates random numbers between bounds with a skew. Taken from: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
  * @param {Number} min Minimum bound
  * @param {Number} max Maximum bound
- * @param {Number} skew Skews the distribution. 1 is a normal distribution, higher than 1 is a right-skewed distribution, lower than 1 is a left-skewed distribution
+ * @param {Number} skew Skews the distribution. 1 is a normal distribution, lower than 1 is a right-skewed distribution, higher than 1 is a left-skewed distribution
  * @returns {Number} a random number between min and max with a skew
  */
 function randn_bm(min, max, skew) {
@@ -150,4 +149,4 @@ function randn_bm(min, max, skew) {
   return num;
 }
 
-export { generateWeather, calculatePoints };
+export { generateWeather, calculatePoints, randn_bm };
