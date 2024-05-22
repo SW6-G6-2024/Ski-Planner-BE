@@ -1,7 +1,7 @@
 import axios from "axios";
 import getPisteDirection from "./getPisteDirection.js";
 import env from '../../config/keys.js';
-import getLatestArrayElement from "./getLatestArrayElement.js";
+import getElementForCurrentTime from "./getCurrentArrayElement.js";
 import errorCodes from "../errorCodes.js";
 
 async function getPredictedRatings(body, weather) {
@@ -23,9 +23,9 @@ async function getPredictedRatings(body, weather) {
       'windSpeed': weather.current.wind_speed_10m,
       'windDirection': weather.current.wind_direction_10m,
       'snowfall': weather.current.snowfall,
-      'snowDepth': getLatestArrayElement(weather.hourly.snow_depth),
+      'snowDepth': getElementForCurrentTime(weather.hourly.snow_depth),
       'rain': weather.current.rain,
-      'visibility': getLatestArrayElement(weather.hourly.visibility)
+      'visibility': getElementForCurrentTime(weather.hourly.visibility)
     },
     'date': {
       'year': new Date().getFullYear(),
